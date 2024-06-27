@@ -4,7 +4,7 @@
  */
 package ec.edu.ups.proyectofinalfundamentos.Empleado;
 
-import ec.edu.ups.proyectofinalfundamentos.ActualizarDatos;
+import ec.edu.ups.proyectofinalfundamentos.Cliente.ActualizarDatos;
 import ec.edu.ups.proyectofinalfundamentos.Cliente.NuevoCliente;
 import ec.edu.ups.proyectofinalfundamentos.Facturas.Facturar;
 

@@ -4,6 +4,8 @@
  */
 package ec.edu.ups.proyectofinalfundamentos;
 
+import ec.edu.ups.proyectofinalfundamentos.Empleado.EmpleadoGeneral;
+
 /**
  *
  * @author Usuario

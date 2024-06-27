@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/MDIApplication.java to edit this template
  */
-package ec.edu.ups.proyectofinalfundamentos;
+package ec.edu.ups.proyectofinalfundamentos.Empleado;
+
+import ec.edu.ups.proyectofinalfundamentos.ActualizarDatos;
+import ec.edu.ups.proyectofinalfundamentos.Cliente.NuevoCliente;
+import ec.edu.ups.proyectofinalfundamentos.Facturas.Facturar;
 
 /**
  *

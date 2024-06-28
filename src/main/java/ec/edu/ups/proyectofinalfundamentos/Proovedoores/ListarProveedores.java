@@ -34,13 +34,13 @@ public class ListarProveedores extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Numero Factura", "Nombre", "Fecha Factura", "Valor Total"
+                "Numero Factura", "Nombre del Proveedor", "Fecha Factura", "Valor Total", "Codigo de Proveedor"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

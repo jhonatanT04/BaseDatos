@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Extra;
+
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
@@ -16,14 +17,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author venot
  */
-
-
-public class Pdf {
-
+public class CrearPdf {
     public void prueba() {
         // step 1: creation of a document-object        
         Document document = new Document();
@@ -88,10 +87,5 @@ public class Pdf {
 
         JOptionPane.showMessageDialog(null, 
                 "Se creo el archivo 'Ejemplo_pdf_java.pdf' en la carpeta del proyecto");
-    }
-
-    public static void main(String[] args) {
-        EjemploPDF obj = new EjemploPDF();
-        obj.prueba();
     }
 }

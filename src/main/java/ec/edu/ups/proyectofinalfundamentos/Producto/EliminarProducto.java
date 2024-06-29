@@ -47,7 +47,15 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
 
         jButton2.setText("Cancelar");
 
+        jTextField2.setEditable(false);
+
+        jTextField3.setEditable(false);
+
+        jTextField4.setEditable(false);
+
         jLabel1.setText("Codigo:");
+
+        jTextField5.setEditable(false);
 
         jLabel2.setText("Nombre:");
 
@@ -56,6 +64,7 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
         jLabel4.setText("Stock:");
 
         jButton3.setText("Eliminar");
+        jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);

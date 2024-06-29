@@ -8,12 +8,12 @@ package ec.edu.ups.proyectofinalfundamentos.Facturas.ListarFactura;
  *
  * @author venot
  */
-public class SeleccionarFacturaLista extends javax.swing.JInternalFrame {
+public class FacturaLista extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form ListarFatura
      */
-    public SeleccionarFacturaLista() {
+    public FacturaLista() {
         initComponents();
     }
 

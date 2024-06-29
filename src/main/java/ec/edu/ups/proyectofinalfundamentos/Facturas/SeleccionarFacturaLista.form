@@ -32,7 +32,7 @@
                   <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton3" alignment="1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace pref="34" max="32767" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -132,7 +132,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Detalles"/>
+        <Property name="text" type="java.lang.String" value="Ver Detalles"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>

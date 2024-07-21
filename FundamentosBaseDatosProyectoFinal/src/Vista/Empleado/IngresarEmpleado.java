@@ -354,7 +354,6 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
         txtContrasenia.setText("");
         buttonGroup.clearSelection();
         jCheckBox1.setSelected(false);
-        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntCancelar;

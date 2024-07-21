@@ -4,7 +4,9 @@
  */
 package Vista.Facturas.Crear;
 
+import Controlador.ControladorDetalleFactura;
 import Controlador.ControladorProducto;
+import Modelo.Factura.DetalleFactura;
 import Modelo.Personas.Persona.Cliente;
 import Modelo.Personas.Persona.Empleado;
 import Modelo.Producto.Producto;
@@ -14,6 +16,7 @@ import Vista.Proovedoores.ComprarProveedores_1;
 import java.awt.BorderLayout;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 import java.util.logging.Level;
@@ -39,18 +42,26 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     private Empleado empleado;
     private BuscarClienteFactura buscarCliente;
     private javax.swing.JDesktopPane desktopPane;
+    private ControladorDetalleFactura controladorDetalleFactura;
+    private DetalleFactura detalleFactura;
+
     /**
      * Creates new form CrearFactura
      */
-    public CrearFactura(ControladorProducto controladorProducto,javax.swing.JDesktopPane p,Empleado emp) {
+    public CrearFactura(ControladorProducto controladorProducto, javax.swing.JDesktopPane p, Empleado emp, ControladorDetalleFactura controladorDetalleFactura) {
         initComponents();
         this.controladorProducto = controladorProducto;
+        this.controladorDetalleFactura = controladorDetalleFactura;
         desktopPane = p;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = dateFormat.format(new Date());
         txtFecha.setText(currentDate);
-        empleado= emp;
-        txtNombreEmpleado.setText(emp.getNombre()+" "+emp.getApellido());
+        empleado = emp;
+        txtNombreEmpleado.setText(emp.getNombre() + " " + emp.getApellido());
+        txtIVA.setText(String.valueOf(12.0));
+        limpiarTabla();
+        jTable1.setRowSelectionAllowed(true);
+        jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     /**
@@ -65,7 +76,7 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         buttonGroupCorreo = new javax.swing.ButtonGroup();
         txtNombreEmpleado = new javax.swing.JTextField();
         btnAgregarProductos = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEliminarProducto = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
@@ -73,16 +84,16 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         txtFecha = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtTelefono = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txtIVA = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnFacturar = new javax.swing.JButton();
         jLabel19 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtSubtotal = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         txtDireccion = new javax.swing.JTextField();
@@ -111,7 +122,12 @@ public class CrearFactura extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Eliminar Producto");
+        btnEliminarProducto.setText("Eliminar Producto");
+        btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProductoActionPerformed(evt);
+            }
+        });
 
         jLabel15.setText("Nombres:");
 
@@ -127,7 +143,12 @@ public class CrearFactura extends javax.swing.JInternalFrame {
 
         txtTelefono.setEditable(false);
 
-        jTextField7.setEditable(false);
+        txtIVA.setEditable(false);
+        txtIVA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIVAActionPerformed(evt);
+            }
+        });
 
         jLabel17.setText("Fecha:");
 
@@ -137,23 +158,28 @@ public class CrearFactura extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Valor total Factura:");
 
-        jButton1.setText("Facturar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnFacturar.setText("Facturar");
+        btnFacturar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnFacturarActionPerformed(evt);
             }
         });
 
         jLabel19.setText("Buscar cliente :");
 
-        jTextField6.setEditable(false);
+        txtSubtotal.setEditable(false);
+        txtSubtotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSubtotalActionPerformed(evt);
+            }
+        });
 
         txtNombre.setEditable(false);
 
-        jTextField8.setEditable(false);
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        txtTotal.setEditable(false);
+        txtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                txtTotalActionPerformed(evt);
             }
         });
 
@@ -210,17 +236,17 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                 .addGap(134, 134, 134)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnFacturar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
@@ -229,7 +255,7 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 782, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -279,7 +305,7 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton2)
+                        .addComponent(btnEliminarProducto)
                         .addComponent(btnAgregarProductos, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
@@ -329,20 +355,20 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                 .addGap(61, 61, 61)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnEliminarProducto)
                         .addGap(18, 18, 18)
                         .addComponent(btnAgregarProductos))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1)
+                            .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnFacturar)
                             .addComponent(jButton5))))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
@@ -354,13 +380,41 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreEmpleadoActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
+        // Obtén el modelo de la tabla
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // Recorre las filas de la tabla para obtener los datos
+        for (int i = 0; i < model.getRowCount(); i++) {
+            try {
+                String nombreProducto = (String) model.getValueAt(i, 0); // Nombre del producto
+                int cantidad = (int) model.getValueAt(i, 1); // Cantidad
+                double precioUnitario = (double) model.getValueAt(i, 2); // Precio sin IVA
+                double subtotal = (double) model.getValueAt(i, 3); // Subtotal
+                double iva = (double) model.getValueAt(i, 4); // IVA
+                double total = (double) model.getValueAt(i, 5); // Total
+
+                // Busca el código del producto basado en el nombre
+                int codigop = controladorProducto.buscarProducto(nombreProducto).getCodigo();
+
+                // Crea un nuevo objeto DetalleFactura con los datos de la fila
+                detalleFactura = new DetalleFactura(i, cantidad, precioUnitario, subtotal, iva, total, 2, codigop);
+
+                // Inserta el detalle de la factura usando el controlador
+                controladorDetalleFactura.ingresardetalle(detalleFactura);
+
+            } catch (SQLException ex) {
+                Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        // Mensaje de éxito después de procesar todos los detalles
+        JOptionPane.showMessageDialog(this, "Factura creada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnFacturarActionPerformed
+
+    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_txtTotalActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
@@ -371,12 +425,23 @@ public class CrearFactura extends javax.swing.JInternalFrame {
 
         if (nombreProducto != null && !nombreProducto.trim().isEmpty()) {
             try {
-                List<Producto> productosEncontrados = (List<Producto>) controladorProducto.buscarProducto(nombreProducto.trim());
+                List<Producto> productosEncontrados = controladorProducto.buscarProductoMismoNombre(nombreProducto);
 
                 if (productosEncontrados != null && !productosEncontrados.isEmpty()) {
                     if (productosEncontrados.size() == 1) {
                         Producto productoEncontrado = productosEncontrados.get(0);
-                        agregarProductoATabla(productoEncontrado);
+                        int cantidadDeseada = obtenerCantidadDeseada(productoEncontrado);
+
+                        // Verifica si la cantidad deseada es válida y hay suficiente stock
+                        while (cantidadDeseada > productoEncontrado.getStock()) {
+                            JOptionPane.showMessageDialog(this, "No hay suficiente stock para el producto: " + nombreProducto, "Error", JOptionPane.ERROR_MESSAGE);
+                            cantidadDeseada = obtenerCantidadDeseada(productoEncontrado);
+                        }
+
+                        if (cantidadDeseada > 0) {
+                            agregarProductoATabla(productoEncontrado, cantidadDeseada);
+                            actualizarTotales();
+                        }
                     } else {
                         JFrame frameSeleccion = new JFrame("Seleccionar Producto");
                         frameSeleccion.setSize(500, 400);
@@ -405,8 +470,19 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                             int selectedRow = table.getSelectedRow();
                             if (selectedRow >= 0) {
                                 Producto productoSeleccionado = productosEncontrados.get(selectedRow);
-                                agregarProductoATabla(productoSeleccionado);
-                                frameSeleccion.dispose();
+                                int cantidadDeseada = obtenerCantidadDeseada(productoSeleccionado);
+
+                                // Verifica si la cantidad deseada es válida y hay suficiente stock
+                                while (cantidadDeseada > productoSeleccionado.getStock()) {
+                                    JOptionPane.showMessageDialog(frameSeleccion, "No hay suficiente stock para el producto seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                                    cantidadDeseada = obtenerCantidadDeseada(productoSeleccionado);
+                                }
+
+                                if (cantidadDeseada > 0) {
+                                    agregarProductoATabla(productoSeleccionado, cantidadDeseada);
+                                    frameSeleccion.dispose();
+                                    actualizarTotales();
+                                }
                             } else {
                                 JOptionPane.showMessageDialog(frameSeleccion, "Debe seleccionar un producto.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -422,7 +498,8 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "No se encontró el producto con el nombre: " + nombreProducto, "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(ComprarProveedores_1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Error al buscar el producto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "El nombre del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -433,53 +510,127 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         limpiarCampos();
         desplegarCedula();
-        
+
     }//GEN-LAST:event_bntBuscarActionPerformed
 
-    private void agregarProductoATabla(Producto producto) {
+    private void txtSubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSubtotalActionPerformed
+
+    }//GEN-LAST:event_txtSubtotalActionPerformed
+
+    private void txtIVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIVAActionPerformed
+
+    }//GEN-LAST:event_txtIVAActionPerformed
+
+    private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese la cantidad:", "Cantidad", JOptionPane.PLAIN_MESSAGE);
 
-        if (cantidadStr != null && !cantidadStr.trim().isEmpty()) {
-            try {
-                int cantidad = Integer.parseInt(cantidadStr);
-                if (cantidad > 0) {
-                    double precioSinIVA = producto.getPrecio();
-                    double iva = producto.getIva();
-                    double precioConIVA = precioSinIVA * (1 + iva);
-                    double subtotal = precioConIVA * cantidad;
-                    double total = subtotal + precioConIVA;
+        // Obtén la fila seleccionada
+        int selectedRow = jTable1.getSelectedRow();
 
-                    model.addRow(new Object[]{
-                        producto.getNombre(),
-                        cantidad,
-                        producto.getPrecio(),
-                        producto.getIva(),
-                        subtotal,
-                        total
-                    });
+        // Verifica si se ha seleccionado una fila
+        if (selectedRow >= 0) {
+            // Confirmar la eliminación del producto
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "¿Estás seguro de que deseas eliminar este producto?",
+                    "Confirmar Eliminación",
+                    JOptionPane.YES_NO_OPTION);
 
-                    JOptionPane.showMessageDialog(this, "Producto encontrado y agregado a la tabla.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que cero.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (confirm == JOptionPane.YES_OPTION) {
+                try {
+                    // Actualiza el stock del producto
+                    String nombreProducto = (String) model.getValueAt(selectedRow, 0); // Nombre del producto
+                    int cantidad = (int) model.getValueAt(selectedRow, 1); // Cantidad del producto
+
+                    // Busca el producto en la lista original (o en el controlador si se guarda allí)
+                    Producto producto = controladorProducto.buscarProducto(nombreProducto);
+                    if (producto != null) {
+                        // Devuelve la cantidad eliminada al stock
+                        producto.setStock(producto.getStock() + cantidad);
+                    }
+
+                    // Elimina la fila seleccionada
+                    model.removeRow(selectedRow);
+
+                    // Actualiza los totales
+                    actualizarTotales();
+
+                    JOptionPane.showMessageDialog(this, "Producto eliminado de la tabla.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Ingrese un número válido para la cantidad.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Debe ingresar la cantidad.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un producto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnEliminarProductoActionPerformed
+
+    private int obtenerCantidadDeseada(Producto producto) {
+        String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese la cantidad deseada para el producto: " + producto.getNombre(), "Cantidad", JOptionPane.PLAIN_MESSAGE);
+        try {
+            int cantidad = Integer.parseInt(cantidadStr.trim());
+            if (cantidad > 0) {
+                return cantidad;
+            } else {
+                JOptionPane.showMessageDialog(this, "La cantidad debe ser mayor que cero.", "Error", JOptionPane.ERROR_MESSAGE);
+                return 0;
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Cantidad inválida. Debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            return 0;
         }
     }
-    private void desplegarCedula(){
-        if(buscarCliente == null){
+
+    private void agregarProductoATabla(Producto producto, int cantidad) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        double precioSinIVA = producto.getPrecio();
+        double subtotal = precioSinIVA * cantidad;
+        double iva = subtotal * (producto.getIva() / 100.0);
+        double total = subtotal + iva;
+
+        model.addRow(new Object[]{
+            producto.getNombre(),
+            cantidad,
+            precioSinIVA,
+            subtotal,
+            iva,
+            total
+        });
+
+        producto.setStock(producto.getStock() - cantidad);
+
+        JOptionPane.showMessageDialog(this, "Producto agregado a la tabla.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void actualizarTotales() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        double subtotalTotal = 0;
+
+        for (int i = 0; i < model.getRowCount(); i++) {
+            subtotalTotal += (double) model.getValueAt(i, 5); // Columna de Total
+        }
+
+        double totalGeneral = subtotalTotal + (subtotalTotal * 0.12);
+        txtSubtotal.setText(String.format("%.2f", subtotalTotal));
+        txtTotal.setText(String.format("%.2f", totalGeneral));
+    }
+
+    private void limpiarTabla() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+    }
+
+    private void desplegarCedula() {
+        if (buscarCliente == null) {
             buscarCliente = new BuscarClienteFactura(clienteFactura, txtNombre, txtApellido, txtCedula, txtCorreo, txtDireccion, txtTelefono);
             desktopPane.add(buscarCliente);
         }
-        
-        buscarCliente.setVisible(true); 
+
+        buscarCliente.setVisible(true);
         clienteFactura = buscarCliente.devolverCliente();
     }
-    public void limpiarCampos(){
+
+    public void limpiarCampos() {
         txtCedula.setText("");
         txtApellido.setText("");
         txtNombre.setText("");
@@ -491,9 +642,9 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntBuscar;
     private javax.swing.JButton btnAgregarProductos;
+    private javax.swing.JButton btnEliminarProducto;
+    private javax.swing.JButton btnFacturar;
     private javax.swing.ButtonGroup buttonGroupCorreo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
@@ -512,16 +663,16 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtIVA;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreEmpleado;
+    private javax.swing.JTextField txtSubtotal;
     private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

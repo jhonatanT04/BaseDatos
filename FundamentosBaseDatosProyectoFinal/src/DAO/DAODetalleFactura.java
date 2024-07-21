@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  */
 public class DAODetalleFactura {
 
-    public boolean insertarDetalleFactura(DetalleFactura detalleFactura) {
+    public boolean insertarDetalleFactura(DetalleFactura detalleFactura) throws SQLException{
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
 

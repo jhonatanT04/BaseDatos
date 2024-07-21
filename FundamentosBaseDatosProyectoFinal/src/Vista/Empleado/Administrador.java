@@ -6,6 +6,7 @@ package Vista.Empleado;
 
 import Controlador.ControladorCategoria;
 import Controlador.ControladorCompraPoveedor;
+import Controlador.ControladorDetalleFactura;
 import Controlador.ControladorPorveedor;
 import Controlador.ControladorProducto;
 import Modelo.Personas.Persona.Empleado;
@@ -75,6 +76,7 @@ public class Administrador extends javax.swing.JFrame {
     private ControladorCategoria controladorCategoria;
     private ControladorPorveedor controladorProveedor;
     private ControladorCompraPoveedor controladorCompraPoveedor;
+    private ControladorDetalleFactura controladorDetalleFactura;
     /**
      * Creates new form Administrador
      */
@@ -84,6 +86,7 @@ public class Administrador extends javax.swing.JFrame {
         controladorProducto = new ControladorProducto();
         controladorProveedor = new ControladorPorveedor();
         controladorCompraPoveedor = new ControladorCompraPoveedor();
+        controladorDetalleFactura = new ControladorDetalleFactura();
         
     }
 
@@ -480,7 +483,7 @@ public class Administrador extends javax.swing.JFrame {
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         
         if(crearFactura == null){
-            crearFactura = new CrearFactura(controladorProducto,desktopPane,empleado);
+            crearFactura = new CrearFactura(controladorProducto,desktopPane,empleado,controladorDetalleFactura);
             desktopPane.add(crearFactura);
         }
         

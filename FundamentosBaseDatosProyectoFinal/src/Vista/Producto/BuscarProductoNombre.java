@@ -28,7 +28,7 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
     private Producto producto;
     private ListarProducto listarProducto; // Añadir referencia a ListarProducto
 
-    public BuscarProductoNombre(JTable jTable, ListarProducto listarProducto,ControladorCategoria controladorCategoria, ControladorProducto controladorProducto) {
+    public BuscarProductoNombre(JTable jTable, ListarProducto listarProducto, ControladorCategoria controladorCategoria, ControladorProducto controladorProducto) {
         initComponents();
         this.controladorCategoria = controladorCategoria;
         this.controladorProducto = controladorProducto;
@@ -90,47 +90,47 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        
+
         String nombre = txtNombre.getText().trim();
 
-    if (nombre.isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del producto a buscar.");
-        return; 
-    }
-
-    DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
-    modelo.setRowCount(0);
-
-    try {
-        List<Producto> productos = controladorProducto.buscarProductoMismoNombre(nombre); 
-
-        if (productos != null && !productos.isEmpty()) {
-            for (Producto producto : productos) {
-                Categoria categoria = controladorCategoria.buscarCategoriaPorCodigo(producto.getCategoria());
-                String nombreCategoria = (categoria != null) ? categoria.getNombre() : "Sin categoría";
-
-                Object[] rowData = {
-                    producto.getCodigo(),
-                    producto.getNombre(),
-                    producto.getPrecio(),
-                    producto.getStock(),
-                    producto.getIva(),
-                    producto.getVisualizacion(),
-                    nombreCategoria
-                };
-                modelo.addRow(rowData);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontraron productos con el nombre ingresado.");
+        if (nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del producto a buscar.");
+            return;
         }
-    } catch (SQLException ex) {
-        Logger.getLogger(BuscarProductoNombre.class.getName()).log(Level.SEVERE, null, ex);
-        JOptionPane.showMessageDialog(null, "Error al buscar los productos: " + ex.getMessage());
-    }
-    
+
+        DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
+        modelo.setRowCount(0);
+
+        try {
+            List<Producto> productos = controladorProducto.buscarProductoMismoNombre(nombre);
+
+            if (productos != null && !productos.isEmpty()) {
+                for (Producto producto : productos) {
+                    Categoria categoria = controladorCategoria.buscarCategoriaPorCodigo(producto.getCategoria());
+                    String nombreCategoria = (categoria != null) ? categoria.getNombre() : "Sin categoría";
+
+                    Object[] rowData = {
+                        producto.getCodigo(),
+                        producto.getNombre(),
+                        producto.getPrecio(),
+                        producto.getStock(),
+                        producto.getIva(),
+                        producto.getVisualizacion(),
+                        nombreCategoria
+                    };
+                    modelo.addRow(rowData);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron productos con el nombre ingresado.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BuscarProductoNombre.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al buscar los productos: " + ex.getMessage());
+        }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-/*public void addClienteToTable(Producto producto) {
+    /*public void addClienteToTable(Producto producto) {
         DefaultTableModel model = (DefaultTableModel) jTableClientes.getModel();
         model.addRow(new Object[]{cliente.getCedula(), cliente.getNombre(), cliente.getApellido(), cliente.getDireccion(), cliente.getTelefono(), cliente.getCorreo()});
     }*/

@@ -36,6 +36,10 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        radioNombre = new javax.swing.JRadioButton();
+        radioRUC = new javax.swing.JRadioButton();
+        radioTodo = new javax.swing.JRadioButton();
+        btnSeleccionar = new javax.swing.JButton();
 
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
@@ -75,6 +79,14 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
             }
         });
 
+        radioNombre.setText("Nombre");
+
+        radioRUC.setText("RUC");
+
+        radioTodo.setText("Listar Todo");
+
+        btnSeleccionar.setText("jButton2");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -85,18 +97,33 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 904, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(428, 428, 428)
-                        .addComponent(jButton1)))
+                        .addGap(426, 426, 426)
+                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(radioNombre)
+                        .addGap(130, 130, 130)
+                        .addComponent(radioRUC)
+                        .addGap(92, 92, 92)
+                        .addComponent(radioTodo)
+                        .addGap(81, 81, 81)
+                        .addComponent(btnSeleccionar)))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioNombre)
+                    .addComponent(radioRUC)
+                    .addComponent(radioTodo)
+                    .addComponent(btnSeleccionar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -144,9 +171,13 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSeleccionar;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JRadioButton radioNombre;
+    private javax.swing.JRadioButton radioRUC;
+    private javax.swing.JRadioButton radioTodo;
     // End of variables declaration//GEN-END:variables
 }

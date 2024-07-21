@@ -4,13 +4,20 @@
  */
 package Vista.Facturas.Crear;
 
+import Controlador.ControladorCabeceraFactura;
+import Controlador.ControladorCliente;
 import Controlador.ControladorDetalleFactura;
+import Controlador.ControladorEmpleado;
+import Controlador.ControladorPersona;
 import Controlador.ControladorProducto;
+import Modelo.Factura.CabeceraFactura;
 import Modelo.Factura.DetalleFactura;
 import Modelo.Personas.Persona.Cliente;
 import Modelo.Personas.Persona.Empleado;
+import Modelo.Personas.Persona.Persona;
 import Modelo.Producto.Producto;
 import Vista.Cliente.BuscarCliente;
+import java.sql.Timestamp;
 import Vista.Facturas.BuscarClienteFactura;
 import Vista.Proovedoores.ComprarProveedores_1;
 import java.awt.BorderLayout;
@@ -44,16 +51,25 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     private javax.swing.JDesktopPane desktopPane;
     private ControladorDetalleFactura controladorDetalleFactura;
     private DetalleFactura detalleFactura;
+    private ControladorCabeceraFactura controladorCabeceraFactura;
+    private CabeceraFactura cabeceraFactura;
+    private ControladorCliente controladorCliente;
+    private ControladorEmpleado controladorEmpleado;
+    private ControladorPersona controladorPersona;
 
     /**
      * Creates new form CrearFactura
      */
-    public CrearFactura(ControladorProducto controladorProducto, javax.swing.JDesktopPane p, Empleado emp, ControladorDetalleFactura controladorDetalleFactura) {
+    public CrearFactura(ControladorProducto controladorProducto, javax.swing.JDesktopPane p, Empleado emp, ControladorDetalleFactura controladorDetalleFactura, ControladorCabeceraFactura controladorCabeceraFactura, ControladorCliente controladorCliente, ControladorEmpleado controladorEmpleado, ControladorPersona controladorPersona) {
         initComponents();
         this.controladorProducto = controladorProducto;
         this.controladorDetalleFactura = controladorDetalleFactura;
+        this.controladorCabeceraFactura = controladorCabeceraFactura;
+        this.controladorCliente = controladorCliente;
+        this.controladorEmpleado = controladorEmpleado;
+        this.controladorPersona = controladorPersona;
         desktopPane = p;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDate = dateFormat.format(new Date());
         txtFecha.setText(currentDate);
         empleado = emp;
@@ -381,35 +397,55 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreEmpleadoActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
-        // Obtén el modelo de la tabla
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if (clienteFactura != null) {
 
-        // Recorre las filas de la tabla para obtener los datos
-        for (int i = 0; i < model.getRowCount(); i++) {
             try {
-                String nombreProducto = (String) model.getValueAt(i, 0); // Nombre del producto
-                int cantidad = (int) model.getValueAt(i, 1); // Cantidad
-                double precioUnitario = (double) model.getValueAt(i, 2); // Precio sin IVA
-                double subtotal = (double) model.getValueAt(i, 3); // Subtotal
-                double iva = (double) model.getValueAt(i, 4); // IVA
-                double total = (double) model.getValueAt(i, 5); // Total
+                Timestamp fecha = Timestamp.valueOf(txtFecha.getText());
+                System.out.println("aaaaaaaaaa");
 
-                // Busca el código del producto basado en el nombre
-                int codigop = controladorProducto.buscarProducto(nombreProducto).getCodigo();
+                // Reemplaza comas por puntos antes de convertir a double
+                double subtotalC = Math.round(Double.parseDouble(txtSubtotal.getText().replace(",", ".")));
+                System.out.println("aaaaaaaaaa");
+                double ivaC = Math.round(Double.parseDouble(txtIVA.getText().replace(",", ".")));
+                double totalC = Math.round(Double.parseDouble(txtTotal.getText().replace(",", ".")));
 
-                // Crea un nuevo objeto DetalleFactura con los datos de la fila
-                detalleFactura = new DetalleFactura(i, cantidad, precioUnitario, subtotal, iva, total, 2, codigop);
+                char estado = 'A';
 
-                // Inserta el detalle de la factura usando el controlador
-                controladorDetalleFactura.ingresardetalle(detalleFactura);
+                cabeceraFactura = new CabeceraFactura(0, fecha, subtotalC, ivaC, totalC, estado, clienteFactura.getClienteCodigo(), empleado.getEmpleadoCodigo());
+                controladorCabeceraFactura.ingresarCabecera(cabeceraFactura);
 
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    try {
+                        String nombreProducto = (String) model.getValueAt(i, 0);
+                        int cantidad = (int) model.getValueAt(i, 1);
+                        double precioUnitario = (double) model.getValueAt(i, 2);
+                        double subtotal = (double) model.getValueAt(i, 3);
+                        double iva = (double) model.getValueAt(i, 4);
+                        double total = (double) model.getValueAt(i, 5);
+
+                        int codigop = controladorProducto.buscarProducto(nombreProducto).getCodigo();
+
+                        detalleFactura = new DetalleFactura(0, cantidad, precioUnitario, subtotal, iva, total, 2, codigop);
+
+                        if (controladorDetalleFactura.ingresardetalle(detalleFactura)) {
+                            System.out.println("Detalle de factura insertado: " + nombreProducto);
+                        } else {
+                            System.err.println("Error al insertar el detalle de la factura: " + nombreProducto);
+                        }
+
+                    } catch (SQLException ex) {
+                        Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, "Error al procesar la fila " + i, ex);
+                        JOptionPane.showMessageDialog(this, "Error al procesar la fila " + (i + 1) + ": " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                JOptionPane.showMessageDialog(this, "Factura creada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             } catch (SQLException ex) {
                 Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            JOptionPane.showMessageDialog(this, "El cliente es nulo");
         }
-
-        // Mensaje de éxito después de procesar todos los detalles
-        JOptionPane.showMessageDialog(this, "Factura creada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnFacturarActionPerformed
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
@@ -524,12 +560,8 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
 
-        // Obtén la fila seleccionada
         int selectedRow = jTable1.getSelectedRow();
-
-        // Verifica si se ha seleccionado una fila
         if (selectedRow >= 0) {
-            // Confirmar la eliminación del producto
             int confirm = JOptionPane.showConfirmDialog(this,
                     "¿Estás seguro de que deseas eliminar este producto?",
                     "Confirmar Eliminación",
@@ -537,21 +569,16 @@ public class CrearFactura extends javax.swing.JInternalFrame {
 
             if (confirm == JOptionPane.YES_OPTION) {
                 try {
-                    // Actualiza el stock del producto
-                    String nombreProducto = (String) model.getValueAt(selectedRow, 0); // Nombre del producto
-                    int cantidad = (int) model.getValueAt(selectedRow, 1); // Cantidad del producto
+                    String nombreProducto = (String) model.getValueAt(selectedRow, 0);
+                    int cantidad = (int) model.getValueAt(selectedRow, 1);
 
-                    // Busca el producto en la lista original (o en el controlador si se guarda allí)
                     Producto producto = controladorProducto.buscarProducto(nombreProducto);
                     if (producto != null) {
-                        // Devuelve la cantidad eliminada al stock
                         producto.setStock(producto.getStock() + cantidad);
                     }
 
-                    // Elimina la fila seleccionada
                     model.removeRow(selectedRow);
 
-                    // Actualiza los totales
                     actualizarTotales();
 
                     JOptionPane.showMessageDialog(this, "Producto eliminado de la tabla.", "Éxito", JOptionPane.INFORMATION_MESSAGE);

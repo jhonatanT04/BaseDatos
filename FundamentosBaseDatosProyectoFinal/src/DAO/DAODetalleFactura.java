@@ -17,22 +17,22 @@ import javax.swing.JOptionPane;
  */
 public class DAODetalleFactura {
 
-    public boolean insertarDetalleFactura(DetalleFactura detalleFactura) throws SQLException{
+    public boolean insertarDetalleFactura(DetalleFactura detalleFactura) throws SQLException {
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
 
-        String sql = "INSERT INTO super_detalle_facturas (det_codigo, det_cantidad, det_precio_unitario, det_subtotal, det_iva, det_total, super_cabecera_facturas_fac_codigo, super_productos_pro_codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO super_detalle_facturas (det_codigo, det_cantidad, det_precio_unitario, det_subtotal, det_iva, det_total, super_cabecera_facturas_fac_codigo, super_productos_pro_codigo) VALUES (seq_det_codigo.nextval, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, detalleFactura.getCodigo());
-            pstmt.setInt(2, detalleFactura.getCantidad());
-            pstmt.setDouble(3, detalleFactura.getPrecioUnitario());
-            pstmt.setDouble(4, detalleFactura.getSubTotal());
-            pstmt.setDouble(5, detalleFactura.getIva());
-            pstmt.setDouble(6, detalleFactura.getTotal());
-            pstmt.setInt(7, detalleFactura.getCodigoCabeceraFactura());
-            pstmt.setInt(8, detalleFactura.getCodigoProducto());
+            System.out.println("aaaaa");
+            pstmt.setInt(1, detalleFactura.getCantidad());
+            pstmt.setDouble(2, detalleFactura.getPrecioUnitario());
+            pstmt.setDouble(3, detalleFactura.getSubTotal());
+            pstmt.setDouble(4, detalleFactura.getIva());
+            pstmt.setDouble(5, detalleFactura.getTotal());
+            pstmt.setInt(6, detalleFactura.getCodigoCabeceraFactura());
+            pstmt.setInt(7, detalleFactura.getCodigoProducto());
 
             pstmt.executeUpdate();
             pstmt.close();

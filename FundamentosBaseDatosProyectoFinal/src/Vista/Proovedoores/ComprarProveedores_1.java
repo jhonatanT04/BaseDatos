@@ -54,11 +54,9 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtCodigo = new javax.swing.JTextField();
         txtFecha = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
@@ -86,19 +84,11 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
 
-        jLabel1.setText("Codigo:");
-
         jLabel2.setText("Fecha:");
 
         jLabel3.setText("Total:");
 
         jLabel4.setText("Cantidad:");
-
-        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCodigoActionPerformed(evt);
-            }
-        });
 
         txtFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -216,12 +206,8 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(60, 60, 60)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                             .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -277,19 +263,12 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(radioRUC)
-                                    .addComponent(radioNombre))))
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(radioRUC)
+                            .addComponent(radioNombre))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -380,10 +359,6 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaActionPerformed
-
-    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:", "Buscar Producto", JOptionPane.PLAIN_MESSAGE);
@@ -486,14 +461,13 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
             int codigoProducto = Integer.parseInt(jTable1.getValueAt(0, columna).toString());
 
             int codigoProveedor = Integer.parseInt(txtCodigoProveedor.getText().trim());
-            int codigo = Integer.parseInt(txtCodigo.getText().trim());
             Timestamp fecha = Timestamp.valueOf(txtFecha.getText().trim());
             int cantidad = Integer.parseInt(txtCantidad.getText().trim());
             double precio = Double.parseDouble(jTable1.getValueAt(0, 2).toString());
             double valorTotal = cantidad * precio;
             txtTotal.setText(String.valueOf(valorTotal)); 
 
-            CompraProveedor compra = new CompraProveedor(codigoProveedor, codigoProducto, codigo, fecha, precio, cantidad);
+            CompraProveedor compra = new CompraProveedor(codigoProveedor, codigoProducto, 0, fecha, precio, cantidad);
 
             controladorCompraProveedor.insertarCompraProveedor(compra);
             
@@ -508,7 +482,6 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
             
             JOptionPane.showMessageDialog(this, "Compra registrada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            txtCodigo.setText("");
             txtCodigoProveedor.setText("");
             txtFecha.setText("");
             txtCantidad.setText("");
@@ -524,7 +497,6 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnBuscarProducto;
     private javax.swing.JButton btnBuscarProveedor;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -543,7 +515,6 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton radioNombre;
     private javax.swing.JRadioButton radioRUC;
     private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCodigoProveedor;
     private javax.swing.JTextField txtCorreoProveedor;
     private javax.swing.JTextField txtDireccionProveedor;

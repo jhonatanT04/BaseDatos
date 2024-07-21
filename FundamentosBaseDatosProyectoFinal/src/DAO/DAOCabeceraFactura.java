@@ -23,22 +23,21 @@ import javax.swing.JOptionPane;
  */
 public class DAOCabeceraFactura {
 
-    public boolean insertarCabeceraFacturas(CabeceraFactura cabeceraFactura) {
+    public boolean insertarCabeceraFacturas(CabeceraFactura cabeceraFactura) throws SQLException{
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
 
-        String sql = "INSERT INTO super_cabecera_facturas (fac_codigo, fac_fecha, fac_subtotal, fac_total_iva, fac_valor_total, fac_estado, super_empleados_emp_codigo, super_clientes_cli_codigo, super_clientesv1_cli_codigo, super_empleadosv1_emp_codigo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO super_cabecera_facturas (fac_codigo, fac_fecha, fac_subtotal, fac_total_iva, fac_valor_total, fac_estado, super_empleados_emp_codigo, super_clientes_cli_codigo, super_clientesv1_cli_codigo, super_empleadosv1_emp_codigo) VALUES (seq_fac_codigo.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, cabeceraFactura.getCodigo());
-            pstmt.setTimestamp(2, cabeceraFactura.getFecha());
-            pstmt.setDouble(3, cabeceraFactura.getSubTotal());
-            pstmt.setDouble(4, cabeceraFactura.getTotalIVA());
-            pstmt.setDouble(5, cabeceraFactura.getValorTotal());
-            pstmt.setString(6, String.valueOf(cabeceraFactura.getEstado()));
-            pstmt.setInt(7, cabeceraFactura.getCodigoEmpleado());
-            pstmt.setInt(8, cabeceraFactura.getCodigoCliente());
+            pstmt.setTimestamp(1, cabeceraFactura.getFecha());
+            pstmt.setDouble(2, cabeceraFactura.getSubTotal());
+            pstmt.setDouble(3, cabeceraFactura.getTotalIVA());
+            pstmt.setDouble(4, cabeceraFactura.getValorTotal());
+            pstmt.setString(5, String.valueOf(cabeceraFactura.getEstado()));
+            pstmt.setInt(6, cabeceraFactura.getCodigoEmpleado());
+            pstmt.setInt(7, cabeceraFactura.getCodigoCliente());
 
             pstmt.executeUpdate();
             pstmt.close();

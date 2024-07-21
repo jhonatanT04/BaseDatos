@@ -4,9 +4,13 @@
  */
 package Vista.Empleado;
 
+import Controlador.ControladorCabeceraFactura;
 import Controlador.ControladorCategoria;
+import Controlador.ControladorCliente;
 import Controlador.ControladorCompraPoveedor;
 import Controlador.ControladorDetalleFactura;
+import Controlador.ControladorEmpleado;
+import Controlador.ControladorPersona;
 import Controlador.ControladorPorveedor;
 import Controlador.ControladorProducto;
 import Modelo.Personas.Persona.Empleado;
@@ -77,6 +81,10 @@ public class Administrador extends javax.swing.JFrame {
     private ControladorPorveedor controladorProveedor;
     private ControladorCompraPoveedor controladorCompraPoveedor;
     private ControladorDetalleFactura controladorDetalleFactura;
+    private ControladorCabeceraFactura controladorCabeceraFactura;
+    private ControladorCliente controladorCliente;
+    private ControladorEmpleado controladorEmpleado;
+    private ControladorPersona controladorPersona;
     /**
      * Creates new form Administrador
      */
@@ -87,6 +95,10 @@ public class Administrador extends javax.swing.JFrame {
         controladorProveedor = new ControladorPorveedor();
         controladorCompraPoveedor = new ControladorCompraPoveedor();
         controladorDetalleFactura = new ControladorDetalleFactura();
+        controladorCabeceraFactura = new ControladorCabeceraFactura();
+        controladorCliente = new ControladorCliente();
+        controladorEmpleado = new ControladorEmpleado();
+        controladorPersona = new ControladorPersona();
         
     }
 
@@ -483,7 +495,7 @@ public class Administrador extends javax.swing.JFrame {
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         
         if(crearFactura == null){
-            crearFactura = new CrearFactura(controladorProducto,desktopPane,empleado,controladorDetalleFactura);
+            crearFactura = new CrearFactura(controladorProducto, desktopPane, empleado, controladorDetalleFactura, controladorCabeceraFactura, controladorCliente, controladorEmpleado, controladorPersona); 
             desktopPane.add(crearFactura);
         }
         

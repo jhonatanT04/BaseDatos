@@ -25,16 +25,15 @@ public class DAOCompraProveedor {
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
 
-        String sql = "INSERT INTO super_compra_proveedores (com_codigo, com_fecha, com_valor_total, com_cantidad, super_productos_pro_codigo, super_proveedores_prov_codigo) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO super_compra_proveedores (com_codigo, com_fecha, com_valor_total, com_cantidad, super_productos_pro_codigo, super_proveedores_prov_codigo) VALUES (SEQ_COM_CODIGO.NEXTVAL, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, compraProveedor.getCodigo());
-            pstmt.setTimestamp(2, compraProveedor.getFecha());
-            pstmt.setDouble(3, compraProveedor.getValorTotal());
-            pstmt.setInt(4, compraProveedor.getCantidad());
-            pstmt.setInt(5, compraProveedor.getCodigoProducto());
-            pstmt.setDouble(6, compraProveedor.getCodigoProveedor());
+            pstmt.setTimestamp(1, compraProveedor.getFecha());
+            pstmt.setDouble(2, compraProveedor.getValorTotal());
+            pstmt.setInt(3, compraProveedor.getCantidad());
+            pstmt.setInt(4, compraProveedor.getCodigoProducto());
+            pstmt.setDouble(5, compraProveedor.getCodigoProveedor());
 
             pstmt.executeUpdate();
             pstmt.close();

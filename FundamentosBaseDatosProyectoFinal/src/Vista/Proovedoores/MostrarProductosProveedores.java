@@ -22,6 +22,7 @@ public class MostrarProductosProveedores extends javax.swing.JInternalFrame {
     private DefaultTableModel defaultTableModel;
     private ControladorProducto controladorProducto;
     private Producto producto;
+    private int codigo;
 
     /**
      * Creates new form MostrarProductosProveedores
@@ -29,8 +30,10 @@ public class MostrarProductosProveedores extends javax.swing.JInternalFrame {
     public MostrarProductosProveedores(int Codigo) {
         initComponents();
         this.controladorProducto = new ControladorProducto();
-        //cargarDetallesProducto(Codigo);
+        cargarDetallesProducto(Codigo);
         this.defaultTableModel = new DefaultTableModel();
+        this.codigo = Codigo;
+                
     }
 
     /**
@@ -110,7 +113,7 @@ public class MostrarProductosProveedores extends javax.swing.JInternalFrame {
         //cargarDetallesProducto(codigo); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void cargarDetallesProducto(int codigoProducto) {
+    public void cargarDetallesProducto(int codigoProducto) {
         try {
             // Obtener el modelo de la tabla de jTable1
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();

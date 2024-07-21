@@ -179,19 +179,19 @@ public class ListarProducto extends javax.swing.JInternalFrame {
 
     private void desplegarNombre() {
         if (buscarProductoNombre == null) {
-            buscarProductoNombre = new BuscarProductoNombre(jTable1, this); 
+            buscarProductoNombre = new BuscarProductoNombre(jTable1, this, controladorCategoria, controladorProducto);
             desktopPane.add(buscarProductoNombre);
         }
-        buscarProductoNombre.setVisible(true); 
+        buscarProductoNombre.setVisible(true);
     }
 
     private void desplegarCategoria() {
         if (buscarProductoCategoria == null) {
-            buscarProductoCategoria = new BuscarProductoCategoria(jTable1);
+            buscarProductoCategoria = new BuscarProductoCategoria(jTable1, this, controladorCategoria, controladorProducto);
             desktopPane.add(buscarProductoCategoria);
         }
-        buscarProductoCategoria.setVisible(true); 
-    }
+        buscarProductoCategoria.setVisible(true);
+    } 
     
     private void actualizarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
@@ -212,7 +212,7 @@ public class ListarProducto extends javax.swing.JInternalFrame {
             modelo.addRow(rowData);
         }
 
-        this.jTable1.setModel(modelo); // Aplicar el modelo actualizado a la tabla
+        this.jTable1.setModel(modelo); 
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

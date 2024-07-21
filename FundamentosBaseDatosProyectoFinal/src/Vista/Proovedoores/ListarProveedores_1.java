@@ -123,12 +123,10 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
 
     private void actualizarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0); // Limpiar el modelo de la tabla
+        modelo.setRowCount(0); 
 
-        // Obtener la lista de proveedores desde el DAO
         List<Proveedor> listaProveedores = controladorPorveedor.listarProveedores();
 
-        // Recorrer la lista de proveedores y añadir sus datos al modelo de la tabla
         for (Proveedor proveedor : listaProveedores) {
             int codigo = proveedor.getCodigo();
             String nombre = proveedor.getNombre();
@@ -140,10 +138,10 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
             Object[] rowData = {codigo, nombre, telefono, direccion, correo, ruc};
             modelo.addRow(rowData);
         }
-
-        // Asignar el modelo actualizado a la tabla
         jTable1.setModel(modelo);
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

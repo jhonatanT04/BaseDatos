@@ -44,6 +44,41 @@ public class DAOProducto {
         }
     }
 
+    public List<Producto> buscarProductoMismoNombre(String nombre) throws SQLException {
+        String sql = "SELECT pro_codigo, pro_nombre, pro_precio, pro_stock, pro_iva, pro_visualizar, super_categorias_cat_codigo "
+                + "FROM super_productos "
+                + "WHERE pro_nombre LIKE ?";
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+        List<Producto> productos = new ArrayList<>();
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, "%" + nombre + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt("pro_codigo");
+                String nombreProducto = rs.getString("pro_nombre");
+                double precio = rs.getDouble("pro_precio");
+                int stock = rs.getInt("pro_stock");
+                double IVA = rs.getDouble("pro_iva");
+                char visualizar = rs.getString("pro_visualizar").charAt(0);
+                int categoriaCodigo = rs.getInt("super_categorias_cat_codigo");
+
+                Producto producto = new Producto(codigo, nombreProducto, precio, stock, IVA, visualizar, categoriaCodigo);
+                productos.add(producto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return productos;
+    }
+
     public Producto buscarProducto(String nombre) throws SQLException {
         String productoSQL = "SELECT pro_codigo, pro_precio, pro_stock, pro_IVA, pro_visualizar FROM super_productos WHERE pro_nombre = ?";
         Conexion conexion = new Conexion();
@@ -104,17 +139,18 @@ public class DAOProducto {
         }
     }
 
-    public List<Producto> buscarProductosPorCategoria(String categoria) throws SQLException {
-        String productoSQL = "SELECT p.pro_codigo, p.pro_nombre, p.pro_precio, p.pro_stock, p.pro_IVA, p.pro_visualizar "
+    public List<Producto> buscarProductosPorCategoria(String nombreCategoria) throws SQLException {
+        String productoSQL = "SELECT p.pro_codigo, p.pro_nombre, p.pro_precio, p.pro_stock, p.pro_iva, p.pro_visualizar "
                 + "FROM super_productos p "
-                + "JOIN super_categorias c ON p.pro_categoria_id = c.cat_id "
+                + "JOIN super_categorias c ON p.super_categorias_cat_codigo = c.cat_codigo "
                 + "WHERE c.cat_nombre = ?";
+
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
         List<Producto> productos = new ArrayList<>();
 
         try (PreparedStatement psProducto = conn.prepareStatement(productoSQL)) {
-            psProducto.setString(1, categoria);
+            psProducto.setString(1, nombreCategoria);
             ResultSet rsProducto = psProducto.executeQuery();
 
             while (rsProducto.next()) {
@@ -122,10 +158,10 @@ public class DAOProducto {
                 String nombreProducto = rsProducto.getString("pro_nombre");
                 double precio = rsProducto.getDouble("pro_precio");
                 int stock = rsProducto.getInt("pro_stock");
-                double IVA = rsProducto.getDouble("pro_IVA");
+                double IVA = rsProducto.getDouble("pro_iva");
                 char visualizar = rsProducto.getString("pro_visualizar").charAt(0);
 
-                Producto producto = new Producto(codigo, nombreProducto, precio, stock, IVA, visualizar, codigo);
+                Producto producto = new Producto(codigo, nombreProducto, precio, stock, IVA, visualizar, 0);
                 productos.add(producto);
             }
         } catch (SQLException e) {

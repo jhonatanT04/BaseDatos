@@ -32,8 +32,12 @@ public class ControladorProducto {
         return daoProducto.buscarProductoPorCodigo(codigo);
     }
     
-    public List<Producto> buscarProductoCategoria(String nombreC) throws SQLException {
+    public List<Producto> buscarProductosCategoria(String nombreC) throws SQLException {
         return daoProducto.buscarProductosPorCategoria(nombreC);
+    }
+    
+    public List<Producto> buscarProductoMismoNombre(String nombre) throws SQLException {
+        return daoProducto.buscarProductoMismoNombre(nombre); 
     }
     
     public boolean actualizarProducto(Producto producto) {

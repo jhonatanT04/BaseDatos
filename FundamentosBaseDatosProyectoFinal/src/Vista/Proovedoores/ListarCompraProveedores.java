@@ -154,15 +154,16 @@ public class ListarCompraProveedores extends javax.swing.JInternalFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int codigoProductoSeleccionado = obtenerCodigoProductoSeleccionado();
 
-        if (mostrarProductosProveedores == null) {
-            mostrarProductosProveedores = new MostrarProductosProveedores(codigoProductoSeleccionado);
-            desktopPane.add(mostrarProductosProveedores);
-        } else {
-            // Actualizar la ventana existente si ya está abierta
-            //mostrarProductosProveedores.cargarDetallesProducto(codigoProductoSeleccionado);
-        }
+        if (codigoProductoSeleccionado != -1) {
+            if (mostrarProductosProveedores == null) {
+                mostrarProductosProveedores = new MostrarProductosProveedores(codigoProductoSeleccionado);
+                desktopPane.add(mostrarProductosProveedores);
+            } else {
+                mostrarProductosProveedores.cargarDetallesProducto(codigoProductoSeleccionado);
+            }
 
-        mostrarProductosProveedores.setVisible(true);
+            mostrarProductosProveedores.setVisible(true);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated

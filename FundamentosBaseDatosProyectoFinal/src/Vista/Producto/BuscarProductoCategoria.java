@@ -7,6 +7,7 @@ package Vista.Producto;
 import Controlador.ControladorCategoria;
 import Controlador.ControladorProducto;
 import DAO.Conexion;
+import Modelo.Producto.Categoria;
 import Modelo.Producto.Producto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,10 +35,10 @@ public class BuscarProductoCategoria extends javax.swing.JInternalFrame {
     /**
      * Creates new form BuscarProductoCategoria
      */
-    public BuscarProductoCategoria(JTable jTable) {
+    public BuscarProductoCategoria(JTable jTable, ListarProducto listarProducto, ControladorCategoria controladorCategoria, ControladorProducto controladorProducto) {
         initComponents();
-        this.controladorCategoria = new ControladorCategoria();
-        this.controladorProducto = new ControladorProducto();
+        this.controladorCategoria = controladorCategoria;
+        this.controladorProducto = controladorProducto;
         this.cargarCategorias(jComboBox1);
         this.jTable = jTable;
     }
@@ -127,11 +128,10 @@ public class BuscarProductoCategoria extends javax.swing.JInternalFrame {
         modelo.setRowCount(0);
 
         try {
-            producto = controladorProducto.buscarProductoCategoria(categoriaSeleccionada);
+            List<Producto> productos = controladorProducto.buscarProductosCategoria(categoriaSeleccionada);
 
-            if (producto != null && !producto.isEmpty()) {
-                for (Producto producto : producto) {
-                    String categoria = controladorCategoria.buscarCategoriaPorCodigo(producto.getCategoria()).getNombre();
+            if (productos != null && !productos.isEmpty()) {
+                for (Producto producto : productos) {
                     Object[] rowData = {
                         producto.getCodigo(),
                         producto.getNombre(),
@@ -139,7 +139,7 @@ public class BuscarProductoCategoria extends javax.swing.JInternalFrame {
                         producto.getStock(),
                         producto.getIva(),
                         producto.getVisualizacion(),
-                        categoria
+                        categoriaSeleccionada 
                     };
                     modelo.addRow(rowData);
                 }

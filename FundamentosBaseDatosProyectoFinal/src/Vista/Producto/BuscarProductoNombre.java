@@ -28,10 +28,10 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
     private Producto producto;
     private ListarProducto listarProducto; // Añadir referencia a ListarProducto
 
-    public BuscarProductoNombre(JTable jTable, ListarProducto listarProducto) {
+    public BuscarProductoNombre(JTable jTable, ListarProducto listarProducto,ControladorCategoria controladorCategoria, ControladorProducto controladorProducto) {
         initComponents();
-        this.controladorCategoria = new ControladorCategoria();
-        this.controladorProducto = new ControladorProducto();
+        this.controladorCategoria = controladorCategoria;
+        this.controladorProducto = controladorProducto;
         this.jTable = jTable;
         this.listarProducto = listarProducto; // Inicializar la referencia
     }
@@ -93,18 +93,21 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
         
         String nombre = txtNombre.getText().trim();
 
-        if (nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del producto a buscar.");
-            return; 
-        }
-        DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
-        modelo.setRowCount(0);
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del producto a buscar.");
+        return; 
+    }
 
-        try {
-            producto = controladorProducto.buscarProducto(nombre);
+    DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
+    modelo.setRowCount(0);
 
-            if (producto != null) {
-                //String categoria = "Sin categoría"; // Asignar "Sin categoría" por defecto
+    try {
+        List<Producto> productos = controladorProducto.buscarProductoMismoNombre(nombre); 
+
+        if (productos != null && !productos.isEmpty()) {
+            for (Producto producto : productos) {
+                Categoria categoria = controladorCategoria.buscarCategoriaPorCodigo(producto.getCategoria());
+                String nombreCategoria = (categoria != null) ? categoria.getNombre() : "Sin categoría";
 
                 Object[] rowData = {
                     producto.getCodigo(),
@@ -113,17 +116,17 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
                     producto.getStock(),
                     producto.getIva(),
                     producto.getVisualizacion(),
-                    controladorCategoria.buscarCategoriaPorCodigo(producto.getCategoria()).getNombre()
+                    nombreCategoria
                 };
                 modelo.addRow(rowData);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Producto no encontrado.");
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(BuscarProductoNombre.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "Error al buscar el producto: " + ex.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron productos con el nombre ingresado.");
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(BuscarProductoNombre.class.getName()).log(Level.SEVERE, null, ex);
+        JOptionPane.showMessageDialog(null, "Error al buscar los productos: " + ex.getMessage());
+    }
     
     }//GEN-LAST:event_btnBuscarActionPerformed
 

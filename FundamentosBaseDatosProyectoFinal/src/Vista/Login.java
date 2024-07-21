@@ -123,9 +123,22 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+        if (jCheckBox1.isSelected()) {
+            jPasswordField1.setEchoChar('\0');
+        } else {
+            jPasswordField1.setEchoChar('*');
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         if (validarCampos()) {
             try {
                 Empleado emp = controladorEmpleado.buscarEmpleadoCorreo(jtxtCorreo.getText().trim());
@@ -146,28 +159,14 @@ public class Login extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
+
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jtxtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtCorreoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtxtCorreoActionPerformed
-
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-        if (jCheckBox1.isSelected()) {
-            jPasswordField1.setEchoChar('\0'); 
-        } else {
-            jPasswordField1.setEchoChar('*');  
-        }
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
-
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
     private void limpiarCampos(){
         jCheckBox1.setSelected(false);
         jtxtCorreo.setText("");

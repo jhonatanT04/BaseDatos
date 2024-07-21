@@ -43,7 +43,7 @@ import Vista.Proovedoores.ListarCompraProveedores;
  * @author Usuario
  */
 public class Administrador extends javax.swing.JFrame {
-    private Empleado empleado;
+    private Empleado empleado = new Empleado(2, 'A', "MoralesAJ", 'A', 22, "0131234331", "Josseline Aracely", "Morales Lituma", "Monay", "0932109876", "gabrielamorales@gmail.com");
     
     
     
@@ -368,6 +368,14 @@ public class Administrador extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    public void ingresarEmpleado(Empleado emp){
+        empleado = emp;
+    }
+    
+    
+    
+    
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         if(eliminarProducto == null){
             eliminarProducto = new EliminarProducto(controladorProducto,controladorCategoria);
@@ -396,9 +404,7 @@ public class Administrador extends javax.swing.JFrame {
         ventanaNuevoCliente.setVisible(true); 
     
     }//GEN-LAST:event_itemMenuNuevoClienteActionPerformed
-    public void ingresarEmpleado(Empleado emp){
-        empleado = emp;
-    }
+    
     private void itemMenuBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuBuscarClienteActionPerformed
         // TODO add your handling code here:
         

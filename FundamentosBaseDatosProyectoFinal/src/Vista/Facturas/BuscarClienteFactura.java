@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -21,14 +22,27 @@ public class BuscarClienteFactura extends javax.swing.JInternalFrame {
     private Cliente cliente;
     private ControladorPersona controladorPersona;
     private ControladorCliente controladorCliente;
+    private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtCedula2;
+    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTelefono;
     /**
      * Creates new form BuscarCliente
      */
-    public BuscarClienteFactura(Cliente cliente) {
+    public BuscarClienteFactura(Cliente cliente,JTextField nombre,JTextField apellido, JTextField cedula, 
+            JTextField correo, JTextField direccion,JTextField telefono) {
         initComponents();
         this.cliente= cliente;
         controladorPersona = new ControladorPersona();
         controladorCliente = new ControladorCliente();
+        txtNombre = nombre;
+        txtApellido = apellido;
+        txtCorreo = correo;
+        txtDireccion = direccion;
+        txtTelefono = telefono;
+        txtCedula2 = cedula;
     }
 
     /**
@@ -147,8 +161,13 @@ public class BuscarClienteFactura extends javax.swing.JInternalFrame {
                             char visu = cli.getVisualizacion();
                             if (visu=='A') {
 
-                                cliente = cli;
-                                
+                                //cliente = cli;
+                                txtCedula2.setText(cli.getCedula());
+                                txtNombre.setText(cli.getNombre());
+                                txtApellido.setText(cli.getApellido());
+                                txtTelefono.setText(cli.getTelefono());
+                                txtDireccion.setText(cli.getDireccion());
+                                txtCorreo.setText(cli.getCorreo());
                                 this.setVisible(false);
                                 this.txtCedula.setText("");
 

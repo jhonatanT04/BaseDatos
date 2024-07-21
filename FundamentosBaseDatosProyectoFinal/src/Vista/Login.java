@@ -25,6 +25,7 @@ public class Login extends javax.swing.JFrame {
     
     private Administrador admin;
     private EmpleadoGeneral gen;
+    private Empleado empleado;
     
     /**
      * Creates new form Login
@@ -133,6 +134,7 @@ public class Login extends javax.swing.JFrame {
                 if (emp!=null&&emp.getContrasenia().equals(jPasswordField1.getText())) {
                     if (emp.getPermiso()=='A') {
                         this.dispose();
+                        empleado = emp;
                         desplegarAdministrador();
                     }else{
                         this.dispose();
@@ -191,8 +193,10 @@ public class Login extends javax.swing.JFrame {
     private void desplegarAdministrador(){
         if(admin == null){
             admin = new Administrador();
+            
             //desktopPane.add(admin);
         }
+        admin.ingresarEmpleado(empleado);
         admin.setVisible(true); 
     }
     private void desplegarGeneral(){

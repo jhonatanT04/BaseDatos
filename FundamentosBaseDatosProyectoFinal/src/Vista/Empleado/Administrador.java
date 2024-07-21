@@ -8,6 +8,7 @@ import Controlador.ControladorCategoria;
 import Controlador.ControladorCompraPoveedor;
 import Controlador.ControladorPorveedor;
 import Controlador.ControladorProducto;
+import Modelo.Personas.Persona.Empleado;
 import Vista.Cliente.NuevoCliente;
 import Vista.Cliente.BuscarCliente;
 import Vista.Producto.ActualizarProducto;
@@ -42,6 +43,10 @@ import Vista.Proovedoores.ListarCompraProveedores;
  * @author Usuario
  */
 public class Administrador extends javax.swing.JFrame {
+    private Empleado empleado;
+    
+    
+    
     private NuevoCliente ventanaNuevoCliente;
     private BuscarCliente ventanaBuscarCliente;
     private ActualizarDatosClientes veActualizarDatos;
@@ -79,6 +84,7 @@ public class Administrador extends javax.swing.JFrame {
         controladorProducto = new ControladorProducto();
         controladorProveedor = new ControladorPorveedor();
         controladorCompraPoveedor = new ControladorCompraPoveedor();
+        
     }
 
     /**
@@ -390,7 +396,9 @@ public class Administrador extends javax.swing.JFrame {
         ventanaNuevoCliente.setVisible(true); 
     
     }//GEN-LAST:event_itemMenuNuevoClienteActionPerformed
-
+    public void ingresarEmpleado(Empleado emp){
+        empleado = emp;
+    }
     private void itemMenuBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemMenuBuscarClienteActionPerformed
         // TODO add your handling code here:
         
@@ -468,7 +476,7 @@ public class Administrador extends javax.swing.JFrame {
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         
         if(crearFactura == null){
-            crearFactura = new CrearFactura(controladorProducto,desktopPane);
+            crearFactura = new CrearFactura(controladorProducto,desktopPane,empleado);
             desktopPane.add(crearFactura);
         }
         

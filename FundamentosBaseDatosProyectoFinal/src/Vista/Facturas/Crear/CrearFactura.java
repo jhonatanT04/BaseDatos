@@ -6,6 +6,7 @@ package Vista.Facturas.Crear;
 
 import Controlador.ControladorProducto;
 import Modelo.Personas.Persona.Cliente;
+import Modelo.Personas.Persona.Empleado;
 import Modelo.Producto.Producto;
 import Vista.Cliente.BuscarCliente;
 import Vista.Facturas.BuscarClienteFactura;
@@ -35,18 +36,21 @@ public class CrearFactura extends javax.swing.JInternalFrame {
 
     private ControladorProducto controladorProducto;
     private Cliente clienteFactura;
+    private Empleado empleado;
     private BuscarClienteFactura buscarCliente;
     private javax.swing.JDesktopPane desktopPane;
     /**
      * Creates new form CrearFactura
      */
-    public CrearFactura(ControladorProducto controladorProducto,javax.swing.JDesktopPane p) {
+    public CrearFactura(ControladorProducto controladorProducto,javax.swing.JDesktopPane p,Empleado emp) {
         initComponents();
         this.controladorProducto = controladorProducto;
         desktopPane = p;
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = dateFormat.format(new Date());
         txtFecha.setText(currentDate);
+        empleado= emp;
+        txtNombreEmpleado.setText(emp.getNombre()+" "+emp.getApellido());
     }
 
     /**
@@ -427,6 +431,7 @@ public class CrearFactura extends javax.swing.JInternalFrame {
 
     private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
         // TODO add your handling code here:
+        limpiarCampos();
         desplegarCedula();
         
     }//GEN-LAST:event_bntBuscarActionPerformed
@@ -467,21 +472,20 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     }
     private void desplegarCedula(){
         if(buscarCliente == null){
-            buscarCliente = new BuscarClienteFactura(clienteFactura);
+            buscarCliente = new BuscarClienteFactura(clienteFactura, txtNombre, txtApellido, txtCedula, txtCorreo, txtDireccion, txtTelefono);
             desktopPane.add(buscarCliente);
         }
         
         buscarCliente.setVisible(true); 
         clienteFactura = buscarCliente.devolverCliente();
-        
-        if(clienteFactura!=null){
-            txtCedula.setText(clienteFactura.getCedula());
-            txtNombre.setText(clienteFactura.getNombre());
-            txtApellido.setText(clienteFactura.getApellido());
-            txtTelefono.setText(clienteFactura.getTelefono());
-            txtDireccion.setText(clienteFactura.getDireccion());
-            txtCorreo.setText(clienteFactura.getCorreo());
-        }
+    }
+    public void limpiarCampos(){
+        txtCedula.setText("");
+        txtApellido.setText("");
+        txtNombre.setText("");
+        txtCorreo.setText("");
+        txtDireccion.setText("");
+        txtTelefono.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -406,7 +406,7 @@ public class EliminarEmpelado extends javax.swing.JInternalFrame {
         txtDireccion.setText("");
         txtTelefono.setText("");
         txtContrasenia.setText("");
-        
+        jCheckBox1.setSelected(false);
         buttonGroupSeleccion.clearSelection();
     }
 

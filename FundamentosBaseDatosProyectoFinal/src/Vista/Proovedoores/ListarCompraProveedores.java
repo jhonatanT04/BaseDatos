@@ -170,32 +170,28 @@ public class ListarCompraProveedores extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_formInternalFrameActivated
 
     private int obtenerCodigoProductoSeleccionado() {
-        int filaSeleccionada = jTable1.getSelectedRow(); // Obtener la fila seleccionada en la tabla
+        int filaSeleccionada = jTable1.getSelectedRow();
 
-        if (filaSeleccionada != -1) { // Verifica si hay una fila seleccionada
-            // Obtener el código del producto de la columna correspondiente
-            // Supongamos que el código del producto está en la columna 4 (índice 4)
+        if (filaSeleccionada != -1) { 
             Object valor = jTable1.getValueAt(filaSeleccionada, 4);
             if (valor instanceof Number) {
                 return ((Number) valor).intValue();
             } else {
                 JOptionPane.showMessageDialog(this, "El código del producto no es válido.");
-                return -1; // Retorna un valor especial para indicar que el valor no es válido
+                return -1; 
             }
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto de la tabla.");
-            return -1; // Retorna un valor especial para indicar que no se seleccionó ningún producto
+            return -1; 
         }
     }
 
     private void actualizarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0); // Limpiar el modelo de la tabla
+        modelo.setRowCount(0); 
 
-        // Obtener la lista de proveedores desde el DAO
         List<CompraProveedor> listaProveedores = controladorCompraPoveedor.listar();
 
-        // Recorrer la lista de proveedores y añadir sus datos al modelo de la tabla
         for (CompraProveedor proveedor : listaProveedores) {
             try {
                 int codigo = proveedor.getCodigo();
@@ -212,12 +208,11 @@ public class ListarCompraProveedores extends javax.swing.JInternalFrame {
             }
         }
 
-        // Asignar el modelo actualizado a la tabla
         jTable1.setModel(modelo);
     }
 
     //Override
-    public void mouseClicked(MouseEvent e) {
+    /*public void mouseClicked(MouseEvent e) {
         int filaSeleccionada = jTable1.rowAtPoint(e.getPoint());
         if (filaSeleccionada >= 0) {
             // Obtener el código del producto
@@ -227,7 +222,7 @@ public class ListarCompraProveedores extends javax.swing.JInternalFrame {
                 //mostrarProductosProveedores.mostrarCodigoProducto(codigoProducto);
             }
         }
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

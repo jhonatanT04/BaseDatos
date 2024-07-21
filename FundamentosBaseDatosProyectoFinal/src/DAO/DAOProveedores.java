@@ -73,7 +73,7 @@ public class DAOProveedores {
                 System.out.println("Dirección: " + direccion);
                 System.out.println("Correo Electrónico: " + correo);
 
-                return new Proveedor(codigo, ruc, nombreProveedor, telefono, direccion, correo);
+                return new Proveedor(codigo, nombreProveedor, telefono, direccion, correo, ruc);
             } else {
                 System.out.println("No se encontró ningún proveedor con el nombre " + nombre);
                 return null;
@@ -111,7 +111,7 @@ public class DAOProveedores {
                 System.out.println("Dirección: " + direccion);
                 System.out.println("Correo Electrónico: " + correo);
 
-                return new Proveedor(codigoProveedor, ruc, nombreProveedor, telefono, direccion, correo);
+                return new Proveedor(codigoProveedor, nombreProveedor, telefono, direccion, correo, ruc);
             } else {
                 System.out.println("No se encontró ningún proveedor con el código " + codigo);
                 return null;
@@ -148,7 +148,7 @@ public class DAOProveedores {
                 System.out.println("Dirección: " + direccion);
                 System.out.println("Correo Electrónico: " + correo);
 
-                return new Proveedor(codigo, ruc, nombreProveedor, telefono, direccion, correo);
+                return new Proveedor(codigo, nombreProveedor, telefono, direccion, correo, ruc);
             } else {
                 System.out.println("No se encontró ningún proveedor con el RUC " + ruc);
                 return null;

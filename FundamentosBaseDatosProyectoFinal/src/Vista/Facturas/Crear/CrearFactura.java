@@ -397,55 +397,60 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreEmpleadoActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
-        clienteFactura = buscarCliente.devolverCliente();
-        if (clienteFactura != null) {
-            
-            try {
-                Timestamp fecha = Timestamp.valueOf(txtFecha.getText());
-                System.out.println("aaaaaaaaaa");
-
-                // Reemplaza comas por puntos antes de convertir a double
-                double subtotalC = Math.round(Double.parseDouble(txtSubtotal.getText().replace(",", ".")));
-                System.out.println("aaaaaaaaaa");
-                double ivaC = Math.round(Double.parseDouble(txtIVA.getText().replace(",", ".")));
-                double totalC = Math.round(Double.parseDouble(txtTotal.getText().replace(",", ".")));
-
-                char estado = 'A';
-
-                cabeceraFactura = new CabeceraFactura(0, fecha, subtotalC, ivaC, totalC, estado, clienteFactura.getClienteCodigo(), empleado.getEmpleadoCodigo());
-                controladorCabeceraFactura.ingresarCabecera(cabeceraFactura);
-
-                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                for (int i = 0; i < model.getRowCount(); i++) {
-                    try {
-                        String nombreProducto = (String) model.getValueAt(i, 0);
-                        int cantidad = (int) model.getValueAt(i, 1);
-                        double precioUnitario = (double) model.getValueAt(i, 2);
-                        double subtotal = (double) model.getValueAt(i, 3);
-                        double iva = (double) model.getValueAt(i, 4);
-                        double total = (double) model.getValueAt(i, 5);
-
-                        int codigop = controladorProducto.buscarProducto(nombreProducto).getCodigo();
-
-                        detalleFactura = new DetalleFactura(0, cantidad, precioUnitario, subtotal, iva, total, 2, codigop);
-
-                        if (controladorDetalleFactura.ingresardetalle(detalleFactura)) {
-                            System.out.println("Detalle de factura insertado: " + nombreProducto);
-                        } else {
-                            System.err.println("Error al insertar el detalle de la factura: " + nombreProducto);
+        try {
+            Persona cli = controladorPersona.buscarPersonaCliente(txtCedula.getText());
+            int codigo = controladorCliente.buscarCliente(cli).getClienteCodigo();
+            if (codigo != 0) {
+                
+                try {
+                    Timestamp fecha = Timestamp.valueOf(txtFecha.getText());
+                    System.out.println("aaaaaaaaaa");
+                    
+                    // Reemplaza comas por puntos antes de convertir a double
+                    double subtotalC = Math.round(Double.parseDouble(txtSubtotal.getText().replace(",", ".")));
+                    System.out.println("aaaaaaaaaa");
+                    double ivaC = Math.round(Double.parseDouble(txtIVA.getText().replace(",", ".")));
+                    double totalC = Math.round(Double.parseDouble(txtTotal.getText().replace(",", ".")));
+                    
+                    char estado = 'A';
+                    
+                    cabeceraFactura = new CabeceraFactura(0, fecha, subtotalC, ivaC, totalC, estado, codigo, empleado.getEmpleadoCodigo());
+                    controladorCabeceraFactura.ingresarCabecera(cabeceraFactura);
+                    
+                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                    for (int i = 0; i < model.getRowCount(); i++) {
+                        try {
+                            String nombreProducto = (String) model.getValueAt(i, 0);
+                            int cantidad = (int) model.getValueAt(i, 1);
+                            double precioUnitario = (double) model.getValueAt(i, 2);
+                            double subtotal = (double) model.getValueAt(i, 3);
+                            double iva = (double) model.getValueAt(i, 4);
+                            double total = (double) model.getValueAt(i, 5);
+                            
+                            int codigop = controladorProducto.buscarProducto(nombreProducto).getCodigo();
+                            
+                            detalleFactura = new DetalleFactura(0, cantidad, precioUnitario, subtotal, iva, total, 2, codigop);
+                            
+                            if (controladorDetalleFactura.ingresardetalle(detalleFactura)) {
+                                System.out.println("Detalle de factura insertado: " + nombreProducto);
+                            } else {
+                                System.err.println("Error al insertar el detalle de la factura: " + nombreProducto);
+                            }
+                            
+                        } catch (SQLException ex) {
+                            Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, "Error al procesar la fila " + i, ex);
+                            JOptionPane.showMessageDialog(this, "Error al procesar la fila " + (i + 1) + ": " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                         }
-
-                    } catch (SQLException ex) {
-                        Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, "Error al procesar la fila " + i, ex);
-                        JOptionPane.showMessageDialog(this, "Error al procesar la fila " + (i + 1) + ": " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     }
+                    JOptionPane.showMessageDialog(this, "Factura creada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                } catch (SQLException ex) {
+                    Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JOptionPane.showMessageDialog(this, "Factura creada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            } catch (SQLException ex) {
-                Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
+            }else{
+                JOptionPane.showMessageDialog(this, "El cliente es nulo");
             }
-        }else{
-            JOptionPane.showMessageDialog(this, "El cliente es nulo");
+        } catch (SQLException ex) {
+            Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnFacturarActionPerformed
 

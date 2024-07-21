@@ -558,7 +558,7 @@ public class Administrador extends javax.swing.JFrame {
 
     private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
         if(listarProveedores_1 == null){
-            listarProveedores_1 = new ListarProveedores_1(controladorProveedor);
+            listarProveedores_1 = new ListarProveedores_1(controladorProveedor,desktopPane);
             desktopPane.add(listarProveedores_1);
         }
         

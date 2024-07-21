@@ -15,12 +15,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ListarProveedores_1 extends javax.swing.JInternalFrame {
     private ControladorPorveedor controladorPorveedor;
+    private BuscarProveedorNombre buscarProveedorNombre;
+    private javax.swing.JDesktopPane desktopPane;
     /**
      * Creates new form ListarProveedores
      */
-    public ListarProveedores_1(ControladorPorveedor controladorPorveedor) {
+    public ListarProveedores_1(ControladorPorveedor controladorPorveedor,javax.swing.JDesktopPane desktopPane) {
         initComponents();
         this.controladorPorveedor = controladorPorveedor;
+        this.desktopPane = desktopPane;
     }
 
     /**
@@ -85,7 +88,12 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
 
         radioTodo.setText("Listar Todo");
 
-        btnSeleccionar.setText("jButton2");
+        btnSeleccionar.setText("Seleccionar");
+        btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -148,6 +156,20 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
         actualizarTabla();
     }//GEN-LAST:event_formInternalFrameActivated
 
+    private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
+        if (radioNombre.isSelected()) {
+            
+        }
+    }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    private void desplegarNombre(){
+        if (buscarProveedorNombre == null) {
+            buscarProveedorNombre = new BuscarProveedorNombre(jTable1, this, controladorPorveedor);
+            desktopPane.add(buscarProveedorNombre);
+        }
+        buscarProveedorNombre.setVisible(true);
+    }
+    
     private void actualizarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0); 

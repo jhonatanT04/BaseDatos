@@ -397,9 +397,11 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreEmpleadoActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+empleado.getEmpleadoCodigo());
         try {
             Persona cli = controladorPersona.buscarPersonaCliente(txtCedula.getText());
             int codigo = controladorCliente.buscarCliente(cli).getClienteCodigo();
+            int codigoemp = empleado.getEmpleadoCodigo();
             if (codigo != 0) {
                 
                 try {
@@ -414,7 +416,7 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                     
                     char estado = 'A';
                     
-                    cabeceraFactura = new CabeceraFactura(0, fecha, subtotalC, ivaC, totalC, estado, codigo, empleado.getEmpleadoCodigo());
+                    cabeceraFactura = new CabeceraFactura(0, fecha, subtotalC, ivaC, totalC, estado, codigo, codigoemp);
                     controladorCabeceraFactura.ingresarCabecera(cabeceraFactura);
                     
                     DefaultTableModel model = (DefaultTableModel) jTable1.getModel();

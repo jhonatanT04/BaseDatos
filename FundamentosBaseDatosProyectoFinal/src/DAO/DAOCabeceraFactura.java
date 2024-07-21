@@ -27,8 +27,8 @@ public class DAOCabeceraFactura {
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
 
-        String sql = "INSERT INTO super_cabecera_facturas (fac_codigo, fac_fecha, fac_subtotal, fac_total_iva, fac_valor_total, fac_estado, super_empleados_emp_codigo, super_clientes_cli_codigo, super_clientesv1_cli_codigo, super_empleadosv1_emp_codigo) VALUES (seq_fac_codigo.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+        String sql = "INSERT INTO super_cabecera_facturas (fac_codigo, fac_fecha, fac_subtotal, fac_total_iva, fac_valor_total, fac_estado, super_clientes_cli_codigo, super_empleados_emp_codigo) VALUES (SEQ_FAC_CODIGO.nextval, ?, ?, ?, ?, ?, ?, ?)";
+        System.out.println(sql);
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setTimestamp(1, cabeceraFactura.getFecha());

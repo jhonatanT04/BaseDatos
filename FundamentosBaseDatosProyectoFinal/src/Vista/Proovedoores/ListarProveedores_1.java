@@ -158,7 +158,7 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         if (radioNombre.isSelected()) {
-            
+            desplegarNombre();
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 

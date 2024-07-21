@@ -397,8 +397,9 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreEmpleadoActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
+        clienteFactura = buscarCliente.devolverCliente();
         if (clienteFactura != null) {
-
+            
             try {
                 Timestamp fecha = Timestamp.valueOf(txtFecha.getText());
                 System.out.println("aaaaaaaaaa");

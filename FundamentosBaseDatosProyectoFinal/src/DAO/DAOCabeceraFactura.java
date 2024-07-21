@@ -48,6 +48,7 @@ public class DAOCabeceraFactura {
         } finally {
             conexion.desconectar();
         }
+        
     }
 
     public void buscarCabeceraFactura(int codigo) {

@@ -28,6 +28,7 @@ public class BuscarClienteFactura extends javax.swing.JInternalFrame {
         initComponents();
         this.cliente= cliente;
         controladorPersona = new ControladorPersona();
+        controladorCliente = new ControladorCliente();
     }
 
     /**
@@ -137,12 +138,13 @@ public class BuscarClienteFactura extends javax.swing.JInternalFrame {
             }else{
                 
                 try {
+                    System.out.println("AAAAAAAA");
                     Persona per =controladorPersona.buscarPersonaCliente(txtCedula.getText().trim());
                     if (per!=null) {
                         Cliente cli = controladorCliente.buscarCliente(per);
                         System.out.println(cli+" sdadasdasadasssssss");
-                        char visu = cli.getVisualizacion();
                         if (cli!=null) {
+                            char visu = cli.getVisualizacion();
                             if (visu=='A') {
 
                                 cliente = cli;
@@ -173,7 +175,7 @@ public class BuscarClienteFactura extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBntBuscarActionPerformed
     
     
-    public Cliente getCliente(){
+    public Cliente devolverCliente(){
         return cliente;
     }
 

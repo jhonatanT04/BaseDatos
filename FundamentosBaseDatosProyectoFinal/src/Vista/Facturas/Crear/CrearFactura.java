@@ -428,16 +428,7 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
         // TODO add your handling code here:
         desplegarCedula();
-        if(clienteFactura!=null){
-            txtCedula.setText(clienteFactura.getCedula());
-            txtNombre.setText(clienteFactura.getNombre());
-            txtApellido.setText(clienteFactura.getApellido());
-            txtTelefono.setText(clienteFactura.getTelefono());
-            txtDireccion.setText(clienteFactura.getDireccion());
-            txtCorreo.setText(clienteFactura.getCorreo());
-        }else{
-            JOptionPane.showMessageDialog(this, "No se ha ingresado ningun clinente");
-        }
+        
     }//GEN-LAST:event_bntBuscarActionPerformed
 
     private void agregarProductoATabla(Producto producto) {
@@ -481,6 +472,16 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         }
         
         buscarCliente.setVisible(true); 
+        clienteFactura = buscarCliente.devolverCliente();
+        
+        if(clienteFactura!=null){
+            txtCedula.setText(clienteFactura.getCedula());
+            txtNombre.setText(clienteFactura.getNombre());
+            txtApellido.setText(clienteFactura.getApellido());
+            txtTelefono.setText(clienteFactura.getTelefono());
+            txtDireccion.setText(clienteFactura.getDireccion());
+            txtCorreo.setText(clienteFactura.getCorreo());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -580,6 +580,7 @@ public class Administrador extends javax.swing.JFrame {
             desktopPane.add(listarCompraProveedores);
         }
         
+        
         listarCompraProveedores.setVisible(true);
     }//GEN-LAST:event_jMenuItem16ActionPerformed
 

@@ -26,24 +26,25 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        jradiobntNumeroFactura = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
-        jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
+        jradiobntFecha = new javax.swing.JRadioButton();
+        jradiobntEmpleado = new javax.swing.JRadioButton();
+        jradiobntCliente = new javax.swing.JRadioButton();
 
         jLabel1.setText("Anular Factura por :");
 
-        jRadioButton4.setText("Numero de Factura");
+        jradiobntNumeroFactura.setText("Numero de Factura");
 
         jButton1.setText("Buscar");
 
-        jRadioButton5.setText("Fecha");
+        jradiobntFecha.setText("Fecha");
 
-        jRadioButton6.setText("Empleado");
+        jradiobntEmpleado.setText("Empleado");
 
-        jRadioButton7.setText("Cliente");
+        jradiobntCliente.setText("Cliente");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -51,15 +52,15 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(110, Short.MAX_VALUE)
-                .addComponent(jRadioButton4)
+                .addComponent(jradiobntNumeroFactura)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton6)
+                .addComponent(jradiobntEmpleado)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton7)
+                .addComponent(jradiobntCliente)
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jRadioButton5))
+                    .addComponent(jradiobntFecha))
                 .addGap(49, 49, 49))
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
@@ -73,10 +74,10 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton6)
-                    .addComponent(jRadioButton7)
-                    .addComponent(jRadioButton5))
+                    .addComponent(jradiobntNumeroFactura)
+                    .addComponent(jradiobntEmpleado)
+                    .addComponent(jradiobntCliente)
+                    .addComponent(jradiobntFecha))
                 .addContainerGap(63, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -89,11 +90,12 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
+    private javax.swing.JRadioButton jradiobntCliente;
+    private javax.swing.JRadioButton jradiobntEmpleado;
+    private javax.swing.JRadioButton jradiobntFecha;
+    private javax.swing.JRadioButton jradiobntNumeroFactura;
     // End of variables declaration//GEN-END:variables
 }

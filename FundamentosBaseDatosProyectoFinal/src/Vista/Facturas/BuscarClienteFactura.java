@@ -80,7 +80,7 @@ public class BuscarClienteFactura extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Cedula del Empleado:");
+        jLabel1.setText("Cedula del Cliente:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

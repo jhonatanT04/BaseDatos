@@ -48,7 +48,7 @@ public class DAOProveedores {
         }
     }
 
-    public Proveedor buscarProveedorPorNombre(String nombre) {
+    public Proveedor buscarProveedorPorNombre(String nombre) throws SQLException{
         String sql = "SELECT prov_codigo, prov_nombre, prov_telefono, prov_direccion, prov_correo_electronico, prov_ruc FROM super_proveedores WHERE prov_nombre = ?";
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
@@ -86,7 +86,36 @@ public class DAOProveedores {
         }
     }
 
-    public Proveedor buscarProveedorPorCodigo(int codigo) {
+    public List<Proveedor> buscarProveedorMismoNombre(String nombre) throws SQLException{
+        List<Proveedor> proveedores = new ArrayList<>();
+        String sql = "SELECT prov_codigo, prov_nombre, prov_telefono, prov_direccion, prov_correo_electronico, prov_ruc FROM super_proveedores WHERE prov_nombre = ?";
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombre);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt("prov_codigo");
+                String ruc = rs.getString("prov_ruc");
+                String nombreProveedor = rs.getString("prov_nombre");
+                String telefono = rs.getString("prov_telefono");
+                String direccion = rs.getString("prov_direccion");
+                String correo = rs.getString("prov_correo_electronico");
+
+                Proveedor proveedor = new Proveedor(codigo, nombreProveedor, telefono, direccion, correo, ruc);
+                proveedores.add(proveedor);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
+        } finally {
+            conexion.desconectar();
+        }
+        return proveedores;
+    }
+
+    public Proveedor buscarProveedorPorCodigo(int codigo) throws SQLException{
         String sql = "SELECT prov_codigo, prov_nombre, prov_telefono, prov_direccion, prov_correo_electronico, prov_ruc FROM super_proveedores WHERE prov_codigo = ?";
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
@@ -124,7 +153,7 @@ public class DAOProveedores {
         }
     }
 
-    public Proveedor buscarProveedorPorRUC(String ruc) {
+    public Proveedor buscarProveedorPorRUC(String ruc) throws SQLException{
         String sql = "SELECT prov_codigo, prov_nombre, prov_telefono, prov_direccion, prov_correo_electronico, prov_ruc FROM super_proveedores WHERE prov_ruc = ?";
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
@@ -161,7 +190,7 @@ public class DAOProveedores {
         }
     }
 
-    public boolean actualizarProveedor(Proveedor proveedor) {
+    public boolean actualizarProveedor(Proveedor proveedor) throws SQLException{
         boolean llave = false;
         String sql = "UPDATE super_proveedores SET prov_nombre=?, prov_telefono=?, prov_direccion=?, prov_correo_electronico=?, prov_ruc=? WHERE prov_codigo=?";
         Conexion conexion = new Conexion();

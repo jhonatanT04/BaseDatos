@@ -6,7 +6,7 @@ package DAO;
 
 import Modelo.Factura.CabeceraFactura;
 import Modelo.Producto.Producto;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class DAOCabeceraFactura {
 
-    public boolean insertarCabeceraFacturas(CabeceraFactura cabeceraFactura) throws SQLException{
+    public boolean insertarCabeceraFacturas(CabeceraFactura cabeceraFactura) throws SQLException {
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
 
@@ -152,17 +152,97 @@ public class DAOCabeceraFactura {
         }
         return llave;
     }
-    public boolean buscarEmpleado(int codigoEmpleado ){
+
+    public List<CabeceraFactura> buscarCabeceraFacturaPorEmpleado(int codigoEmpleado) {
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+        List<CabeceraFactura> listaCabeceraFacturas = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM super_cabecera_facturas WHERE super_empleados_emp_codigo = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, codigoEmpleado);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // Crear un nuevo objeto CabeceraFactura con los datos obtenidos
+                int codigo = rs.getInt("fac_codigo");
+                Timestamp fecha = rs.getTimestamp("fac_fecha");
+                double subtotal = rs.getDouble("fac_subtotal");
+                double totalIVA = rs.getDouble("fac_total_iva");
+                double valorTotal = rs.getDouble("fac_valor_total");
+                char estado = rs.getString("fac_estado").charAt(0);
+                int codigoCliente = rs.getInt("super_clientes_cli_codigo");
+
+                CabeceraFactura cabeceraFactura = new CabeceraFactura(codigo, fecha, subtotal, totalIVA, valorTotal, estado, codigoEmpleado, codigoCliente);
+                listaCabeceraFacturas.add(cabeceraFactura);
+            }
+
+            if (listaCabeceraFacturas.isEmpty()) {
+                System.out.println("No se encontró ninguna factura con el código del empleado " + codigoEmpleado);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCabeceraFactura.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexion.desconectar();
+        }
+
+        return listaCabeceraFacturas;
+    }
+
+    public CabeceraFactura buscarCabeceraFacturaPorCodigo(int codigoCabecera) {
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+        CabeceraFactura cabeceraFactura = null; // Inicializar el objeto CabeceraFactura
+
+        try {
+            String sql = "SELECT * FROM super_cabecera_facturas WHERE fac_codigo = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, codigoCabecera);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Crear un nuevo objeto CabeceraFactura con los datos obtenidos
+                int codigo = rs.getInt("fac_codigo");
+                Timestamp fecha = rs.getTimestamp("fac_fecha");
+                double subtotal = rs.getDouble("fac_subtotal");
+                double totalIVA = rs.getDouble("fac_total_iva");
+                double valorTotal = rs.getDouble("fac_valor_total");
+                char estado = rs.getString("fac_estado").charAt(0);
+                int codigoEmpleado = rs.getInt("super_empleados_emp_codigo");
+                int codigoCliente = rs.getInt("super_clientes_cli_codigo");
+
+                cabeceraFactura = new CabeceraFactura(codigo, fecha, subtotal, totalIVA, valorTotal, estado, codigoEmpleado, codigoCliente);
+            } else {
+                System.out.println("No se encontró ninguna factura con el código de cabecera " + codigoCabecera);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCabeceraFactura.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexion.desconectar();
+        }
+
+        return cabeceraFactura;
+    }
+
+    public boolean buscarEmpleado(int codigoEmpleado) {
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
         try {
-            
-            
+
             String sql = "SELECT * "
                     + "FROM super_cabecera_facturas "
                     + "where super_empleados_emp_codigo = ?";
             //System.out.println(sql);
-            
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, codigoEmpleado);
             ResultSet rs = pstmt.executeQuery();
@@ -177,7 +257,7 @@ public class DAOCabeceraFactura {
                 System.out.println("Estado: " + rs.getString("fac_estado"));
                 System.out.println("Código Empleado: " + rs.getInt("super_empleados_emp_codigo"));
                 System.out.println("Código Cliente: " + rs.getInt("super_clientes_cli_codigo"));
-                
+
                 rs.close();
                 pstmt.close();
                 return true;
@@ -187,28 +267,26 @@ public class DAOCabeceraFactura {
                 pstmt.close();
                 return false;
             }
-            
-            
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DAOCabeceraFactura.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             conexion.desconectar();
         }
         return false;
-        
+
     }
-    public boolean buscarCliente(int codigoCliente ){
+
+    public boolean buscarCliente(int codigoCliente) {
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();
         try {
-            
-            
+
             String sql = "SELECT * "
                     + "FROM super_cabecera_facturas "
                     + "where super_clientes_cli_codigo = ?";
             //System.out.println(sql);
-            
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, codigoCliente);
             ResultSet rs = pstmt.executeQuery();
@@ -223,7 +301,7 @@ public class DAOCabeceraFactura {
                 System.out.println("Estado: " + rs.getString("fac_estado"));
                 System.out.println("Código Empleado: " + rs.getInt("super_empleados_emp_codigo"));
                 System.out.println("Código Cliente: " + rs.getInt("super_clientes_cli_codigo"));
-                
+
                 rs.close();
                 pstmt.close();
                 return true;
@@ -233,15 +311,97 @@ public class DAOCabeceraFactura {
                 pstmt.close();
                 return false;
             }
-            
-            
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(DAOCabeceraFactura.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             conexion.desconectar();
         }
         return false;
-        
+
+    }
+
+    public List<CabeceraFactura> buscarCabeceraFacturaPorCliente(int codigoCliente) {
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+        List<CabeceraFactura> listaCabeceraFacturas = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM super_cabecera_facturas WHERE super_clientes_cli_codigo = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, codigoCliente);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // Crear un nuevo objeto CabeceraFactura con los datos obtenidos
+                int codigo = rs.getInt("fac_codigo");
+                Timestamp fecha = rs.getTimestamp("fac_fecha");
+                double subtotal = rs.getDouble("fac_subtotal");
+                double totalIVA = rs.getDouble("fac_total_iva");
+                double valorTotal = rs.getDouble("fac_valor_total");
+                char estado = rs.getString("fac_estado").charAt(0);
+                int codigoEmpleado = rs.getInt("super_empleados_emp_codigo");
+
+                CabeceraFactura cabeceraFactura = new CabeceraFactura(codigo, fecha, subtotal, totalIVA, valorTotal, estado, codigoEmpleado, codigoCliente);
+                listaCabeceraFacturas.add(cabeceraFactura);
+            }
+
+            if (listaCabeceraFacturas.isEmpty()) {
+                System.out.println("No se encontró ninguna factura con el código del cliente " + codigoCliente);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCabeceraFactura.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexion.desconectar();
+        }
+
+        return listaCabeceraFacturas;
+    }
+
+    public List<CabeceraFactura> listarCabecerasFacturas() {
+        List<CabeceraFactura> listaCabeceras = new ArrayList<>();
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+
+        String sql = "SELECT * FROM super_cabecera_facturas";
+
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                int codigo = rs.getInt("fac_codigo");
+                Timestamp fecha = rs.getTimestamp("fac_fecha");
+                double subtotal = rs.getDouble("fac_subtotal");
+                double totalIVA = rs.getDouble("fac_total_iva");
+                double valorTotal = rs.getDouble("fac_valor_total");
+                char estado = rs.getString("fac_estado").charAt(0); // Convertir a char
+                int codigoEmpleado = rs.getInt("super_empleados_emp_codigo");
+                int codigoCliente = rs.getInt("super_clientes_cli_codigo");
+                // Si tienes estos campos en tu tabla, agrega también:
+                // int codigoClienteV1 = rs.getInt("super_clientesv1_cli_codigo");
+                // int codigoEmpleadoV1 = rs.getInt("super_empleadosv1_emp_codigo");
+
+                CabeceraFactura cabecera = new CabeceraFactura(codigo, fecha, subtotal, totalIVA, valorTotal, estado, codigoEmpleado, codigoCliente);
+                // Si tienes los campos adicionales, agrega también:
+                // cabecera.setCodigoClienteV1(codigoClienteV1);
+                // cabecera.setCodigoEmpleadoV1(codigoEmpleadoV1);
+
+                listaCabeceras.add(cabecera);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
+        } finally {
+            conexion.desconectar();
+        }
+
+        return listaCabeceras;
     }
 }

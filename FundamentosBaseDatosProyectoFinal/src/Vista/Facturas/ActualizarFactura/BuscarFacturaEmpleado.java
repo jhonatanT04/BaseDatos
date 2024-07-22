@@ -2,38 +2,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package Vista.Proovedoores;
+package Vista.Facturas.ActualizarFactura;
 
-import Controlador.ControladorPorveedor;
-import Modelo.Proveedor.Proveedor;
-import java.lang.System.Logger;
+import Controlador.ControladorCabeceraFactura;
+import Controlador.ControladorEmpleado;
+import Controlador.ControladorPersona;
+import Modelo.Factura.CabeceraFactura;
+import Modelo.Personas.Persona.Empleado;
+import java.sql.SQLException;
+import Modelo.Personas.Persona.Persona;
+import Vista.Proovedoores.BuscarProveedorNombre;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import oracle.jdbc.clio.annotations.Debug.Level;
-import java.sql.SQLException;
-import java.util.List;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Usuario
  */
-public class BuscarProveedorNombre extends javax.swing.JInternalFrame {
+public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
 
-    private ControladorPorveedor controladorPorveedor;
+    private ControladorCabeceraFactura controladorCabeceraFactura;
+    private CabeceraFactura cabeceraFactura;
     private JTable jTable;
-    private Proveedor proveedor;
-    private ListarProveedores_1 listarProveedores_1;
+    private ListaDeFacturasPorOpcion listaDeFacturasPorOpcion;
 
     /**
-     * Creates new form BuscarProveedorNombre
+     * Creates new form BuscarFacturaEmpleado
      */
-    public BuscarProveedorNombre(JTable jTable, ListarProveedores_1 listarProveedores_1, ControladorPorveedor controladorPorveedor) {
+    public BuscarFacturaEmpleado(ControladorCabeceraFactura controladorCabeceraFactura, ListaDeFacturasPorOpcion listaDeFacturasPorOpcion, JTable jTable) {
         initComponents();
-        this.controladorPorveedor = controladorPorveedor;
-        this.listarProveedores_1 = listarProveedores_1;
+        this.controladorCabeceraFactura = controladorCabeceraFactura;
+        this.listaDeFacturasPorOpcion = listaDeFacturasPorOpcion;
         this.jTable = jTable;
     }
 
@@ -51,7 +52,7 @@ public class BuscarProveedorNombre extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
-        jLabel1.setText("Ingrese el nombre del Proveedor:");
+        jLabel1.setText("Ingrese la cedula del empleado:");
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -69,23 +70,23 @@ public class BuscarProveedorNombre extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(jLabel1)
-                        .addGap(63, 63, 63)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(60, 60, 60)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(210, 210, 210)
+                        .addGap(231, 231, 231)
                         .addComponent(btnBuscar)))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
+                .addGap(65, 65, 65)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addComponent(btnBuscar)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -107,27 +108,41 @@ public class BuscarProveedorNombre extends javax.swing.JInternalFrame {
             String nombre = txtNombre.getText().trim();
 
             if (nombre.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del proveedor a buscar.");
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del empleado a buscar.");
                 return;
             }
 
             DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
             modelo.setRowCount(0);
 
-            // Obtener la lista de proveedores
-            List<Proveedor> proveedores = controladorPorveedor.buscarProveedorMismoNombre(nombre); 
+            // Obtener el empleado
+            ControladorPersona cp = new ControladorPersona();
+            ControladorEmpleado ce = new ControladorEmpleado();
+            Persona persona = cp.buscarPersonaEmpleado(nombre);
 
-            if (proveedores != null && !proveedores.isEmpty()) {
-                for (Proveedor proveedor : proveedores) {
+            if (persona == null) {
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna persona con el nombre ingresado.");
+                return;
+            }
+
+            int codigoEmpleado = ce.buscarEmpleado(persona).getEmpleadoCodigo();
+            List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorEmpleado(codigoEmpleado); 
+
+            if (cabeceraFacturas != null && !cabeceraFacturas.isEmpty()) {
+                for (CabeceraFactura cabecera : cabeceraFacturas) {
                     Object[] rowData = {
-                        proveedor.getCodigo(),
-                        proveedor.getNombre(),
-                        proveedor.getDireccion(),
-                        proveedor.getTelefono(),};
+                        cabecera.getCodigo(),
+                        cabecera.getFecha(),
+                        cabecera.getSubTotal(),
+                        cabecera.getTotalIVA(),
+                        cabecera.getValorTotal(),
+                        cabecera.getEstado(),
+                        cabecera.getCodigoCliente()
+                    };
                     modelo.addRow(rowData);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontraron proveedores con el nombre ingresado.");
+                JOptionPane.showMessageDialog(null, "No se encontraron facturas para el empleado con el nombre ingresado.");
             }
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(BuscarProveedorNombre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);

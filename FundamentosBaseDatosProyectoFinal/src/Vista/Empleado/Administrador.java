@@ -29,6 +29,7 @@ import Vista.Empleado.ActualizarEmpleado;
 import Vista.Empleado.EliminarEmpelado;
 import Vista.Empleado.IngresarEmpleado;
 import Vista.Empleado.ListarEmpleado;
+import Vista.Facturas.ActualizarFactura.ListaDeFacturasPorOpcion;
 import Vista.Facturas.AnularFactura.AnularFacturaFactura;
 import Vista.Facturas.Buscar.BuscarFactura;
 import Vista.Facturas.Crear.CrearFactura;
@@ -63,7 +64,7 @@ public class Administrador extends javax.swing.JFrame {
     private EliminarEmpelado eliminarEmpelado;
     private ListarEmpleado listarEmpleado;
     private CrearFactura crearFactura;
-    private BuscarFactura buscarFactura;
+    private ListaDeFacturasPorOpcion buscarFactura;
     private AnularFacturaFactura anularFacturaFactura;
     private AgregarProducto agregarProducto;
     private BuscarProducto buscarProducto;
@@ -345,7 +346,7 @@ public class Administrador extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem11);
 
-        jMenuItem12.setText("Buscar Factura");
+        jMenuItem12.setText("Listar Factura");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem12ActionPerformed(evt);
@@ -504,8 +505,8 @@ public class Administrador extends javax.swing.JFrame {
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         if(buscarFactura== null){
-            buscarFactura = new BuscarFactura();
-            desktopPane.add(buscarFactura);
+            buscarFactura = new ListaDeFacturasPorOpcion(controladorCabeceraFactura, controladorDetalleFactura, controladorProducto,desktopPane);
+            desktopPane.add(buscarFactura); 
         }
         
         buscarFactura.setVisible(true); 

@@ -28,6 +28,10 @@ public class ControladorPorveedor {
         return daoProveedores.buscarProveedorPorNombre(nombre);
     }
 
+    public List<Proveedor> buscarProveedorMismoNombre(String nombre) throws SQLException{
+        return daoProveedores.buscarProveedorMismoNombre(nombre);
+    } 
+    
     public Proveedor buscarProveedorRUC(String ruc) throws SQLException{
         return daoProveedores.buscarProveedorPorRUC(ruc); 
     }
@@ -36,7 +40,7 @@ public class ControladorPorveedor {
         return daoProveedores.buscarProveedorPorCodigo(codigo);
     }
     
-    public boolean actualizarProveedor(int codigo, String nombre, String telefono, String direccion, String correo, String ruc) {
+    public boolean actualizarProveedor(int codigo, String nombre, String telefono, String direccion, String correo, String ruc) throws SQLException{
         Proveedor proveedor = new Proveedor(codigo, nombre, telefono, direccion, correo, ruc);
         return daoProveedores.actualizarProveedor(proveedor);
     }

@@ -7,6 +7,7 @@ package Controlador;
 import DAO.DAODetalleFactura;
 import Modelo.Factura.DetalleFactura;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -22,5 +23,9 @@ public class ControladorDetalleFactura {
     
     public boolean ingresardetalle(DetalleFactura detalleFactura)throws SQLException{
         return dAODetalleFactura.insertarDetalleFactura(detalleFactura);
+    }
+    
+    public List<DetalleFactura> buscar(int codigo){
+        return dAODetalleFactura.buscarDetalleFactura(codigo);
     }
 }

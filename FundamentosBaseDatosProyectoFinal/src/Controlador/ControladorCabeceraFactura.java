@@ -7,6 +7,7 @@ package Controlador;
 import DAO.DAOCabeceraFactura;
 import Modelo.Factura.CabeceraFactura;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -22,5 +23,21 @@ public class ControladorCabeceraFactura {
     
     public boolean ingresarCabecera(CabeceraFactura cabeceraFactura)throws SQLException{
         return dAOCabeceraFactura.insertarCabeceraFacturas(cabeceraFactura);
+    }
+    
+    public List<CabeceraFactura> buscarPorEmpleado(int Codigo){
+        return dAOCabeceraFactura.buscarCabeceraFacturaPorEmpleado(Codigo);
+    }
+    
+    public List<CabeceraFactura> buscarPorCliente(int codigo){
+        return dAOCabeceraFactura.buscarCabeceraFacturaPorCliente(codigo);
+    }
+    
+    public CabeceraFactura buscarCabecera(int codigo){
+        return dAOCabeceraFactura.buscarCabeceraFacturaPorCodigo(codigo);
+    }
+    
+    public List<CabeceraFactura> listar(){
+        return dAOCabeceraFactura.listarCabecerasFacturas();
     }
 }

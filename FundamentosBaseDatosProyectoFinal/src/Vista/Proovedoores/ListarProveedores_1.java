@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 public class ListarProveedores_1 extends javax.swing.JInternalFrame {
     private ControladorPorveedor controladorPorveedor;
     private BuscarProveedorNombre buscarProveedorNombre;
+    private BuscarProveedorRUC buscarProveedorRUC;
     private javax.swing.JDesktopPane desktopPane;
     /**
      * Creates new form ListarProveedores
@@ -159,6 +160,10 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         if (radioNombre.isSelected()) {
             desplegarNombre();
+        }else if (radioRUC.isSelected()) {
+            desplegarRUC();
+        }else if (radioTodo.isSelected()) {
+            actualizarTabla();
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
@@ -168,6 +173,14 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
             desktopPane.add(buscarProveedorNombre);
         }
         buscarProveedorNombre.setVisible(true);
+    }
+    
+    private void desplegarRUC(){
+        if (buscarProveedorRUC == null) {
+            buscarProveedorRUC = new BuscarProveedorRUC(controladorPorveedor, this, jTable1); 
+            desktopPane.add(buscarProveedorRUC);
+        }
+        buscarProveedorRUC.setVisible(true);
     }
     
     private void actualizarTabla() {

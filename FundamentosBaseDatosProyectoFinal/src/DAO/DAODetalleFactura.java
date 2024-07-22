@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -45,42 +47,72 @@ public class DAODetalleFactura {
         }
     }
 
-    public void buscarDetalleFactura(int codigo) {
-        if (codigo > 0) {
-            Conexion conexion = new Conexion();
-            Connection conn = conexion.conectar();
 
-            String sql = "SELECT * FROM super_detalle_facturas WHERE det_codigo = ?";
 
-            try {
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(1, codigo);
-                ResultSet rs = pstmt.executeQuery();
+    public List<DetalleFactura> buscarDetalleFactura(int codigo) {
+        List<DetalleFactura> detallesFactura = new ArrayList<>();
 
-                if (rs.next()) {
-                    System.out.println("Detalle de factura encontrado:");
-                    System.out.println("Código: " + rs.getInt("det_codigo"));
-                    System.out.println("Cantidad: " + rs.getInt("det_cantidad"));
-                    System.out.println("Precio Unitario: " + rs.getDouble("det_precio_unitario"));
-                    System.out.println("Subtotal: " + rs.getDouble("det_subtotal"));
-                    System.out.println("IVA: " + rs.getDouble("det_iva"));
-                    System.out.println("Total: " + rs.getDouble("det_total"));
-                    System.out.println("Código Cabecera Factura: " + rs.getInt("super_cabecera_facturas_fac_codigo"));
-                    System.out.println("Código Producto: " + rs.getInt("super_productos_pro_codigo"));
-                } else {
-                    System.out.println("No se encontró ningún detalle de factura con el código " + codigo);
-                }
-
-                rs.close();
-                pstmt.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
-            } finally {
-                conexion.desconectar();
-            }
-        } else {
+        // Verificar que el código sea válido
+        if (codigo <= 0) {
             System.out.println("El código del detalle de factura no puede ser menor o igual a 0.");
+            return detallesFactura; // Retorna la lista vacía si el código no es válido
         }
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establecer la conexión
+            Conexion conexion = new Conexion();
+            conn = conexion.conectar();
+
+            // Consulta SQL parametrizada
+            String sql = "SELECT * FROM super_detalle_facturas WHERE det_codigo = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, codigo);
+
+            // Ejecutar la consulta
+            rs = pstmt.executeQuery();
+
+            // Procesar los resultados
+            while (rs.next()) {
+                // Obtener los datos del ResultSet para cada detalle de factura encontrado
+                int detCodigo = rs.getInt("det_codigo");
+                int cantidad = rs.getInt("det_cantidad");
+                double precioUnitario = rs.getDouble("det_precio_unitario");
+                double subtotal = rs.getDouble("det_subtotal");
+                double iva = rs.getDouble("det_iva");
+                double total = rs.getDouble("det_total");
+                int codigoCabeceraFactura = rs.getInt("super_cabecera_facturas_fac_codigo");
+                int codigoProducto = rs.getInt("super_productos_pro_codigo");
+
+                // Crear un objeto DetalleFactura y agregarlo a la lista
+                DetalleFactura detalleFactura = new DetalleFactura(detCodigo, cantidad, precioUnitario, subtotal, iva, total, codigoCabeceraFactura, codigoProducto);
+                detallesFactura.add(detalleFactura);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
+        } finally {
+            // Cerrar recursos
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return detallesFactura;
     }
 
     public boolean actualizarDetalleFactura(DetalleFactura detalleFactura) {

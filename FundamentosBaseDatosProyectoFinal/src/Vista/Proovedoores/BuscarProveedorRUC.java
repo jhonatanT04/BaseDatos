@@ -45,6 +45,7 @@ public class BuscarProveedorRUC extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtRUC = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jLabel1.setText("Ingrese el RUC:");
 
@@ -52,6 +53,13 @@ public class BuscarProveedorRUC extends javax.swing.JInternalFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -68,8 +76,10 @@ public class BuscarProveedorRUC extends javax.swing.JInternalFrame {
                         .addComponent(txtRUC, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(206, 206, 206)
-                        .addComponent(jButton1)))
-                .addContainerGap(216, Short.MAX_VALUE))
+                        .addComponent(jButton1)
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton2)))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,7 +89,9 @@ public class BuscarProveedorRUC extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtRUC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(16, 16, 16))
         );
 
@@ -107,6 +119,8 @@ public class BuscarProveedorRUC extends javax.swing.JInternalFrame {
                     proveedor.getTelefono(),
                 };
                 modelo.addRow(rowData);
+                this.setVisible(false);
+                txtRUC.setText("");
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontraron proveedores con el RUC ingresado.");
             }
@@ -115,9 +129,14 @@ public class BuscarProveedorRUC extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false); 
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtRUC;
     // End of variables declaration//GEN-END:variables

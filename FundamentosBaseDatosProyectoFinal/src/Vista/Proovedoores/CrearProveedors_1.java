@@ -49,6 +49,26 @@ public class CrearProveedors_1 extends javax.swing.JInternalFrame {
         txtCorreo = new javax.swing.JTextField();
         txtRuc = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
         jLabel5.setText("Telefono:");
 
         Registrar.setText("Registrar");
@@ -59,6 +79,11 @@ public class CrearProveedors_1 extends javax.swing.JInternalFrame {
         });
 
         txtCancelar.setText("Cancelar");
+        txtCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Direccion:");
 
@@ -179,11 +204,12 @@ public class CrearProveedors_1 extends javax.swing.JInternalFrame {
                 return;
             }
 
+            // Validar formato del RUC
             if (!ruc.matches("^\\d{10}$")) {
-            JOptionPane.showMessageDialog(this, "RUC no válido. Debe contener 10 dígitos numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-            
+                JOptionPane.showMessageDialog(this, "RUC no válido. Debe contener 10 dígitos numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             // Validar formato del teléfono (puedes ajustar el patrón según las reglas locales)
             if (!telefono.matches("^\\d{7,15}$")) {
                 JOptionPane.showMessageDialog(this, "Teléfono no válido. Debe contener entre 7 y 15 dígitos numéricos.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -198,41 +224,12 @@ public class CrearProveedors_1 extends javax.swing.JInternalFrame {
 
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Proveedor registrado exitosamente.");
-                // Limpiar los campos de texto después de un registro exitoso
-                txtNombre.setText("");
-                txtTelefono.setText("");
-                txtDireccion.setText("");
-                txtCorreo.setText("");
-                txtRuc.setText("");
+                this.limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(this, "Error al registrar el proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
-            // Obtener el código de error específico de Oracle
-            int errorCode = ex.getErrorCode();
-            String errorMessage;
-
-            switch (errorCode) {
-                case 1:  // Código de error de clave duplicada
-                    errorMessage = "El RUC ya está registrado. Por favor, use un RUC diferente.";
-                    break;
-                case 1400:  // Código de error de columna no puede ser nula
-                    errorMessage = "Uno de los campos obligatorios está vacío.";
-                    break;
-                case 2291:  // Código de error de restricción de clave foránea
-                    errorMessage = "Error en la relación de claves foráneas. Verifique los datos ingresados.";
-                    break;
-                case 1722:  // Código de error de número inválido
-                    errorMessage = "Formato de número inválido.";
-                    break;
-                case 12899:  // Código de error de valor demasiado grande para la columna
-                    errorMessage = "El valor ingresado es demasiado grande para uno de los campos. Verifique los datos ingresados.";
-                    break;
-                default:  // Error genérico
-                    errorMessage = "Error al registrar el proveedor: " + ex.getMessage();
-                    break;
-            }
-
+            String errorMessage = "Error al registrar el proveedor: " + ex.getMessage();
             JOptionPane.showMessageDialog(this, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(CrearProveedors_1.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -258,6 +255,22 @@ public class CrearProveedors_1 extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRucActionPerformed
 
+    private void txtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCancelarActionPerformed
+        this.setVisible(false);
+        this.limpiarCampos();
+    }//GEN-LAST:event_txtCancelarActionPerformed
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        this.limpiarCampos();
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    public void limpiarCampos() {
+        txtCorreo.setText("");
+        txtDireccion.setText("");
+        txtNombre.setText("");
+        txtRuc.setText("");
+        txtTelefono.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Registrar;

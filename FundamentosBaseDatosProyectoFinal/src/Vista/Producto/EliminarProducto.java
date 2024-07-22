@@ -57,6 +57,26 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
         txtCategoria = new javax.swing.JTextField();
         txtEstado = new javax.swing.JTextField();
 
+        setClosable(true);
+        setIconifiable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
         jLabel5.setText("IVA:");
 
         btnBuscar.setText("Buscar");
@@ -67,6 +87,11 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         txtPrecio.setEnabled(false);
 
@@ -138,8 +163,8 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
                 .addGap(33, 33, 33)
                 .addComponent(btnBuscar)
                 .addGap(8, 8, 8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -198,6 +223,7 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
                 if (eliminado) {
                     JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
                     txtNombre.setText("");
+                    this.limpiarCampos();
                 } else {
                     JOptionPane.showMessageDialog(null, "No se pudo eliminar el producto. Puede estar relacionado con facturas o compras.");
                 }
@@ -234,6 +260,22 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false); 
+        this.limpiarCampos();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        this.limpiarCampos();
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    public void limpiarCampos(){
+        txtIva.setText(""); 
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+        txtCategoria.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

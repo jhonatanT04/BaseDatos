@@ -73,6 +73,9 @@ public class BuscarCompraProveedores extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+
         jLabel1.setText("Codigo:");
 
         jLabel2.setText("Fecha:");
@@ -142,6 +145,11 @@ public class BuscarCompraProveedores extends javax.swing.JInternalFrame {
         });
 
         jButton4.setText("Cancelar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Productos");
 
@@ -329,7 +337,7 @@ public class BuscarCompraProveedores extends javax.swing.JInternalFrame {
             txtCodigoProveedor.setText(String.valueOf(proveedor.getCodigo()));
             txtTelefonoProveedor.setText(proveedor.getTelefono()); 
         } catch (SQLException ex) {
-            Logger.getLogger(EliminarCompraProveedores.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarCompraProveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
@@ -346,13 +354,35 @@ public class BuscarCompraProveedores extends javax.swing.JInternalFrame {
 
             jTable1.setModel(modeloTabla);
         } catch (SQLException ex) {
-            Logger.getLogger(EliminarCompraProveedores.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BuscarCompraProveedores.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
+        this.limpiarCampos();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.setVisible(false); 
+        this.limpiarCampos();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
+    public void limpiarCampos() {
+        txtCodigo.setText("");
+        txtFecha.setText("");
+        txtTotal.setText("");
+        txtCantidad.setText("");
+        txtCodigoProveedor.setText("");
+        txtNombreProveedor.setText("");
+        txtRUCProveedor.setText("");
+        txtTelefonoProveedor.setText("");
+        txtDireccionProveedor.setText("");
+        txtCorreoProveedor.setText("");
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTable1.getModel();
+        modeloTabla.setRowCount(0);
+
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

@@ -82,6 +82,27 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
         txtEstado = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setIconifiable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
         jLabel5.setText("IVA:");
 
         btnBuscar.setText("Buscar");
@@ -92,6 +113,11 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
         });
 
         txtCancelar.setText("Cancelar");
+        txtCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCancelarActionPerformed(evt);
+            }
+        });
 
         txtPrecio.setEnabled(false);
 
@@ -208,77 +234,63 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        if (txtNombre.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
+            return;
+        }
+
+        String precioText = txtPrecio.getText().trim();
+        if (precioText.isEmpty() || !precioText.matches("\\d+(\\.\\d+)?")) {
+            JOptionPane.showMessageDialog(null, "El precio debe ser un número válido.");
+            return;
+        }
+        double precio = Double.parseDouble(precioText);
+        if (precio <= 0) {
+            JOptionPane.showMessageDialog(null, "El precio debe ser mayor que 0.");
+            return;
+        }
+
+        String stockText = txtStock.getText().trim();
+        if (stockText.isEmpty() || !stockText.matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "El stock debe ser un número entero válido.");
+            return;
+        }
+        int stock = Integer.parseInt(stockText);
+        if (stock < 0) {
+            JOptionPane.showMessageDialog(null, "El stock no puede ser negativo.");
+            return;
+        }
+
+        String ivaText = txtIva.getText().trim();
+        if (ivaText.isEmpty() || !ivaText.matches("\\d+(\\.\\d+)?")) {
+            JOptionPane.showMessageDialog(null, "El IVA debe ser un número válido.");
+            return;
+        }
+        double iva = Double.parseDouble(ivaText);
+        if (iva < 0 || iva > 100) {
+            JOptionPane.showMessageDialog(null, "El IVA debe estar entre 0 y 100.");
+            return;
+        }
+
         try {
-            int codigo;
-            try {
-                codigo = controladorProducto.buscarProducto(txtNombre.getText()).getCodigo();
-                if (codigo <= 0) {
-                    JOptionPane.showMessageDialog(null, "El código debe ser un número positivo.");
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Error: Asegúrese de ingresar un número válido en el campo de código.");
-                return;
-            }
-
+            int codigo = controladorProducto.buscarProducto(txtNombre.getText()).getCodigo();
             String nombre = txtNombre.getText();
-            if (nombre == null || nombre.trim().isEmpty() || nombre.length() > 100) {
-                JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío y debe tener menos de 100 caracteres.");
-                return;
-            }
-
-            double precio;
-            try {
-                precio = Double.parseDouble(txtPrecio.getText());
-                if (precio <= 0) {
-                    JOptionPane.showMessageDialog(null, "El precio debe ser un número positivo.");
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Error: Asegúrese de ingresar un número válido en el campo de precio.");
-                return;
-            }
-
-            int stock;
-            try {
-                stock = Integer.parseInt(txtStock.getText());
-                if (stock < 0) {
-                    JOptionPane.showMessageDialog(null, "El stock no puede ser negativo.");
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Error: Asegúrese de ingresar un número válido en el campo de stock.");
-                return;
-            }
-
-            double iva;
-            try {
-                iva = Double.parseDouble(txtIva.getText());
-                if (iva < 0 || iva > 100) {
-                    JOptionPane.showMessageDialog(null, "El IVA debe ser un porcentaje entre 0 y 100.");
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Error: Asegúrese de ingresar un número válido en el campo de IVA.");
-                return;
-            }
-
-            char visualizacion = 'A'; // Supongo que 'A' significa que el producto está visible, puedes cambiarlo según tu lógica.
+            char visualizacion = 'A'; // Ajustar según lógica
 
             String categoriaSeleccionada = (String) jComboBox1.getSelectedItem();
             Categoria categoria = controladorCategoria.buscarCategoria(categoriaSeleccionada);
             if (categoria == null) {
-                JOptionPane.showMessageDialog(null, "No se encontró ninguna categoría con el nombre " + categoriaSeleccionada);
+                JOptionPane.showMessageDialog(null, "Categoría no encontrada.");
                 return;
             }
             int codigoCat = categoria.getCodigo();
 
-            Producto pronuevo = new Producto(codigo, nombre, precio, stock, iva, visualizacion, codigoCat);
+            Producto productoActualizado = new Producto(codigo, nombre, precio, stock, iva, visualizacion, codigoCat);
 
-            boolean actualizado = controladorProducto.actualizarProducto(pronuevo);
-
+            boolean actualizado = controladorProducto.actualizarProducto(productoActualizado);
             if (actualizado) {
                 JOptionPane.showMessageDialog(null, "Producto actualizado correctamente.");
+                // Limpiar campos
                 txtNombre.setText("");
                 txtPrecio.setText("");
                 txtStock.setText("");
@@ -294,35 +306,65 @@ public class ActualizarProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String nombreProducto = txtNombre.getText().trim();
+        if (nombreProducto.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre del producto para buscar.");
+            return;
+        }
+
         try {
-            producto = controladorProducto.buscarProducto(txtNombre.getText());
+            producto = controladorProducto.buscarProducto(nombreProducto);
+            if (producto != null) {
+                txtNombre.setText(producto.getNombre());
+                txtPrecio.setText(String.valueOf(producto.getPrecio()));
+                txtStock.setText(String.valueOf(producto.getStock()));
+                txtIva.setText(String.valueOf(producto.getIva()));
+                txtEstado.setText(String.valueOf(producto.getVisualizacion()));
+
+                int codigoCat = producto.getCategoria();
+                String nombreCategoria = controladorCategoria.buscarCategoriaPorCodigo(codigoCat).getNombre();
+                if (nombreCategoria != null) {
+                    jComboBox1.setSelectedItem(nombreCategoria);
+                }
+
+                txtNombre.setEnabled(true);
+                txtPrecio.setEnabled(true);
+                txtStock.setEnabled(true);
+                txtIva.setEnabled(true);
+                txtEstado.setEnabled(true);
+                btnActualizar.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Producto no encontrado.");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ActualizarProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (producto != null) {
-            txtNombre.setText(producto.getNombre());
-            txtPrecio.setText(String.valueOf(producto.getPrecio()));
-            txtStock.setText(String.valueOf(producto.getStock()));
-            txtIva.setText(String.valueOf(producto.getIva()));
-            txtEstado.setText(String.valueOf(producto.getVisualizacion()));
-
-            int codigoCat = producto.getCategoria();
-            String nombreCategoria = controladorCategoria.buscarCategoriaPorCodigo(codigoCat).getNombre();
-            if (nombreCategoria != null) {
-                jComboBox1.setSelectedItem(nombreCategoria);
-            }
-
-            txtNombre.setEnabled(true);
-            txtPrecio.setEnabled(true);
-            txtStock.setEnabled(true);
-            txtIva.setEnabled(true);
-            txtEstado.setEnabled(true);
-            btnActualizar.setEnabled(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Producto no encontrado.");
+            JOptionPane.showMessageDialog(null, "Error al buscar el producto.");
         }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCancelarActionPerformed
+
+        this.limpiarCampos();
+        this.setVisible(false);
+    }//GEN-LAST:event_txtCancelarActionPerformed
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+       
+    }//GEN-LAST:event_formInternalFrameClosed
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        this.limpiarCampos();
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    public void limpiarCampos() {
+        txtIva.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+        txtEstado.setText("");
+        jComboBox1.setSelectedIndex(0);
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

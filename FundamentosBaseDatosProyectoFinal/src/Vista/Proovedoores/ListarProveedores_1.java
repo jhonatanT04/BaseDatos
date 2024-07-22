@@ -45,6 +45,8 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
         radioTodo = new javax.swing.JRadioButton();
         btnSeleccionar = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameActivated(evt);
@@ -150,7 +152,7 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        actualizarTabla();
+       this.setVisible(false); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated

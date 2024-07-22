@@ -78,6 +78,26 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
 
+        setClosable(true);
+        setIconifiable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
         jLabel6.setText("IVA:");
 
         btnAgregar.setText("Agrgar");
@@ -90,6 +110,11 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
         jLabel7.setText("Stock:");
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Precio:");
 
@@ -185,15 +210,20 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         try {
-            String nombre = txtNombre.getText();
-            if (nombre == null || nombre.trim().isEmpty() || nombre.length() > 100) {
+            String nombre = txtNombre.getText().trim();
+            if (nombre.isEmpty() || nombre.length() > 100) {
                 JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío y debe tener menos de 100 caracteres.");
+                return;
+            }
+
+            if (txtPrecio.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El campo de precio no puede estar vacío.");
                 return;
             }
 
             double precio;
             try {
-                precio = Double.parseDouble(txtPrecio.getText());
+                precio = Double.parseDouble(txtPrecio.getText().trim());
                 if (precio <= 0) {
                     JOptionPane.showMessageDialog(null, "El precio debe ser un número positivo.");
                     return;
@@ -203,9 +233,14 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
                 return;
             }
 
+            if (txtStock.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El campo de stock no puede estar vacío.");
+                return;
+            }
+
             int stock;
             try {
-                stock = Integer.parseInt(txtStock.getText());
+                stock = Integer.parseInt(txtStock.getText().trim());
                 if (stock < 0) {
                     JOptionPane.showMessageDialog(null, "El stock no puede ser negativo.");
                     return;
@@ -215,9 +250,14 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
                 return;
             }
 
+            if (txtIVA.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "El campo de IVA no puede estar vacío.");
+                return;
+            }
+
             double iva;
             try {
-                iva = Double.parseDouble(txtIVA.getText());
+                iva = Double.parseDouble(txtIVA.getText().trim());
                 if (iva < 0 || iva > 100) {
                     JOptionPane.showMessageDialog(null, "El IVA debe ser un porcentaje entre 0 y 100.");
                     return;
@@ -227,8 +267,6 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
                 return;
             }
 
-            char visualizacion = 'A'; // Esta visible
-
             String nombreCategoriaSeleccionada = (String) jComboBox1.getSelectedItem();
             if (nombreCategoriaSeleccionada == null || nombreCategoriaSeleccionada.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Por favor, seleccione una categoría.");
@@ -237,6 +275,7 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
 
             int categoria = controladorCategoria.obtenerCodigoCategoria(nombreCategoriaSeleccionada);
 
+            char visualizacion = 'A'; // Esta visible
             Producto producto = new Producto(0, nombre, precio, stock, iva, visualizacion, categoria);
 
             boolean insertado = false;
@@ -248,15 +287,31 @@ public class AgregarProducto extends javax.swing.JInternalFrame {
 
             if (insertado) {
                 JOptionPane.showMessageDialog(null, "Producto insertado correctamente.");
+                this.limpiarCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "Error al insertar el producto.");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.setVisible(false);
+        this.limpiarCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        this.limpiarCampos();
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    public void limpiarCampos() {
+        txtIVA.setText("");
+        txtNombre.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+        jComboBox1.setSelectedIndex(0);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

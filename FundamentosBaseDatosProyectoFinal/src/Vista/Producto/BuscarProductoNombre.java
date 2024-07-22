@@ -48,6 +48,7 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setText("Ingrese el nombre del producto:");
 
@@ -55,6 +56,13 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -71,7 +79,9 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(235, 235, 235)
-                        .addComponent(btnBuscar)))
+                        .addComponent(btnBuscar)
+                        .addGap(42, 42, 42)
+                        .addComponent(jButton1)))
                 .addContainerGap(94, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -82,7 +92,9 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(btnBuscar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(jButton1))
                 .addGap(26, 26, 26))
         );
 
@@ -119,6 +131,8 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
                         nombreCategoria
                     };
                     modelo.addRow(rowData);
+                    this.setVisible(false);
+                    this.txtNombre.setText(""); 
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontraron productos con el nombre ingresado.");
@@ -130,6 +144,11 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false); 
+        txtNombre.setText(""); 
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /*public void addClienteToTable(Producto producto) {
         DefaultTableModel model = (DefaultTableModel) jTableClientes.getModel();
         model.addRow(new Object[]{cliente.getCedula(), cliente.getNombre(), cliente.getApellido(), cliente.getDireccion(), cliente.getTelefono(), cliente.getCorreo()});
@@ -137,6 +156,7 @@ public class BuscarProductoNombre extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

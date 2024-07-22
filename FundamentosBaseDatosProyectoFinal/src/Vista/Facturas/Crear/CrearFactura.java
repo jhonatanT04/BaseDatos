@@ -124,6 +124,24 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
 
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
         txtNombreEmpleado.setEditable(false);
         txtNombreEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -397,62 +415,88 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNombreEmpleadoActionPerformed
 
     private void btnFacturarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturarActionPerformed
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+empleado.getEmpleadoCodigo());
         try {
+            if (!validarCamposLlenos()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "No hay productos en la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Timestamp fecha;
+            try {
+                fecha = Timestamp.valueOf(txtFecha.getText());
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, "Fecha inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            double subtotalC;
+            try {
+                subtotalC = Double.parseDouble(txtSubtotal.getText().replace(",", "."));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Subtotal inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            double ivaC;
+            try {
+                ivaC = Double.parseDouble(txtIVA.getText().replace(",", "."));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "IVA inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            double totalC;
+            try {
+                totalC = Double.parseDouble(txtTotal.getText().replace(",", "."));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Total inválido.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             Persona cli = controladorPersona.buscarPersonaCliente(txtCedula.getText());
             int codigo = controladorCliente.buscarCliente(cli).getClienteCodigo();
-            int codigoemp = empleado.getEmpleadoCodigo();
-            if (codigo != 0) {
-                
-                try {
-                    Timestamp fecha = Timestamp.valueOf(txtFecha.getText());
-                    System.out.println("aaaaaaaaaa");
-                    
-                    // Reemplaza comas por puntos antes de convertir a double
-                    double subtotalC = Math.round(Double.parseDouble(txtSubtotal.getText().replace(",", ".")));
-                    System.out.println("aaaaaaaaaa");
-                    double ivaC = Math.round(Double.parseDouble(txtIVA.getText().replace(",", ".")));
-                    double totalC = Math.round(Double.parseDouble(txtTotal.getText().replace(",", ".")));
-                    
-                    char estado = 'A';
-                    
-                    cabeceraFactura = new CabeceraFactura(0, fecha, subtotalC, ivaC, totalC, estado, codigo, codigoemp);
-                    controladorCabeceraFactura.ingresarCabecera(cabeceraFactura);
-                    
-                    DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-                    for (int i = 0; i < model.getRowCount(); i++) {
-                        try {
-                            String nombreProducto = (String) model.getValueAt(i, 0);
-                            int cantidad = (int) model.getValueAt(i, 1);
-                            double precioUnitario = (double) model.getValueAt(i, 2);
-                            double subtotal = (double) model.getValueAt(i, 3);
-                            double iva = (double) model.getValueAt(i, 4);
-                            double total = (double) model.getValueAt(i, 5);
-                            
-                            int codigop = controladorProducto.buscarProducto(nombreProducto).getCodigo();
-                            
-                            detalleFactura = new DetalleFactura(0, cantidad, precioUnitario, subtotal, iva, total, 2, codigop);
-                            
-                            if (controladorDetalleFactura.ingresardetalle(detalleFactura)) {
-                                System.out.println("Detalle de factura insertado: " + nombreProducto);
-                            } else {
-                                System.err.println("Error al insertar el detalle de la factura: " + nombreProducto);
-                            }
-                            
-                        } catch (SQLException ex) {
-                            Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, "Error al procesar la fila " + i, ex);
-                            JOptionPane.showMessageDialog(this, "Error al procesar la fila " + (i + 1) + ": " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                    JOptionPane.showMessageDialog(this, "Factura creada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                } catch (SQLException ex) {
-                    Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }else{
-                JOptionPane.showMessageDialog(this, "El cliente es nulo");
+            if (codigo == 0) {
+                JOptionPane.showMessageDialog(this, "Cliente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
-        } catch (SQLException ex) {
+            for (int i = 0; i < model.getRowCount(); i++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
+                    Object value = model.getValueAt(i, j);
+                    if (value == null || value.toString().trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(this, "Hay campos vacíos en la tabla.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+            }
+
+            CabeceraFactura cabeceraFactura = new CabeceraFactura(0, fecha, subtotalC, ivaC, totalC, 'A', codigo, empleado.getEmpleadoCodigo());
+            controladorCabeceraFactura.ingresarCabecera(cabeceraFactura);
+
+            for (int i = 0; i < model.getRowCount(); i++) {
+                try {
+                    String nombreProducto = (String) model.getValueAt(i, 0);
+                    int cantidad = (int) model.getValueAt(i, 1);
+                    double precioUnitario = (double) model.getValueAt(i, 2);
+                    double subtotal = (double) model.getValueAt(i, 3);
+                    double iva = (double) model.getValueAt(i, 4);
+                    double total = (double) model.getValueAt(i, 5);
+
+                    int codigop = controladorProducto.buscarProducto(nombreProducto).getCodigo();
+                    DetalleFactura detalleFactura = new DetalleFactura(0, cantidad, precioUnitario, subtotal, iva, total, 2, codigop);
+
+                    if (!controladorDetalleFactura.ingresardetalle(detalleFactura)) {
+                        JOptionPane.showMessageDialog(this, "Error al insertar el detalle de la factura: " + nombreProducto, "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, "Error al procesar la fila " + i, ex);
+                    JOptionPane.showMessageDialog(this, "Error al procesar la fila " + (i + 1) + ": " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+            JOptionPane.showMessageDialog(this, "Factura creada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception ex) {
             Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error al crear la factura: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnFacturarActionPerformed
 
@@ -461,7 +505,9 @@ public class CrearFactura extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtTotalActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        this.limpiarCampos();
+        this.limpiarTabla();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void btnAgregarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductosActionPerformed
@@ -477,9 +523,9 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                         int cantidadDeseada = obtenerCantidadDeseada(productoEncontrado);
 
                         // Verifica si la cantidad deseada es válida y hay suficiente stock
-                        while (cantidadDeseada > productoEncontrado.getStock()) {
+                        if (cantidadDeseada > productoEncontrado.getStock()) {
                             JOptionPane.showMessageDialog(this, "No hay suficiente stock para el producto: " + nombreProducto, "Error", JOptionPane.ERROR_MESSAGE);
-                            cantidadDeseada = obtenerCantidadDeseada(productoEncontrado);
+                            return;
                         }
 
                         if (cantidadDeseada > 0) {
@@ -517,9 +563,9 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                                 int cantidadDeseada = obtenerCantidadDeseada(productoSeleccionado);
 
                                 // Verifica si la cantidad deseada es válida y hay suficiente stock
-                                while (cantidadDeseada > productoSeleccionado.getStock()) {
+                                if (cantidadDeseada > productoSeleccionado.getStock()) {
                                     JOptionPane.showMessageDialog(frameSeleccion, "No hay suficiente stock para el producto seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
-                                    cantidadDeseada = obtenerCantidadDeseada(productoSeleccionado);
+                                    return;
                                 }
 
                                 if (cantidadDeseada > 0) {
@@ -548,13 +594,13 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         } else {
             JOptionPane.showMessageDialog(this, "El nombre del producto no puede estar vacío.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnAgregarProductosActionPerformed
 
     private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
         // TODO add your handling code here:
         limpiarCampos();
         desplegarCedula();
-
     }//GEN-LAST:event_bntBuscarActionPerformed
 
     private void txtSubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSubtotalActionPerformed
@@ -592,12 +638,18 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "Producto eliminado de la tabla.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 } catch (SQLException ex) {
                     Logger.getLogger(CrearFactura.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Error al eliminar el producto: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un producto para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        this.limpiarCampos();
+        this.limpiarTabla();
+    }//GEN-LAST:event_formInternalFrameClosing
 
     private int obtenerCantidadDeseada(Producto producto) {
         String cantidadStr = JOptionPane.showInputDialog(this, "Ingrese la cantidad deseada para el producto: " + producto.getNombre(), "Cantidad", JOptionPane.PLAIN_MESSAGE);
@@ -610,7 +662,7 @@ public class CrearFactura extends javax.swing.JInternalFrame {
                 return 0;
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Cantidad inválida. Debe ser un número entero.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Cantidad inválida.", "Error", JOptionPane.ERROR_MESSAGE);
             return 0;
         }
     }
@@ -665,6 +717,18 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         clienteFactura = buscarCliente.devolverCliente();
     }
 
+    private boolean validarCamposLlenos() {
+        return !txtCedula.getText().trim().isEmpty()
+                && !txtApellido.getText().trim().isEmpty()
+                && !txtNombre.getText().trim().isEmpty()
+                && !txtCorreo.getText().trim().isEmpty()
+                && !txtDireccion.getText().trim().isEmpty()
+                && !txtTelefono.getText().trim().isEmpty()
+                && !txtIVA.getText().trim().isEmpty()
+                && !txtNombreEmpleado.getText().trim().isEmpty()
+                && !txtFecha.getText().trim().isEmpty();
+    }
+
     public void limpiarCampos() {
         txtCedula.setText("");
         txtApellido.setText("");
@@ -672,6 +736,9 @@ public class CrearFactura extends javax.swing.JInternalFrame {
         txtCorreo.setText("");
         txtDireccion.setText("");
         txtTelefono.setText("");
+        txtIVA.setText("");
+        txtNombreEmpleado.setText("");
+        txtFecha.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

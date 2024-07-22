@@ -84,6 +84,26 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosing(evt);
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
         jLabel2.setText("Fecha:");
 
         jLabel3.setText("Total:");
@@ -170,6 +190,11 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
         });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -361,6 +386,19 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
+        if (txtCantidad.getText().isEmpty() || txtTotal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, llene todos los campos necesarios.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            Integer.parseInt(txtCantidad.getText());
+            Double.parseDouble(txtTotal.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese valores numéricos válidos en Cantidad y Total.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         String nombreProducto = JOptionPane.showInputDialog(this, "Ingrese el nombre del producto:", "Buscar Producto", JOptionPane.PLAIN_MESSAGE);
 
         if (nombreProducto != null && !nombreProducto.trim().isEmpty()) {
@@ -403,6 +441,16 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_radioNombreActionPerformed
 
     private void btnBuscarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProveedorActionPerformed
+
+        if (radioRUC.isSelected() && txtRUCProveedor.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese el RUC del proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (radioNombre.isSelected() && txtNombreProveedor.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese el nombre del proveedor.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         if (radioRUC.isSelected()) {
             String ruc = txtRUCProveedor.getText();
@@ -450,9 +498,25 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarProveedorActionPerformed
 
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
+        if (txtCodigoProveedor.getText().isEmpty() || txtNombreProveedor.getText().isEmpty()
+                || txtRUCProveedor.getText().isEmpty() || txtTelefonoProveedor.getText().isEmpty()
+                || txtDireccionProveedor.getText().isEmpty() || txtCorreoProveedor.getText().isEmpty()
+                || txtCantidad.getText().isEmpty() || txtTotal.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, llene todos los campos.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         try {
-            int fila = jTable1.getRowCount(); 
-            int columna = 0; 
+            Integer.parseInt(txtCantidad.getText());
+            Double.parseDouble(txtTotal.getText());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese valores numéricos válidos en Cantidad y Total.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            int fila = jTable1.getRowCount();
+            int columna = 0;
 
             if (fila == 0) {
                 throw new IllegalArgumentException("La tabla no contiene productos.");
@@ -465,12 +529,12 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
             int cantidad = Integer.parseInt(txtCantidad.getText().trim());
             double precio = Double.parseDouble(jTable1.getValueAt(0, 2).toString());
             double valorTotal = cantidad * precio;
-            txtTotal.setText(String.valueOf(valorTotal)); 
+            txtTotal.setText(String.valueOf(valorTotal));
 
             CompraProveedor compra = new CompraProveedor(codigoProveedor, codigoProducto, 0, fecha, precio, cantidad);
 
             controladorCompraProveedor.insertarCompraProveedor(compra);
-            
+
             String nombrep = controladorProducto.buscarProductoCodigo(codigoProducto).getNombre();
             double preciop = controladorProducto.buscarProductoCodigo(codigoProducto).getPrecio();
             int stockn = cantidad + controladorProducto.buscarProductoCodigo(codigoProducto).getStock();
@@ -479,18 +543,43 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
             int codigoCategorip = controladorProducto.buscarProductoCodigo(codigoProducto).getCategoria();
             Producto pactualizado = new Producto(codigoProducto, nombrep, preciop, stockn, ivap, visualizacionp, codigoCategorip);
             controladorProducto.actualizarProducto(pactualizado);
-            
+
             JOptionPane.showMessageDialog(this, "Compra registrada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
             txtCodigoProveedor.setText("");
             txtFecha.setText("");
             txtCantidad.setText("");
             txtTotal.setText("");
+            this.limpiarCampos();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al procesar la compra: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_AceptarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.setVisible(false);
+        this.limpiarCampos();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void formInternalFrameClosing(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosing
+        this.limpiarCampos();
+    }//GEN-LAST:event_formInternalFrameClosing
+
+    public void limpiarCampos() {
+        txtFecha.setText("");
+        txtTotal.setText("");
+        txtCantidad.setText("");
+        txtCodigoProveedor.setText("");
+        txtNombreProveedor.setText("");
+        txtRUCProveedor.setText("");
+        txtTelefonoProveedor.setText("");
+        txtDireccionProveedor.setText("");
+        txtCorreoProveedor.setText("");
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) jTable1.getModel();
+        modeloTabla.setRowCount(0);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Aceptar;

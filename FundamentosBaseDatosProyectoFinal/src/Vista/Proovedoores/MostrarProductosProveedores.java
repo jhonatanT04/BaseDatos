@@ -110,22 +110,18 @@ public class MostrarProductosProveedores extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //cargarDetallesProducto(codigo); 
+        this.setVisible(false); 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void cargarDetallesProducto(int codigoProducto) {
         try {
-            // Obtener el modelo de la tabla de jTable1
             DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
 
-            // Limpiar la tabla antes de cargar nuevos datos
             tableModel.setRowCount(0);
 
-            // Obtener los detalles del producto usando el DAO
             producto = controladorProducto.buscarProductoCodigo(codigoProducto);
 
             if (producto != null) {
-                // Agregar la información del producto a la tabla
                 Object[] rowData = {producto.getCodigo(), producto.getNombre(), producto.getPrecio(), producto.getStock(), producto.getIva()};
                 tableModel.addRow(rowData);
             } else {

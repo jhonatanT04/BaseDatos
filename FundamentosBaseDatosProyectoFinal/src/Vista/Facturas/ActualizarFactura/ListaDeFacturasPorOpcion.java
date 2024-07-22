@@ -10,6 +10,7 @@ import Controlador.ControladorProducto;
 import Modelo.Factura.CabeceraFactura;
 import java.sql.Timestamp;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +26,7 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
     private ControladorDetalleFactura controladorDetalleFactura;
     private ControladorProducto controladorProducto;
     private javax.swing.JDesktopPane desktopPane;
+    private MostrarDetallesFactura mostrarDetallesFactura;
     
     /**
      * Creates new form ListaDeFacturasPorOpcion
@@ -63,13 +65,13 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Fecha", "Cliente", "Empleado", "Sub total", "IVA", "Valor Total"
+                "Codigo", "Fecha", "Subtotal", "Iva", "Total", "Estado", "Cliente", "Empleado"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -82,6 +84,11 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
         });
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Seleccionar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +154,18 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        int codigoProductoSeleccionado = obtenerCodigoProductoSeleccionado();
+
+        if (codigoProductoSeleccionado != -1) {
+            if (mostrarDetallesFactura == null) {
+                mostrarDetallesFactura = new MostrarDetallesFactura(codigoProductoSeleccionado);
+                desktopPane.add(mostrarDetallesFactura);
+            } else {
+                mostrarDetallesFactura.cargarDetallesProducto(codigoProductoSeleccionado);
+            }
+
+            mostrarDetallesFactura.setVisible(true);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -159,6 +177,10 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
             desplegarCliente();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.setVisible(false); 
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void desplegarEmpleado(){
         if (buscarFacturaEmpleado == null) {
@@ -174,6 +196,23 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
             desktopPane.add(buscarFacturaCliente);
         }
         buscarFacturaCliente.setVisible(true);
+    }
+    
+    private int obtenerCodigoProductoSeleccionado() {
+        int filaSeleccionada = jTable1.getSelectedRow();
+
+        if (filaSeleccionada != -1) { 
+            Object valor = jTable1.getValueAt(filaSeleccionada, 0);
+            if (valor instanceof Number) {
+                return ((Number) valor).intValue();
+            } else {
+                JOptionPane.showMessageDialog(this, "El código del producto no es válido.");
+                return -1; 
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto de la tabla.");
+            return -1; 
+        }
     }
     
     private void actualizarTabla() {

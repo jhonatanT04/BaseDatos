@@ -137,7 +137,8 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
                         cabecera.getTotalIVA(),
                         cabecera.getValorTotal(),
                         cabecera.getEstado(),
-                        cabecera.getCodigoCliente()
+                        cabecera.getCodigoCliente(),
+                        cabecera.getCodigoEmpleado()
                     };
                     modelo.addRow(rowData);
                 }

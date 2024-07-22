@@ -141,6 +141,34 @@ public class DAOCliente {
             }
         }
     }
+    public Cliente buscarClientePorCodigo(int codigoCliente) throws SQLException {        
+       
+        String empleadoSQL = "SELECT cli_codigo, cli_visualizar,per_codigo, per_cedula, per_nombre, per_apellido, per_direccion, per_telefono, per_correo_electronico FROM super_clientes c , super_personas p where c.super_personas_per_codigo = p.per_codigo;";
+    
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+        try (PreparedStatement psCliente = conn.prepareStatement(empleadoSQL)) {
+            psCliente.setInt(1, codigoCliente);
+            ResultSet rsCliente = psCliente.executeQuery();
+            if (rsCliente.next()) {
+                int cliCodigo = rsCliente.getInt("cli_codigo");
+                String visualizar = rsCliente.getString("cli_visualizar");
+                
+                
+                int codigoPer = rsCliente.getInt("per_codigo");
+                String cedula = rsCliente.getString("per_cedula");
+                String nombre = rsCliente.getString("per_nombre");
+                String apellido = rsCliente.getString("per_apellido");
+                String direccion = rsCliente.getString("per_direccion");
+                String telefono = rsCliente.getString("per_telefono");
+                String cor = rsCliente.getString("per_correo_electronico");
+                return new Cliente(cliCodigo, visualizar.charAt(0), codigoPer, cedula, nombre, apellido, direccion, telefono, cor);
+            } else {
+            return null;
+            }
+        }
+        
+    }
     
     
 }

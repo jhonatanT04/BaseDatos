@@ -170,7 +170,37 @@ public class DAOEmpleado {
             }
         }
     }
-
+    
+    
+    public Empleado buscarEmpleadoPorCodigo(int codigoEmpleado) throws SQLException {
+        
+        String empleadoSQL = "SELECT e.emp_codigo, e.emp_visualizar, e.emp_contrasenia, e.emp_permiso, p.per_codigo, p.per_cedula, p.per_nombre, p.per_apellido, p.per_direccion, p.per_telefono, p.per_correo_electronico "
+                + "FROM super_empleados e, super_personas p "
+            + "WHERE e.super_personas_per_codigo = p.per_codigo AND p.per_correo_electronico = ?";
+    
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+        try (PreparedStatement psCliente = conn.prepareStatement(empleadoSQL)) {
+            psCliente.setInt(1, codigoEmpleado);
+            ResultSet rsCliente = psCliente.executeQuery();
+            if (rsCliente.next()) {
+                int empCodigo = rsCliente.getInt("emp_codigo");
+                String visualizar = rsCliente.getString("emp_visualizar");
+                String empContra = rsCliente.getString("emp_contrasenia");
+                String empPermiso = rsCliente.getString("emp_permiso");
+                int codigoPer = rsCliente.getInt("per_codigo");
+                String cedula = rsCliente.getString("per_cedula");
+                String nombre = rsCliente.getString("per_nombre");
+                String apellido = rsCliente.getString("per_apellido");
+                String direccion = rsCliente.getString("per_direccion");
+                String telefono = rsCliente.getString("per_telefono");
+                String cor = rsCliente.getString("per_correo_electronico");
+                return new Empleado(empCodigo, visualizar.charAt(0), empContra, empPermiso.charAt(0), codigoPer, cedula, nombre, apellido, direccion, telefono, cor);
+            } else {
+            return null;
+            }
+        }
+    }
 
 
 

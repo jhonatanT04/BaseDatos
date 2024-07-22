@@ -40,4 +40,7 @@ public class ControladorEmpleado {
     public boolean eliminarEmpleado(int codigoEmp) throws SQLException{
         return daoEmpleado.eliminarEmpleado(codigoEmp);
     }
+    public Empleado buscarClientePorCodigo(int codigoEmpleado) throws SQLException{
+        return daoEmpleado.buscarEmpleadoPorCodigo(codigoEmpleado);
+    }
 }

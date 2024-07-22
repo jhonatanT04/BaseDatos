@@ -40,4 +40,7 @@ public class ControladorCliente {
     public void eliminarCliente(int codigoCli) throws SQLException{
         daoCliente.eliminarCliente(codigoCli);
     }
+    public Cliente buscarClientePorCodigo(int codigoCli) throws SQLException{
+        return daoCliente.buscarClientePorCodigo(codigoCli);
+    }
 }

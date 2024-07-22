@@ -19,7 +19,6 @@ import Vista.Cliente.BuscarCliente;
 import Vista.Producto.ActualizarProducto;
 import Vista.Proovedoores.BuscarCompraProveedores;
 import Vista.Proovedoores.ComprarProveedores_1;
-import Vista.Proovedoores.EliminarCompraProveedores;
 import Vista.Proovedoores.ListarProveedores_1;
 import Vista.Cliente.ActualizarDatosClientes;
 import Vista.Cliente.EliminarCliente;
@@ -75,7 +74,6 @@ public class Administrador extends javax.swing.JFrame {
     private ListarProveedores_1 listarProveedores_1;
     private ComprarProveedores_1 comprarProveedores_1;
     private BuscarCompraProveedores buscarCompraProveedores;
-    private EliminarCompraProveedores eliminarCompraProveedores;
     private ListarCompraProveedores listarCompraProveedores;
     private ControladorProducto controladorProducto;
     private ControladorCategoria controladorCategoria;
@@ -549,12 +547,7 @@ public class Administrador extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        if(eliminarCompraProveedores == null){
-            eliminarCompraProveedores = new EliminarCompraProveedores(controladorCompraPoveedor,controladorProveedor,controladorProducto);
-            desktopPane.add(eliminarCompraProveedores);
-        }
         
-        eliminarCompraProveedores.setVisible(true); 
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed

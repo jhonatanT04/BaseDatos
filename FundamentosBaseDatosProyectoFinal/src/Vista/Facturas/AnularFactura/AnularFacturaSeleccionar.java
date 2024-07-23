@@ -29,16 +29,22 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
         buttonGroup = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jradiobntNumeroFactura = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
+        jbntBuscar = new javax.swing.JButton();
         jradiobntFecha = new javax.swing.JRadioButton();
         jradiobntEmpleado = new javax.swing.JRadioButton();
         jradiobntCliente = new javax.swing.JRadioButton();
+        jbntSalir = new javax.swing.JButton();
 
         jLabel1.setText("Anular Factura por :");
 
         jradiobntNumeroFactura.setText("Numero de Factura");
 
-        jButton1.setText("Buscar");
+        jbntBuscar.setText("Buscar");
+        jbntBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbntBuscarActionPerformed(evt);
+            }
+        });
 
         jradiobntFecha.setText("Fecha");
 
@@ -46,53 +52,65 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
 
         jradiobntCliente.setText("Cliente");
 
+        jbntSalir.setText("Salir");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(110, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addGap(0, 555, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(132, 132, 132)
                 .addComponent(jradiobntNumeroFactura)
                 .addGap(18, 18, 18)
                 .addComponent(jradiobntEmpleado)
                 .addGap(18, 18, 18)
                 .addComponent(jradiobntCliente)
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1)
-                    .addComponent(jradiobntFecha))
-                .addGap(49, 49, 49))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel1)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jradiobntFecha)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbntBuscar)
+                .addGap(25, 25, 25)
+                .addComponent(jbntSalir)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jradiobntNumeroFactura)
                     .addComponent(jradiobntEmpleado)
                     .addComponent(jradiobntCliente)
                     .addComponent(jradiobntFecha))
-                .addContainerGap(63, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(15, 15, 15))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbntBuscar)
+                    .addComponent(jbntSalir))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntBuscarActionPerformed
+                // TODO add your handling code here:
+                
+    }//GEN-LAST:event_jbntBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jbntBuscar;
+    private javax.swing.JButton jbntSalir;
     private javax.swing.JRadioButton jradiobntCliente;
     private javax.swing.JRadioButton jradiobntEmpleado;
     private javax.swing.JRadioButton jradiobntFecha;

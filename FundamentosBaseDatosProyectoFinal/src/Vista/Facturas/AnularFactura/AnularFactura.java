@@ -8,12 +8,12 @@ package Vista.Facturas.AnularFactura;
  *
  * @author venot
  */
-public class AnularFacturaFactura extends javax.swing.JInternalFrame {
+public class AnularFactura extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form AnularFacturaFactura
      */
-    public AnularFacturaFactura() {
+    public AnularFactura() {
         initComponents();
     }
 

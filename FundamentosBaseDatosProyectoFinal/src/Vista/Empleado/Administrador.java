@@ -30,6 +30,7 @@ import Vista.Empleado.IngresarEmpleado;
 import Vista.Empleado.ListarEmpleado;
 import Vista.Facturas.ActualizarFactura.ListaDeFacturasPorOpcion;
 import Vista.Facturas.AnularFactura.AnularFactura;
+import Vista.Facturas.AnularFactura.AnularFacturaSeleccionar;
 import Vista.Facturas.Buscar.BuscarFactura;
 import Vista.Facturas.Crear.CrearFactura;
 import Vista.Producto.AgregarProducto;
@@ -64,7 +65,7 @@ public class Administrador extends javax.swing.JFrame {
     private ListarEmpleado listarEmpleado;
     private CrearFactura crearFactura;
     private ListaDeFacturasPorOpcion buscarFactura;
-    private AnularFactura anularFacturaFactura;
+    private AnularFacturaSeleccionar anularFacturaFactura;
     private AgregarProducto agregarProducto;
     private BuscarProducto buscarProducto;
     private ActualizarProducto actualizarProducto;
@@ -512,8 +513,8 @@ public class Administrador extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         if(anularFacturaFactura == null){
-            anularFacturaFactura = new AnularFactura();
-            desktopPane.add(ventanaNuevoCliente);
+            anularFacturaFactura = new AnularFacturaSeleccionar(desktopPane);
+            desktopPane.add(anularFacturaFactura);
         }
         
         anularFacturaFactura.setVisible(true); 

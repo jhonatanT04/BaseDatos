@@ -4,17 +4,30 @@
  */
 package Vista.Facturas.AnularFactura;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author venot
  */
 public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
-
+    private ClienteFactura clienteFactura;
+    private BuscarPorEmpleado empleadoFactura;
+    private javax.swing.JDesktopPane desktopPane;
+    private FechaFactura fechaFactura;
+    private NumeroFactura numeroFactura;
+    
+    
     /**
      * Creates new form AnularFacturaSeleccionar
      */
-    public AnularFacturaSeleccionar() {
+    public AnularFacturaSeleccionar(javax.swing.JDesktopPane p) {
         initComponents();
+        buttonGroup.add(jradiobntCliente);
+        buttonGroup.add(jradiobntEmpleado);
+        buttonGroup.add(jradiobntFecha);
+        buttonGroup.add(jradiobntNumeroFactura);
+        desktopPane = p;
     }
 
     /**
@@ -101,11 +114,62 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntBuscarActionPerformed
-                // TODO add your handling code here:
+        if(jradiobntCliente.isSelected()||jradiobntEmpleado.isSelected()||jradiobntFecha.isSelected()||jradiobntNumeroFactura.isSelected()){
+            if (jradiobntCliente.isSelected()) {
+                
+                desplegarCliente();
+                
+            }else if(jradiobntEmpleado.isSelected()){
+                
+                desplegarEmplado();
+                
+            }else if(jradiobntFecha.isSelected()){
+                desplegarFecha();
+                
+                
+            }else if(jradiobntNumeroFactura.isSelected()){
+                
+                
+                
+            }
+        }else{
+            JOptionPane.showInternalMessageDialog(rootPane, "Escoja una opcion.");
+        }
                 
     }//GEN-LAST:event_jbntBuscarActionPerformed
-
-
+    
+    private void desplegarCliente(){
+        if(clienteFactura == null){
+            clienteFactura = new ClienteFactura();
+            desktopPane.add(clienteFactura);
+        }
+        
+        clienteFactura.setVisible(true);
+    }
+    private void desplegarEmplado(){
+        if(empleadoFactura == null){
+            empleadoFactura = new BuscarPorEmpleado();
+            desktopPane.add(empleadoFactura);
+        }
+        empleadoFactura.setVisible(true);
+    }
+    private void desplegarFecha(){
+        if(fechaFactura == null){
+            fechaFactura = new FechaFactura();
+            desktopPane.add(fechaFactura);
+        }
+        fechaFactura.setVisible(true);
+    }
+    private void desplegarNumeroFactura(){
+        if(numeroFactura == null){
+            numeroFactura = new NumeroFactura();
+            desktopPane.add(numeroFactura);
+        }
+        numeroFactura.setVisible(true);
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel1;

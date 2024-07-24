@@ -53,7 +53,7 @@ public class BuscarFacturaFecha extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
-        jLabel1.setText("Ingrese la cedula del cliente:");
+        jLabel1.setText("Ingrese la fecha:");
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -76,7 +76,7 @@ public class BuscarFacturaFecha extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(234, 234, 234)
                         .addComponent(btnBuscar)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

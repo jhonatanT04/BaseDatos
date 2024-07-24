@@ -8,6 +8,7 @@ import DAO.DAOCabeceraFactura;
 import Modelo.Factura.CabeceraFactura;
 import java.sql.SQLException;
 import java.util.List;
+import java.sql.Timestamp;
 
 /**
  *
@@ -31,6 +32,10 @@ public class ControladorCabeceraFactura {
     
     public List<CabeceraFactura> buscarPorCliente(int codigo){
         return dAOCabeceraFactura.buscarCabeceraFacturaPorCliente(codigo);
+    }
+    
+    public List<CabeceraFactura> buscarPorFecha(Timestamp fecha){
+        return dAOCabeceraFactura.buscarCabeceraFacturaPorFecha(fecha); 
     }
     
     public CabeceraFactura buscarCabecera(int codigo){

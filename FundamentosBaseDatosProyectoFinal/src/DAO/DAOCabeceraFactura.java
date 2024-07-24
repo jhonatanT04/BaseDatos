@@ -48,7 +48,7 @@ public class DAOCabeceraFactura {
         } finally {
             conexion.desconectar();
         }
-        
+
     }
 
     public void buscarCabeceraFactura(int codigo) {
@@ -182,6 +182,48 @@ public class DAOCabeceraFactura {
 
             if (listaCabeceraFacturas.isEmpty()) {
                 System.out.println("No se encontró ninguna factura con el código del empleado " + codigoEmpleado);
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCabeceraFactura.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexion.desconectar();
+        }
+
+        return listaCabeceraFacturas;
+    }
+
+    public List<CabeceraFactura> buscarCabeceraFacturaPorFecha(Timestamp fecha) {
+        Conexion conexion = new Conexion();
+        Connection conn = conexion.conectar();
+        List<CabeceraFactura> listaCabeceraFacturas = new ArrayList<>();
+
+        try {
+            String sql = "SELECT * FROM super_cabecera_facturas WHERE DATE(fac_fecha) = DATE(?)";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setTimestamp(1, fecha);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                // Crear un nuevo objeto CabeceraFactura con los datos obtenidos
+                int codigo = rs.getInt("fac_codigo");
+                Timestamp facFecha = rs.getTimestamp("fac_fecha");
+                double subtotal = rs.getDouble("fac_subtotal");
+                double totalIVA = rs.getDouble("fac_total_iva");
+                double valorTotal = rs.getDouble("fac_valor_total");
+                char estado = rs.getString("fac_estado").charAt(0);
+                int codigoEmpleado = rs.getInt("super_empleados_emp_codigo");
+                int codigoCliente = rs.getInt("super_clientes_cli_codigo");
+
+                CabeceraFactura cabeceraFactura = new CabeceraFactura(codigo, facFecha, subtotal, totalIVA, valorTotal, estado, codigoEmpleado, codigoCliente);
+                listaCabeceraFacturas.add(cabeceraFactura);
+            }
+
+            if (listaCabeceraFacturas.isEmpty()) {
+                System.out.println("No se encontró ninguna factura en la fecha " + fecha);
             }
 
             rs.close();

@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
 
+    private BuscarFacturaFecha buscarFacturaFecha;
     private BuscarFacturaCliente buscarFacturaCliente;
     private BuscarFacturaEmpleado buscarFacturaEmpleado;
     private ControladorCabeceraFactura controladorCabeceraFactura;
@@ -60,6 +61,7 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
         radioCliente = new javax.swing.JRadioButton();
         radioEmpleado = new javax.swing.JRadioButton();
         radioListar = new javax.swing.JRadioButton();
+        radioFecha = new javax.swing.JRadioButton();
 
         jLabel1.setText("Lista por      :");
 
@@ -103,6 +105,13 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
 
         radioListar.setText("Listar Todo");
 
+        radioFecha.setText("Fecha");
+        radioFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioFechaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,21 +121,26 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(jButton2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(44, 44, 44)
+                                .addComponent(jButton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3)
+                                    .addComponent(jButton1)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(26, 26, 26)
                         .addComponent(radioCliente)
                         .addGap(40, 40, 40)
                         .addComponent(radioEmpleado)
-                        .addGap(37, 37, 37)
-                        .addComponent(radioListar)
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton1)
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton3)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addGap(60, 60, 60)
+                        .addComponent(radioFecha)
+                        .addGap(58, 58, 58)
+                        .addComponent(radioListar)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,17 +148,19 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1)
                     .addComponent(jButton3)
                     .addComponent(radioCliente)
                     .addComponent(radioEmpleado)
-                    .addComponent(radioListar))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radioListar)
+                    .addComponent(radioFecha))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(64, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addGap(28, 28, 28))))
@@ -175,6 +191,8 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
             desplegarEmpleado();
         }else if (radioCliente.isSelected()) {
             desplegarCliente();
+        }else if (radioFecha.isSelected()) {
+            desplegarFecha();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -182,12 +200,24 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
         this.setVisible(false); 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void radioFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_radioFechaActionPerformed
+
     private void desplegarEmpleado(){
         if (buscarFacturaEmpleado == null) {
             buscarFacturaEmpleado = new BuscarFacturaEmpleado(controladorCabeceraFactura, this, jTable1);
             desktopPane.add(buscarFacturaEmpleado);
         }
         buscarFacturaEmpleado.setVisible(true);
+    }
+    
+    private void desplegarFecha(){
+        if (buscarFacturaFecha == null) {
+            buscarFacturaFecha = new BuscarFacturaFecha(controladorCabeceraFactura, this, jTable1); 
+            desktopPane.add(buscarFacturaFecha);
+        }
+        buscarFacturaFecha.setVisible(true);
     }
     
     private void desplegarCliente(){
@@ -249,6 +279,7 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton radioCliente;
     private javax.swing.JRadioButton radioEmpleado;
+    private javax.swing.JRadioButton radioFecha;
     private javax.swing.JRadioButton radioListar;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,32 +6,33 @@ package Vista.Facturas.ActualizarFactura;
 
 import Controlador.ControladorCabeceraFactura;
 import Controlador.ControladorCliente;
-import Controlador.ControladorEmpleado;
 import Controlador.ControladorPersona;
 import Modelo.Factura.CabeceraFactura;
 import Modelo.Personas.Persona.Persona;
-import Vista.Proovedoores.BuscarProveedorNombre;
-import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
+import java.sql.SQLException;
 import javax.swing.JTable;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Usuario
  */
-public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
+public class BuscarFacturaFecha extends javax.swing.JInternalFrame {
 
     private ControladorCabeceraFactura controladorCabeceraFactura;
     private CabeceraFactura cabeceraFactura;
     private JTable jTable;
     private ListaDeFacturasPorOpcion listaDeFacturasPorOpcion;
-    
+
     /**
-     * Creates new form BuscarFacturaCliente
+     * Creates new form BuscarFacturaFecha
      */
-    public BuscarFacturaCliente(ControladorCabeceraFactura controladorCabeceraFactura,ListaDeFacturasPorOpcion listaDeFacturasPorOpcion,JTable jTable) {
+    public BuscarFacturaFecha(ControladorCabeceraFactura controladorCabeceraFactura, ListaDeFacturasPorOpcion listaDeFacturasPorOpcion, JTable jTable) {
         initComponents();
         this.controladorCabeceraFactura = controladorCabeceraFactura;
         this.listaDeFacturasPorOpcion = listaDeFacturasPorOpcion;
@@ -75,7 +76,7 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(234, 234, 234)
                         .addComponent(btnBuscar)))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -84,7 +85,7 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
                 .addGap(25, 25, 25))
         );
@@ -105,27 +106,21 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-            String nombre = txtNombre.getText().trim();
-
-            if (nombre.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del empleado a buscar.");
+            String fechaStr = txtNombre.getText().trim();
+            if (fechaStr.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese la fecha a buscar.");
                 return;
             }
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date parsedDate = dateFormat.parse(fechaStr);
+            Timestamp fecha = new Timestamp(parsedDate.getTime());
 
             DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
             modelo.setRowCount(0);
 
-            ControladorPersona cp = new ControladorPersona();
-            ControladorCliente cc = new ControladorCliente();
-            Persona persona = cp.buscarPersonaEmpleado(nombre);
-
-            if (persona == null) {
-                JOptionPane.showMessageDialog(null, "No se encontró ninguna persona con el nombre ingresado.");
-                return;
-            }
-
-            int codigocliente= cc.buscarCliente(persona).getClienteCodigo();
-            List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorCliente(codigocliente); 
+            controladorCabeceraFactura = new ControladorCabeceraFactura();
+            List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorFecha(fecha);
 
             if (cabeceraFacturas != null && !cabeceraFacturas.isEmpty()) {
                 for (CabeceraFactura cabecera : cabeceraFacturas) {
@@ -142,10 +137,11 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
                     modelo.addRow(rowData);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontraron facturas para el empleado con el nombre ingresado.");
+                JOptionPane.showMessageDialog(null, "No se encontraron facturas para la fecha ingresada.");
             }
-        } catch (SQLException ex) {
-            java.util.logging.Logger.getLogger(BuscarProveedorNombre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "El formato de la fecha es incorrecto. Por favor, ingrese una fecha en el formato 'yyyy-MM-dd HH:mm:ss'.");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 

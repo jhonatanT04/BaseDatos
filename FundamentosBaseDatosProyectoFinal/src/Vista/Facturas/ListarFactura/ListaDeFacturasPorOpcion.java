@@ -5,11 +5,18 @@
 package Vista.Facturas.ListarFactura;
 
 import Controlador.ControladorCabeceraFactura;
+import Controlador.ControladorCliente;
 import Controlador.ControladorDetalleFactura;
+import Controlador.ControladorEmpleado;
+import Controlador.ControladorPersona;
 import Controlador.ControladorProducto;
 import Modelo.Factura.CabeceraFactura;
+import Modelo.Personas.Persona.Persona;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -28,17 +35,21 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
     private ControladorProducto controladorProducto;
     private javax.swing.JDesktopPane desktopPane;
     private MostrarDetallesFactura mostrarDetallesFactura;
-    
+
     /**
      * Creates new form ListaDeFacturasPorOpcion
      */
-    public ListaDeFacturasPorOpcion(ControladorCabeceraFactura controladorCabeceraFactura,ControladorDetalleFactura controladorDetalleFactura,ControladorProducto controladorProducto,javax.swing.JDesktopPane desktopPane) {
+    public ListaDeFacturasPorOpcion(ControladorCabeceraFactura controladorCabeceraFactura, ControladorDetalleFactura controladorDetalleFactura, ControladorProducto controladorProducto, javax.swing.JDesktopPane desktopPane) {
         initComponents();
+        buttonGroup1.add(radioCliente); 
+        buttonGroup1.add(radioEmpleado); 
+        buttonGroup1.add(radioListar); 
+        buttonGroup1.add(radioFecha); 
         this.controladorCabeceraFactura = controladorCabeceraFactura;
         this.controladorDetalleFactura = controladorDetalleFactura;
         this.controladorProducto = controladorProducto;
         this.desktopPane = desktopPane;
-        
+
         jTable1.setRowSelectionAllowed(true);
         jTable1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
@@ -52,6 +63,7 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -173,104 +185,114 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
         int codigoProductoSeleccionado = obtenerCodigoProductoSeleccionado();
 
         if (codigoProductoSeleccionado != -1) {
-            if (mostrarDetallesFactura == null) {
-                mostrarDetallesFactura = new MostrarDetallesFactura(codigoProductoSeleccionado);
-                desktopPane.add(mostrarDetallesFactura);
-            } else {
-                mostrarDetallesFactura.cargarDetallesProducto(codigoProductoSeleccionado);
+            if (mostrarDetallesFactura != null) {
+                mostrarDetallesFactura.dispose();  // Cierra la ventana actual
+                mostrarDetallesFactura = null;     // Libera la referencia
             }
 
-            mostrarDetallesFactura.setVisible(true);
+            mostrarDetallesFactura = new MostrarDetallesFactura(codigoProductoSeleccionado);
+            desktopPane.add(mostrarDetallesFactura);
+            mostrarDetallesFactura.setVisible(true); // Mostrar la nueva ventana
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (radioListar.isSelected()) {
             actualizarTabla();
-        }else if (radioEmpleado.isSelected()) {
+        } else if (radioEmpleado.isSelected()) {
             desplegarEmpleado();
-        }else if (radioCliente.isSelected()) {
+        } else if (radioCliente.isSelected()) {
             desplegarCliente();
-        }else if (radioFecha.isSelected()) {
+        } else if (radioFecha.isSelected()) {
             desplegarFecha();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false); 
+        this.setVisible(false);
+        buttonGroup1.clearSelection();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void radioFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFechaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioFechaActionPerformed
 
-    private void desplegarEmpleado(){
+    private void desplegarEmpleado() {
         if (buscarFacturaEmpleado == null) {
             buscarFacturaEmpleado = new BuscarFacturaEmpleado(controladorCabeceraFactura, this, jTable1);
             desktopPane.add(buscarFacturaEmpleado);
         }
         buscarFacturaEmpleado.setVisible(true);
     }
-    
-    private void desplegarFecha(){
+
+    private void desplegarFecha() {
         if (buscarFacturaFecha == null) {
-            buscarFacturaFecha = new BuscarFacturaFecha(controladorCabeceraFactura, this, jTable1); 
+            buscarFacturaFecha = new BuscarFacturaFecha(controladorCabeceraFactura, this, jTable1);
             desktopPane.add(buscarFacturaFecha);
         }
         buscarFacturaFecha.setVisible(true);
     }
-    
-    private void desplegarCliente(){
+
+    private void desplegarCliente() {
         if (buscarFacturaCliente == null) {
             buscarFacturaCliente = new BuscarFacturaCliente(controladorCabeceraFactura, this, jTable1);
             desktopPane.add(buscarFacturaCliente);
         }
         buscarFacturaCliente.setVisible(true);
     }
-    
+
     private int obtenerCodigoProductoSeleccionado() {
         int filaSeleccionada = jTable1.getSelectedRow();
 
-        if (filaSeleccionada != -1) { 
+        if (filaSeleccionada != -1) {
             Object valor = jTable1.getValueAt(filaSeleccionada, 0);
             if (valor instanceof Number) {
                 return ((Number) valor).intValue();
             } else {
                 JOptionPane.showMessageDialog(this, "El código del producto no es válido.");
-                return -1; 
+                return -1;
             }
         } else {
             JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto de la tabla.");
-            return -1; 
+            return -1;
         }
     }
-    
+
     private void actualizarTabla() {
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
-        modelo.setRowCount(0); 
+        modelo.setRowCount(0);
         List<CabeceraFactura> listaCabeceras = controladorCabeceraFactura.listar();
 
-        // Agregar cada cabecera de factura a la tabla
         for (CabeceraFactura cabecera : listaCabeceras) {
-            int codigo = cabecera.getCodigo();
-            Timestamp fecha = cabecera.getFecha();
-            double subtotal = cabecera.getSubTotal();
-            double totalIVA = cabecera.getTotalIVA();
-            double valorTotal = cabecera.getValorTotal();
-            char estado = cabecera.getEstado();
-            int codigoEmpleado = cabecera.getCodigoEmpleado();
-            int codigoCliente = cabecera.getCodigoCliente();
-            
+            try {
+                int codigo = cabecera.getCodigo();
+                Timestamp fecha = cabecera.getFecha();
+                double subtotal = cabecera.getSubTotal();
+                double totalIVA = cabecera.getTotalIVA();
+                double valorTotal = cabecera.getValorTotal();
+                char estado = cabecera.getEstado();
+                //ControladorPersona controladorPersona = new ControladorPersona();
+                ControladorCliente controladorCliente = new ControladorCliente();
+                ControladorEmpleado controladorEmpleado = new ControladorEmpleado();
+                //Persona per = controladorPersona.buscarPersonaCliente(cabecera.getCodigoEmpleado());
+                String nombreC = controladorCliente.buscarClientePorCodigo(cabecera.getCodigoCliente()).getNombre();
+                //String nombreE = controladorEmpleado.buscarClientePorCodigo(cabecera.getCodigoEmpleado()).getNombre();
+                int codigoEmpleado = cabecera.getCodigoEmpleado();
+                int codigoCliente = cabecera.getCodigoCliente();
 
-            Object[] rowData = {codigo, fecha, subtotal, totalIVA, valorTotal, estado, codigoEmpleado, codigoCliente};
-            
-            modelo.addRow(rowData);
+                Object[] rowData = {codigo, fecha, subtotal, totalIVA, valorTotal, estado, nombreC, codigoEmpleado};
+
+                modelo.addRow(rowData);
+            } catch (SQLException ex) {
+                Logger.getLogger(ListaDeFacturasPorOpcion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
+
         jTable1.setModel(modelo);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

@@ -49,7 +49,7 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        txtCedula = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
         jLabel1.setText("Ingrese la cedula del empleado:");
@@ -71,7 +71,7 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
                         .addGap(70, 70, 70)
                         .addComponent(jLabel1)
                         .addGap(60, 60, 60)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(231, 231, 231)
                         .addComponent(btnBuscar)))
@@ -83,7 +83,7 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
                 .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addComponent(btnBuscar)
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -105,28 +105,32 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
-            String nombre = txtNombre.getText().trim();
+            String cedula = txtCedula.getText().trim();
 
-            if (nombre.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Por favor, ingrese el nombre del empleado a buscar.");
+            if (cedula.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese la cédula del empleado a buscar.");
+                return;
+            }
+
+            if (!validarCedula(cedula)) {
+                JOptionPane.showMessageDialog(null, "La cédula ingresada no es válida.");
                 return;
             }
 
             DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
             modelo.setRowCount(0);
 
-            // Obtener el empleado
             ControladorPersona cp = new ControladorPersona();
-            ControladorEmpleado ce = new ControladorEmpleado();
-            Persona persona = cp.buscarPersonaEmpleado(nombre);
+            Persona persona = cp.buscarPersonaEmpleado(cedula);
 
             if (persona == null) {
-                JOptionPane.showMessageDialog(null, "No se encontró ninguna persona con el nombre ingresado.");
+                JOptionPane.showMessageDialog(null, "No se encontró ninguna persona con la cédula ingresada.");
                 return;
             }
 
+            ControladorEmpleado ce = new ControladorEmpleado();
             int codigoEmpleado = ce.buscarEmpleado(persona).getEmpleadoCodigo();
-            List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorEmpleado(codigoEmpleado); 
+            List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorEmpleado(codigoEmpleado);
 
             if (cabeceraFacturas != null && !cabeceraFacturas.isEmpty()) {
                 for (CabeceraFactura cabecera : cabeceraFacturas) {
@@ -138,23 +142,46 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
                         cabecera.getValorTotal(),
                         cabecera.getEstado(),
                         cabecera.getCodigoCliente(),
-                        cabecera.getCodigoEmpleado(),
-                    };
+                        cabecera.getCodigoEmpleado(),};
                     modelo.addRow(rowData);
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontraron facturas para el empleado con el nombre ingresado.");
+                JOptionPane.showMessageDialog(null, "No se encontraron facturas para el empleado con la cédula ingresada.");
             }
         } catch (SQLException ex) {
             java.util.logging.Logger.getLogger(BuscarProveedorNombre.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private boolean validarCedula(String cedula) {
+        if (cedula == null || cedula.length() != 10) {
+            return false;
+        }
+
+        int sum = 0;
+        for (int i = 0; i < cedula.length() - 1; i++) {
+            int digit = Character.getNumericValue(cedula.charAt(i));
+            if (i % 2 == 0) {
+                digit *= 2;
+                if (digit > 9) {
+                    digit -= 9;
+                }
+            }
+            sum += digit;
+        }
+
+        int lastDigit = Character.getNumericValue(cedula.charAt(cedula.length() - 1));
+        int modulo = sum % 10;
+        int checkDigit = modulo == 0 ? 0 : 10 - modulo;
+
+        return checkDigit == lastDigit;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtCedula;
     // End of variables declaration//GEN-END:variables
 }

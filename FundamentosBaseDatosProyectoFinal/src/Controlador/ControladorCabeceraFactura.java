@@ -39,6 +39,7 @@ public class ControladorCabeceraFactura {
     }
     
     public CabeceraFactura buscarCabecera(int codigo){
+        System.out.println("aaaaaaaaa");
         return dAOCabeceraFactura.buscarCabeceraFacturaPorCodigo(codigo);
     }
     

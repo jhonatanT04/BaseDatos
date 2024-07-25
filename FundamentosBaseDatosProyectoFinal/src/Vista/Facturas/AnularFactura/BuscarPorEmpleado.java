@@ -158,7 +158,7 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
                 Persona per = controladorPersona.buscarPersonaEmpleado(jtxtCedula.getText().trim());
                 if (per!=null) {
                     Empleado emp = controladorEmpleado.buscarEmpleado(per);
-                    if (emp!= null) {
+                    if (emp!= null ){
                         this.desplegarTabla(emp.getEmpleadoCodigo());
                     }else{
                         JOptionPane.showInternalMessageDialog(rootPane, "El empleado no existe en la base de datos");
@@ -223,10 +223,11 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
     
     private void desplegarVentana(int num){
         if(anularFactura == null){
-            anularFactura = new AnularFactura(num);
+            anularFactura = new AnularFactura();
             desktopPane.add(anularFactura);
         }
         
+        anularFactura.setCabeceraFactura(controladorCabeceraFactura.buscarCabecera(num));
         anularFactura.setVisible(true);
     }
 

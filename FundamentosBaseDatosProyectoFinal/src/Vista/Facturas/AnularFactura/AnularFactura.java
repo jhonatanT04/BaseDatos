@@ -25,16 +25,16 @@ public class AnularFactura extends javax.swing.JInternalFrame {
     private DefaultTableModel defaultTableModel;
     private ControladorDetalleFactura controladorDetalleFactura;
     private DetalleFactura detalleFactura;
-    private int codigo;
+    private CabeceraFactura cabeceraFactura;
     /**
      * Creates new form AnularFacturaFactura
      */
-    public AnularFactura(int Codigo) {
+    public AnularFactura() {
         initComponents();
-        this.codigo = Codigo;
+        this.cabeceraFactura = cabeceraFactura;
         this.controladorDetalleFactura = new ControladorDetalleFactura();
         this.defaultTableModel = new DefaultTableModel();
-        cargarFacturaPorCodigo(Codigo); 
+        
     }
 
     /**
@@ -328,14 +328,15 @@ public class AnularFactura extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_txtSubtotalActionPerformed
     
+    public void setCabeceraFactura(CabeceraFactura ca){
+        this.cabeceraFactura=ca;
+    }
     
     
-    private void cargarFacturaPorCodigo(int codigoFactura) {
+    private void cargarFacturaPorCodigo(CabeceraFactura cabeceraFactura) {
         try {
-            // Buscar la cabecera de la factura
-            ControladorCabeceraFactura controladorCabecera = new ControladorCabeceraFactura();
-            CabeceraFactura cabeceraFactura = controladorCabecera.buscarCabecera(codigoFactura);
-
+            
+            
             if (cabeceraFactura != null) {
                 txtFecha.setText(cabeceraFactura.getFecha().toString());
                 txtSubtotal.setText(String.valueOf(cabeceraFactura.getSubTotal()));
@@ -356,7 +357,7 @@ public class AnularFactura extends javax.swing.JInternalFrame {
                 DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
                 tableModel.setRowCount(0); // Limpiar la tabla antes de llenar los nuevos datos
                 controladorDetalleFactura = new ControladorDetalleFactura();
-                List<DetalleFactura> detalles = controladorDetalleFactura.buscar(codigoFactura);
+                List<DetalleFactura> detalles = controladorDetalleFactura.buscar(cabeceraFactura.getCodigo());
                 
 
                 if (detalles != null && !detalles.isEmpty()) {
@@ -374,10 +375,10 @@ public class AnularFactura extends javax.swing.JInternalFrame {
                         tableModel.addRow(rowData);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "No se encontraron detalles para la cabecera de factura con código " + codigoFactura);
+                    JOptionPane.showMessageDialog(this, "No se encontraron detalles para la cabecera de factura con código " + cabeceraFactura.getCodigo());
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "No se encontró ninguna cabecera de factura con código " + codigoFactura);
+                JOptionPane.showMessageDialog(this, "No se encontró ninguna cabecera de factura con código " + cabeceraFactura.getCodigo());
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar la factura: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -387,6 +388,7 @@ public class AnularFactura extends javax.swing.JInternalFrame {
         DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
         tableModel.setRowCount(0);
         ControladorCabeceraFactura controladorCabecera = new ControladorCabeceraFactura();
+        
         CabeceraFactura cabeceraFactura = controladorCabecera.buscarCabecera(codigoProducto);
         if (cabeceraFactura != null) {
             controladorDetalleFactura = new ControladorDetalleFactura();

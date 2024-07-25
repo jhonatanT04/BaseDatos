@@ -147,6 +147,7 @@ public class DAOCliente {
                 + "per_telefono, per_correo_electronico FROM super_clientes c , super_personas p where c.super_personas_per_codigo = ?;";
     
         Conexion conexion = new Conexion();
+        
         Connection conn = conexion.conectar();
         try (PreparedStatement psCliente = conn.prepareStatement(empleadoSQL)) {
             psCliente.setInt(1, codigoCliente);

@@ -144,7 +144,7 @@ public class DAOCliente {
     public Cliente buscarClientePorCodigo(int codigoCliente) throws SQLException {        
        
         String empleadoSQL = "SELECT cli_codigo, cli_visualizar,per_codigo, per_cedula, per_nombre, per_apellido, per_direccion, "
-                + "per_telefono, per_correo_electronico FROM super_clientes c , super_personas p where c.super_personas_per_codigo = ?;";
+                + "per_telefono, per_correo_electronico FROM super_clientes c , super_personas p where c.cli_codigo = ?;";
     
         Conexion conexion = new Conexion();
         

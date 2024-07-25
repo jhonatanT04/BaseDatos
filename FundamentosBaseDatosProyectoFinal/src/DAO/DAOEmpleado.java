@@ -176,7 +176,7 @@ public class DAOEmpleado {
         
         String empleadoSQL = "SELECT e.emp_codigo, e.emp_visualizar, e.emp_contrasenia, e.emp_permiso, p.per_codigo, p.per_cedula, p.per_nombre, p.per_apellido, p.per_direccion, p.per_telefono, p.per_correo_electronico "
                 + "FROM super_empleados e, super_personas p "
-            + "WHERE e.super_personas_per_codigo = p.per_codigo AND p.per_correo_electronico = ?";
+            + "WHERE e.super_personas_per_codigo = p.per_codigo AND e.emp_codigo = ?";
     
         Conexion conexion = new Conexion();
         Connection conn = conexion.conectar();

@@ -176,7 +176,8 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
     private void jbntSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntSeleccionarActionPerformed
         // TODO add your handling code here:
         int num = obtenerCodigoProductoSeleccionado();
-        
+        desplegarVentana(num);
+        this.setVisible(false);
     }//GEN-LAST:event_jbntSeleccionarActionPerformed
     
     

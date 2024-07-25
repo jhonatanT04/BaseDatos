@@ -55,10 +55,12 @@ public class DAOCabeceraFactura {
         if (codigo > 0) {
             Conexion conexion = new Conexion();
             Connection conn = conexion.conectar();
-
-            String sql = "SELECT * FROM super_cabecera_facturas WHERE fac_codigo = ?";
-
             try {
+                
+                
+                String sql = "SELECT * FROM super_cabecera_facturas WHERE fac_codigo = ?";
+                
+                
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, codigo);
                 ResultSet rs = pstmt.executeQuery();
@@ -81,9 +83,10 @@ public class DAOCabeceraFactura {
 
                 rs.close();
                 pstmt.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "ERROR: " + e.getMessage());
-            } finally {
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOCabeceraFactura.class.getName()).log(Level.SEVERE, null, ex);
+            }finally {
                 conexion.desconectar();
             }
         } else {

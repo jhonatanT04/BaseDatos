@@ -26,15 +26,17 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
     private ControladorEmpleado controladorEmpleado;
     private ControladorPersona controladorPersona;
     private ControladorCabeceraFactura controladorCabeceraFactura;
-    
+    private AnularFactura anularFactura;
+    private javax.swing.JDesktopPane desktopPane;
     /**
      * Creates new form BuscarPorEmpleado
      */
-    public BuscarPorEmpleado() {
+    public BuscarPorEmpleado(javax.swing.JDesktopPane p) {
         initComponents();
         controladorEmpleado = new ControladorEmpleado();
         controladorPersona = new ControladorPersona();
         controladorCabeceraFactura = new ControladorCabeceraFactura();
+        desktopPane = p;
     }
 
     /**
@@ -75,13 +77,13 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
 
         jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Numeracion", "Fecha", "Cliente", "Empleado", "Sub total", "IVA", "Valor Total"
+                "Codigo", "Fecha", "Subtotal", "Iva", "Total", "Estado", "Cliente", "Empleado"
             }
         ));
         jScrollPane1.setViewportView(jTable);
@@ -101,8 +103,9 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
                         .addComponent(jbntBuscar)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jbntSeleccionar, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                             .addComponent(jbntSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -117,13 +120,13 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
                         .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jbntBuscar))
                     .addComponent(jLabel1))
-                .addGap(57, 57, 57)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(135, 135, 135)
                 .addComponent(jbntSeleccionar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 218, Short.MAX_VALUE)
                 .addComponent(jbntSalir)
                 .addGap(44, 44, 44))
         );
@@ -172,6 +175,7 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
 
     private void jbntSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntSeleccionarActionPerformed
         // TODO add your handling code here:
+        int num = obtenerCodigoProductoSeleccionado();
         
     }//GEN-LAST:event_jbntSeleccionarActionPerformed
     
@@ -197,6 +201,32 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontraron facturas para el empleado con el nombre ingresado.");
             }
+    }
+    
+    private int obtenerCodigoProductoSeleccionado() {
+        int filaSeleccionada = jTable.getSelectedRow();
+
+        if (filaSeleccionada != -1) { 
+            Object valor = jTable.getValueAt(filaSeleccionada, 0);
+            if (valor instanceof Number) {
+                return ((Number) valor).intValue();
+            } else {
+                JOptionPane.showMessageDialog(this, "El código del producto no es válido.");
+                return -1; 
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un producto de la tabla.");
+            return -1; 
+        }
+    }
+    
+    private void desplegarVentana(int num){
+        if(anularFactura == null){
+            anularFactura = new AnularFactura(num);
+            desktopPane.add(anularFactura);
+        }
+        
+        anularFactura.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -153,7 +153,7 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
     }
     private void desplegarEmplado(){
         if(empleadoFactura == null){
-            empleadoFactura = new BuscarPorEmpleado();
+            empleadoFactura = new BuscarPorEmpleado(desktopPane);
             desktopPane.add(empleadoFactura);
         }
         empleadoFactura.setVisible(true);

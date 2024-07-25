@@ -28,6 +28,7 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
         buttonGroup.add(jradiobntFecha);
         buttonGroup.add(jradiobntNumeroFactura);
         desktopPane = p;
+        
     }
 
     /**
@@ -66,6 +67,11 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
         jradiobntCliente.setText("Cliente");
 
         jbntSalir.setText("Salir");
+        jbntSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbntSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,27 +122,26 @@ public class AnularFacturaSeleccionar extends javax.swing.JInternalFrame {
     private void jbntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntBuscarActionPerformed
         if(jradiobntCliente.isSelected()||jradiobntEmpleado.isSelected()||jradiobntFecha.isSelected()||jradiobntNumeroFactura.isSelected()){
             if (jradiobntCliente.isSelected()) {
-                
                 desplegarCliente();
-                
             }else if(jradiobntEmpleado.isSelected()){
-                
                 desplegarEmplado();
-                
             }else if(jradiobntFecha.isSelected()){
                 desplegarFecha();
                 
-                
             }else if(jradiobntNumeroFactura.isSelected()){
-                
-                
-                
+                desplegarNumeroFactura();
             }
         }else{
             JOptionPane.showInternalMessageDialog(rootPane, "Escoja una opcion.");
         }
                 
     }//GEN-LAST:event_jbntBuscarActionPerformed
+
+    private void jbntSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntSalirActionPerformed
+        // TODO add your handling code here:
+        buttonGroup.clearSelection();
+        this.setVisible(false);
+    }//GEN-LAST:event_jbntSalirActionPerformed
     
     private void desplegarCliente(){
         if(clienteFactura == null){

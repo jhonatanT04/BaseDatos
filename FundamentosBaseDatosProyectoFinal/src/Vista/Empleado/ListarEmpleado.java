@@ -36,6 +36,8 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
         desktopPane = p;
         controladorPersona=new ControladorPersona();
         controladorEmpleado=new ControladorEmpleado();
+        this.limpiarTabla();
+        
     }
 
     /**
@@ -173,6 +175,7 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
         this.setVisible(false);
         this.limpiarTabla();
         buttonGroupSeleccion.clearSelection();
+        
     }//GEN-LAST:event_jBntCancelarActionPerformed
 
     private void jBntSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBntSeleccionarActionPerformed

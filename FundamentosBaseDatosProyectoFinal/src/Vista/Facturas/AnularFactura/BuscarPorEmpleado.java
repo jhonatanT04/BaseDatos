@@ -4,17 +4,37 @@
  */
 package Vista.Facturas.AnularFactura;
 
+import Controlador.ControladorCabeceraFactura;
+import Controlador.ControladorEmpleado;
+import Controlador.ControladorPersona;
+import Modelo.Factura.CabeceraFactura;
+import Modelo.Personas.Persona.Empleado;
+import Modelo.Personas.Persona.Persona;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import Modelo.Personas.Persona.Empleado;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author venot
  */
 public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
-
+    private ControladorEmpleado controladorEmpleado;
+    private ControladorPersona controladorPersona;
+    private ControladorCabeceraFactura controladorCabeceraFactura;
+    
     /**
      * Creates new form BuscarPorEmpleado
      */
     public BuscarPorEmpleado() {
         initComponents();
+        controladorEmpleado = new ControladorEmpleado();
+        controladorPersona = new ControladorPersona();
+        controladorCabeceraFactura = new ControladorCabeceraFactura();
     }
 
     /**
@@ -27,26 +47,33 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jbntMostrarDetalles = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jbntSeleccionar = new javax.swing.JButton();
+        jbntSalir = new javax.swing.JButton();
         jtxtCedula = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jbntBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
 
-        jButton1.setText("Seleccionar");
+        jbntSeleccionar.setText("Seleccionar");
+        jbntSeleccionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbntSeleccionarActionPerformed(evt);
+            }
+        });
 
-        jbntMostrarDetalles.setText("Mostrar detalles");
-
-        jButton2.setText("Salir");
+        jbntSalir.setText("Salir");
 
         jLabel1.setText("Ingrese el numero de cedula del cliente :");
 
         jbntBuscar.setText("Buscar");
+        jbntBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbntBuscarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -57,7 +84,7 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
                 "Numeracion", "Fecha", "Cliente", "Empleado", "Sub total", "IVA", "Valor Total"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTable);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -72,20 +99,14 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
                         .addComponent(jtxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
                         .addComponent(jbntBuscar)
-                        .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 684, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jbntMostrarDetalles)
-                                .addGap(23, 23, 23))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap())))))
+                            .addComponent(jbntSeleccionar, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(jbntSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,15 +118,14 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
                         .addComponent(jbntBuscar))
                     .addComponent(jLabel1))
                 .addGap(57, 57, 57)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbntMostrarDetalles)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addComponent(jbntSeleccionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbntSalir)
+                .addGap(44, 44, 44))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -126,16 +146,67 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntBuscarActionPerformed
+        // TODO add your handling code here:
+        if (jtxtCedula.getText().trim().isEmpty()){
+            JOptionPane.showInternalMessageDialog(rootPane, "Llene el campo de cedula para empleado");
+        }else{
+            try {
+                Persona per = controladorPersona.buscarPersonaEmpleado(jtxtCedula.getText().trim());
+                if (per!=null) {
+                    Empleado emp = controladorEmpleado.buscarEmpleado(per);
+                    if (emp!= null) {
+                        this.desplegarTabla(emp.getEmpleadoCodigo());
+                    }else{
+                        JOptionPane.showInternalMessageDialog(rootPane, "El empleado no existe en la base de datos");
+                    }
+                    
+                }else{
+                    JOptionPane.showInternalMessageDialog(rootPane, "La persona no existe en la base de datos");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BuscarPorEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jbntBuscarActionPerformed
+
+    private void jbntSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntSeleccionarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jbntSeleccionarActionPerformed
+    
+    
+    private void desplegarTabla(int codigoEmpleado){
+        DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
+        modelo.setRowCount(0);
+        List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorEmpleado(codigoEmpleado);
+        if (cabeceraFacturas != null && !cabeceraFacturas.isEmpty()) {
+                for (CabeceraFactura cabecera : cabeceraFacturas) {
+                    Object[] rowData = {
+                        cabecera.getCodigo(),
+                        cabecera.getFecha(),
+                        cabecera.getSubTotal(),
+                        cabecera.getTotalIVA(),
+                        cabecera.getValorTotal(),
+                        cabecera.getEstado(),
+                        cabecera.getCodigoCliente(),
+                        cabecera.getCodigoEmpleado()
+                    };
+                    modelo.addRow(rowData);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron facturas para el empleado con el nombre ingresado.");
+            }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable;
     private javax.swing.JButton jbntBuscar;
-    private javax.swing.JButton jbntMostrarDetalles;
+    private javax.swing.JButton jbntSalir;
+    private javax.swing.JButton jbntSeleccionar;
     private javax.swing.JTextField jtxtCedula;
     // End of variables declaration//GEN-END:variables
 }

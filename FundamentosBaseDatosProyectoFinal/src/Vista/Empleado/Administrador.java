@@ -28,7 +28,7 @@ import Vista.Empleado.ActualizarEmpleado;
 import Vista.Empleado.EliminarEmpelado;
 import Vista.Empleado.IngresarEmpleado;
 import Vista.Empleado.ListarEmpleado;
-import Vista.Facturas.ActualizarFactura.ListaDeFacturasPorOpcion;
+import Vista.Facturas.ListarFactura.ListaDeFacturasPorOpcion;
 import Vista.Facturas.AnularFactura.AnularFactura;
 import Vista.Facturas.AnularFactura.AnularFacturaSeleccionar;
 import Vista.Facturas.Buscar.BuscarFactura;

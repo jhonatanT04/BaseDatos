@@ -2,16 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package Vista.Facturas.ActualizarFactura;
+package Vista.Facturas.ListarFactura;
 
 import Controlador.ControladorCabeceraFactura;
+import Controlador.ControladorCliente;
 import Controlador.ControladorEmpleado;
 import Controlador.ControladorPersona;
 import Modelo.Factura.CabeceraFactura;
-import Modelo.Personas.Persona.Empleado;
-import java.sql.SQLException;
 import Modelo.Personas.Persona.Persona;
 import Vista.Proovedoores.BuscarProveedorNombre;
+import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -21,17 +21,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Usuario
  */
-public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
+public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
 
     private ControladorCabeceraFactura controladorCabeceraFactura;
     private CabeceraFactura cabeceraFactura;
     private JTable jTable;
     private ListaDeFacturasPorOpcion listaDeFacturasPorOpcion;
-
+    
     /**
-     * Creates new form BuscarFacturaEmpleado
+     * Creates new form BuscarFacturaCliente
      */
-    public BuscarFacturaEmpleado(ControladorCabeceraFactura controladorCabeceraFactura, ListaDeFacturasPorOpcion listaDeFacturasPorOpcion, JTable jTable) {
+    public BuscarFacturaCliente(ControladorCabeceraFactura controladorCabeceraFactura,ListaDeFacturasPorOpcion listaDeFacturasPorOpcion,JTable jTable) {
         initComponents();
         this.controladorCabeceraFactura = controladorCabeceraFactura;
         this.listaDeFacturasPorOpcion = listaDeFacturasPorOpcion;
@@ -52,7 +52,7 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
         txtNombre = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
-        jLabel1.setText("Ingrese la cedula del empleado:");
+        jLabel1.setText("Ingrese la cedula del cliente:");
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -70,23 +70,23 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(jLabel1)
-                        .addGap(60, 60, 60)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(77, 77, 77)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(231, 231, 231)
+                        .addGap(234, 234, 234)
                         .addComponent(btnBuscar)))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(65, 65, 65)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(btnBuscar)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,9 +115,8 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
             DefaultTableModel modelo = (DefaultTableModel) this.jTable.getModel();
             modelo.setRowCount(0);
 
-            // Obtener el empleado
             ControladorPersona cp = new ControladorPersona();
-            ControladorEmpleado ce = new ControladorEmpleado();
+            ControladorCliente cc = new ControladorCliente();
             Persona persona = cp.buscarPersonaEmpleado(nombre);
 
             if (persona == null) {
@@ -125,8 +124,8 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
                 return;
             }
 
-            int codigoEmpleado = ce.buscarEmpleado(persona).getEmpleadoCodigo();
-            List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorEmpleado(codigoEmpleado); 
+            int codigocliente= cc.buscarCliente(persona).getClienteCodigo();
+            List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorCliente(codigocliente); 
 
             if (cabeceraFacturas != null && !cabeceraFacturas.isEmpty()) {
                 for (CabeceraFactura cabecera : cabeceraFacturas) {
@@ -138,7 +137,7 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
                         cabecera.getValorTotal(),
                         cabecera.getEstado(),
                         cabecera.getCodigoCliente(),
-                        cabecera.getCodigoEmpleado(),
+                        cabecera.getCodigoEmpleado()
                     };
                     modelo.addRow(rowData);
                 }

@@ -31,7 +31,7 @@ public class AnularFactura extends javax.swing.JInternalFrame {
      */
     public AnularFactura() {
         initComponents();
-        this.cabeceraFactura = cabeceraFactura;
+        
         this.controladorDetalleFactura = new ControladorDetalleFactura();
         this.defaultTableModel = new DefaultTableModel();
         

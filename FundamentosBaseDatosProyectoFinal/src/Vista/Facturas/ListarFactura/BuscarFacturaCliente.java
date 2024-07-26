@@ -132,17 +132,25 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
             int codigocliente = cc.buscarCliente(persona).getClienteCodigo();
             List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorCliente(codigocliente);
 
+            ControladorEmpleado controladorEmpleado = new ControladorEmpleado();
+            ControladorCliente controladorCliente = new ControladorCliente();
+
+            String nombrecli = controladorCliente.buscarClientePorCodigo(codigocliente).getNombre();
+
             if (cabeceraFacturas != null && !cabeceraFacturas.isEmpty()) {
                 for (CabeceraFactura cabecera : cabeceraFacturas) {
+                    String nomreemp = controladorEmpleado.buscarClientePorCodigo(cabecera.getCodigoEmpleado()).getNombre();
+                    char estadoChar = cabecera.getEstado();
+                    String estado = (estadoChar == 'A') ? "Activo" : "Inactivo";
                     Object[] rowData = {
                         cabecera.getCodigo(),
                         cabecera.getFecha(),
                         cabecera.getSubTotal(),
                         cabecera.getTotalIVA(),
                         cabecera.getValorTotal(),
-                        cabecera.getEstado(),
-                        cabecera.getCodigoCliente(),
-                        cabecera.getCodigoEmpleado()
+                        estado,
+                        nombrecli,
+                        nomreemp
                     };
                     modelo.addRow(rowData);
                 }
@@ -155,28 +163,9 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private boolean validarCedula(String cedula) {
-        if (cedula == null || cedula.length() != 10) {
-            return false;
-        }
-
-        int sum = 0;
-        for (int i = 0; i < cedula.length() - 1; i++) {
-            int digit = Character.getNumericValue(cedula.charAt(i));
-            if (i % 2 == 0) {
-                digit *= 2;
-                if (digit > 9) {
-                    digit -= 9;
-                }
-            }
-            sum += digit;
-        }
-
-        int lastDigit = Character.getNumericValue(cedula.charAt(cedula.length() - 1));
-        int modulo = sum % 10;
-        int checkDigit = modulo == 0 ? 0 : 10 - modulo;
-
-        return checkDigit == lastDigit;
+        return cedula != null && cedula.length() == 10;
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

@@ -6,6 +6,7 @@ package Vista.Facturas.ListarFactura;
 
 import Controlador.ControladorCabeceraFactura;
 import Controlador.ControladorCliente;
+import Controlador.ControladorEmpleado;
 import Controlador.ControladorPersona;
 import Modelo.Factura.CabeceraFactura;
 import Modelo.Personas.Persona.Persona;
@@ -122,17 +123,23 @@ public class BuscarFacturaFecha extends javax.swing.JInternalFrame {
             controladorCabeceraFactura = new ControladorCabeceraFactura();
             List<CabeceraFactura> cabeceraFacturas = controladorCabeceraFactura.buscarPorFecha(fecha);
 
+            ControladorCliente controladorCliente = new ControladorCliente();
+            ControladorEmpleado controladorEmpleado = new ControladorEmpleado();
             if (cabeceraFacturas != null && !cabeceraFacturas.isEmpty()) {
                 for (CabeceraFactura cabecera : cabeceraFacturas) {
+                    char estadoChar = cabecera.getEstado();
+                    String estado = (estadoChar == 'A') ? "Activo" : "Inactivo";
+                    String nombreemp = controladorEmpleado.buscarClientePorCodigo(cabecera.getCodigoEmpleado()).getNombre();
+                    String nombrecli = controladorCliente.buscarClientePorCodigo(cabecera.getCodigoCliente()).getNombre();
                     Object[] rowData = {
                         cabecera.getCodigo(),
                         cabecera.getFecha(),
                         cabecera.getSubTotal(),
                         cabecera.getTotalIVA(),
                         cabecera.getValorTotal(),
-                        cabecera.getEstado(),
-                        cabecera.getCodigoCliente(),
-                        cabecera.getCodigoEmpleado()
+                        estado,
+                        nombrecli,
+                        nombreemp
                     };
                     modelo.addRow(rowData);
                 }

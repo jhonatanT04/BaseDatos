@@ -41,10 +41,10 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
      */
     public ListaDeFacturasPorOpcion(ControladorCabeceraFactura controladorCabeceraFactura, ControladorDetalleFactura controladorDetalleFactura, ControladorProducto controladorProducto, javax.swing.JDesktopPane desktopPane) {
         initComponents();
-        buttonGroup1.add(radioCliente); 
-        buttonGroup1.add(radioEmpleado); 
-        buttonGroup1.add(radioListar); 
-        buttonGroup1.add(radioFecha); 
+        buttonGroup1.add(radioCliente);
+        buttonGroup1.add(radioEmpleado);
+        buttonGroup1.add(radioListar);
+        buttonGroup1.add(radioFecha);
         this.controladorCabeceraFactura = controladorCabeceraFactura;
         this.controladorDetalleFactura = controladorDetalleFactura;
         this.controladorProducto = controladorProducto;
@@ -270,17 +270,19 @@ public class ListaDeFacturasPorOpcion extends javax.swing.JInternalFrame {
                 double subtotal = cabecera.getSubTotal();
                 double totalIVA = cabecera.getTotalIVA();
                 double valorTotal = cabecera.getValorTotal();
-                char estado = cabecera.getEstado();
+                //char estado = cabecera.getEstado();
                 //ControladorPersona controladorPersona = new ControladorPersona();
                 ControladorCliente controladorCliente = new ControladorCliente();
                 ControladorEmpleado controladorEmpleado = new ControladorEmpleado();
+                char estadoChar = cabecera.getEstado();
+                String estado = (estadoChar == 'A') ? "Activo" : "Inactivo";
                 //Persona per = controladorPersona.buscarPersonaCliente(cabecera.getCodigoEmpleado());
                 String nombreC = controladorCliente.buscarClientePorCodigo(cabecera.getCodigoCliente()).getNombre();
-                //String nombreE = controladorEmpleado.buscarClientePorCodigo(cabecera.getCodigoEmpleado()).getNombre();
+                String nombreE = controladorEmpleado.buscarClientePorCodigo(cabecera.getCodigoEmpleado()).getNombre();
                 int codigoEmpleado = cabecera.getCodigoEmpleado();
                 int codigoCliente = cabecera.getCodigoCliente();
 
-                Object[] rowData = {codigo, fecha, subtotal, totalIVA, valorTotal, estado, nombreC, codigoEmpleado};
+                Object[] rowData = {codigo, fecha, subtotal, totalIVA, valorTotal, estado, nombreC, nombreE};
 
                 modelo.addRow(rowData);
             } catch (SQLException ex) {

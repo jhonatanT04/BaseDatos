@@ -93,12 +93,6 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
             }
         });
 
-        txtPrecio.setEnabled(false);
-
-        txtStock.setEnabled(false);
-
-        txtIva.setEnabled(false);
-
         jLabel2.setText("Nombre:");
 
         jLabel3.setText("Precio:");
@@ -116,10 +110,6 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
         jLabel6.setText("Categoria:");
 
         jLabel7.setText("Estado:");
-
-        txtCategoria.setEnabled(false);
-
-        txtEstado.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -275,6 +265,7 @@ public class EliminarProducto extends javax.swing.JInternalFrame {
         txtPrecio.setText("");
         txtStock.setText("");
         txtCategoria.setText("");
+        txtEstado.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

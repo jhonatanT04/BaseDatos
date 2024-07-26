@@ -23,6 +23,9 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
      */
     public ListarProveedores_1(ControladorPorveedor controladorPorveedor,javax.swing.JDesktopPane desktopPane) {
         initComponents();
+        buttonGroup1.add(radioNombre);
+        buttonGroup1.add(radioRUC);
+        buttonGroup1.add(radioTodo); 
         this.controladorPorveedor = controladorPorveedor;
         this.desktopPane = desktopPane;
     }
@@ -36,6 +39,7 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -209,6 +213,7 @@ public class ListarProveedores_1 extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSeleccionar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

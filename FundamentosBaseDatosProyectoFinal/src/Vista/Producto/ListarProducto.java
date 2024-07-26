@@ -29,6 +29,9 @@ public class ListarProducto extends javax.swing.JInternalFrame {
      */
     public ListarProducto(ControladorProducto controladorProducto, ControladorCategoria controladorCategoria,javax.swing.JDesktopPane desktop) {
         initComponents();
+        buttonGroup1.add(radioCategoria);
+        buttonGroup1.add(radioListartodo);
+        buttonGroup1.add(radioNombre);
         this.controladorProducto = controladorProducto;
         this.controladorCategoria = controladorCategoria;
         desktopPane = desktop;
@@ -43,6 +46,7 @@ public class ListarProducto extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -97,7 +101,7 @@ public class ListarProducto extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Listar");
+        jButton1.setText("Salir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -164,6 +168,7 @@ public class ListarProducto extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false); 
+        buttonGroup1.clearSelection();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
@@ -224,6 +229,7 @@ public class ListarProducto extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSeleccionar;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

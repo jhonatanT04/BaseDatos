@@ -51,6 +51,7 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jLabel1.setText("Ingrese la cedula del cliente:");
 
@@ -58,6 +59,13 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -74,7 +82,9 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
                         .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(234, 234, 234)
-                        .addComponent(btnBuscar)))
+                        .addComponent(btnBuscar)
+                        .addGap(36, 36, 36)
+                        .addComponent(jButton1)))
                 .addContainerGap(129, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -85,7 +95,9 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(btnBuscar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(jButton1))
                 .addGap(25, 25, 25))
         );
 
@@ -162,6 +174,11 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        txtCedula.setText(""); 
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private boolean validarCedula(String cedula) {
         return cedula != null && cedula.length() == 10;
     }
@@ -169,6 +186,7 @@ public class BuscarFacturaCliente extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtCedula;

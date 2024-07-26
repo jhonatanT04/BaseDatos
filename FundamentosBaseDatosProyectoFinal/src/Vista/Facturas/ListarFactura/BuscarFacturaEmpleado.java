@@ -52,6 +52,7 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         jLabel1.setText("Ingrese la cedula del empleado:");
 
@@ -59,6 +60,13 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -75,7 +83,9 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
                         .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(231, 231, 231)
-                        .addComponent(btnBuscar)))
+                        .addComponent(btnBuscar)
+                        .addGap(55, 55, 55)
+                        .addComponent(btnCancelar)))
                 .addContainerGap(147, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -86,7 +96,9 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
-                .addComponent(btnBuscar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscar)
+                    .addComponent(btnCancelar))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -161,6 +173,11 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.setVisible(false);
+        txtCedula.setText("");
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     private boolean validarCedula(String cedula) {
         return cedula != null && cedula.length() == 10;
     }
@@ -168,6 +185,7 @@ public class BuscarFacturaEmpleado extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtCedula;

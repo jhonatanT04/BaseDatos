@@ -116,6 +116,7 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
             }
         });
 
+        txtTotal.setEnabled(false);
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalActionPerformed(evt);
@@ -386,8 +387,8 @@ public class ComprarProveedores_1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-        if (txtCantidad.getText().isEmpty() || txtTotal.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, llene todos los campos necesarios.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (txtCantidad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, llene la cantidad para buscar el producto.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

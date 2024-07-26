@@ -300,7 +300,7 @@ public class EliminarCliente extends javax.swing.JInternalFrame {
         this.habilitarCampos(false);
         this.limpiarCampos();
     }//GEN-LAST:event_jButton2ActionPerformed
-    private boolean validarCampos() {
+    /*private boolean validarCampos() {
         if (txtApellido.getText().trim().isEmpty()||txtNombre.getText().trim().isEmpty()||txtDireccion.getText().trim().isEmpty()||txtTelefono.getText().trim().isEmpty()||txtCorreo.getText().trim().isEmpty()) {
             JOptionPane.showInternalMessageDialog(rootPane, "Se deben llenar Todos los campos");
             return false;
@@ -335,7 +335,7 @@ public class EliminarCliente extends javax.swing.JInternalFrame {
         
         
         
-    }
+    }*/
     
     
 

@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
  *
  * @author venot
  */
+//HOLA
 public class Login extends javax.swing.JFrame {
     private ControladorEmpleado controladorEmpleado;
     

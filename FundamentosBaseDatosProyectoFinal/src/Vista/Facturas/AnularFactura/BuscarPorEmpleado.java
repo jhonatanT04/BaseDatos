@@ -65,6 +65,11 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
         });
 
         jbntSalir.setText("Salir");
+        jbntSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbntSalirActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Ingrese el numero de cedula del cliente :");
 
@@ -179,6 +184,11 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
         desplegarVentana(num);
         this.setVisible(false);
     }//GEN-LAST:event_jbntSeleccionarActionPerformed
+
+    private void jbntSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbntSalirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbntSalirActionPerformed
+    
     
     
     private void desplegarTabla(int codigoEmpleado){
@@ -227,8 +237,8 @@ public class BuscarPorEmpleado extends javax.swing.JInternalFrame {
             desktopPane.add(anularFactura);
         }
         
-        anularFactura.setCabeceraFactura(controladorCabeceraFactura.buscarCabecera(num));
-        anularFactura.setVisible(true);
+        anularFactura.Visibilidada(controladorCabeceraFactura.buscarCabecera(num));
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

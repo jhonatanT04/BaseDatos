@@ -328,8 +328,10 @@ public class AnularFactura extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_txtSubtotalActionPerformed
     
-    public void setCabeceraFactura(CabeceraFactura ca){
-        this.cabeceraFactura=ca;
+    
+    public void Visibilidada(CabeceraFactura ca){
+        this.setVisible(true);
+        this.cargarFacturaPorCodigo(ca);
     }
     
     
@@ -384,37 +386,7 @@ public class AnularFactura extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Error al cargar la factura: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    public void cargarDetallesProducto(int codigoProducto) {
-        DefaultTableModel tableModel = (DefaultTableModel) jTable1.getModel();
-        tableModel.setRowCount(0);
-        ControladorCabeceraFactura controladorCabecera = new ControladorCabeceraFactura();
-        
-        CabeceraFactura cabeceraFactura = controladorCabecera.buscarCabecera(codigoProducto);
-        if (cabeceraFactura != null) {
-            controladorDetalleFactura = new ControladorDetalleFactura();
-            List<DetalleFactura> detalles = controladorDetalleFactura.buscar(cabeceraFactura.getCodigo());
-
-            if (detalles != null && !detalles.isEmpty()) {
-                for (DetalleFactura detalle : detalles) {
-                    Object[] rowData = {
-                        detalle.getCodigo(),
-                        detalle.getCantidad(),
-                        detalle.getPrecioUnitario(),
-                        detalle.getSubTotal(),
-                        detalle.getIva(),
-                        detalle.getTotal(),
-                        detalle.getCodigoCabeceraFactura(),
-                        detalle.getCodigoProducto()
-                    };
-                    tableModel.addRow(rowData);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encontraron detalles para la cabecera de factura con código " + cabeceraFactura.getCodigo());
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontró ninguna cabecera de factura para el producto con código " + codigoProducto);
-        }
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton5;

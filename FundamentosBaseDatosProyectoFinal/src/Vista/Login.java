@@ -9,7 +9,7 @@ import Controlador.ControladorEmpleado;
 import Controlador.ControladorPersona;
 import Modelo.Personas.Persona.Empleado;
 import Vista.Empleado.Administrador;
-import ec.edu.ups.Vista.Empleado.EmpleadoGeneral;
+import Vista.Empleado.GeneralEmpleado;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +25,7 @@ public class Login extends javax.swing.JFrame {
     private ControladorEmpleado controladorEmpleado;
     
     private Administrador admin;
-    private EmpleadoGeneral gen;
+    private GeneralEmpleado gen;
     private Empleado empleado;
     
     /**
@@ -200,7 +200,7 @@ public class Login extends javax.swing.JFrame {
     }
     private void desplegarGeneral(){
         if(gen == null){
-            gen = new EmpleadoGeneral();
+            gen = new GeneralEmpleado();
             //desktopPane.add(admin);
         }
         gen.setVisible(true); 

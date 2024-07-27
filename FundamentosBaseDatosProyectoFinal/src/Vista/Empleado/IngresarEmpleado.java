@@ -66,8 +66,12 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
         txtContrasenia = new javax.swing.JPasswordField();
         jCheckBox1 = new javax.swing.JCheckBox();
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 255));
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel8.setText("Permisos:");
 
+        jRadioButtonAdministrador.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jRadioButtonAdministrador.setText("Administrativo");
         jRadioButtonAdministrador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,14 +79,19 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        jRadioButtonGeneral.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jRadioButtonGeneral.setText("General");
 
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel7.setText("Telefono:");
 
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel11.setText("Apellidos:");
 
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel9.setText("Correo Electronico:");
 
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel12.setText("Direccion:");
 
         txtCedula.addActionListener(new java.awt.event.ActionListener() {
@@ -91,6 +100,7 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        bntCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/cancelar.png"))); // NOI18N
         bntCancelar.setText("Cancelar");
         bntCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,10 +108,13 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setText("Cedula:");
 
+        jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel13.setText("Nombres:");
 
+        btnIngresarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/crearCliente.png"))); // NOI18N
         btnIngresarCliente.setText("Crear empleado");
         btnIngresarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,10 +122,12 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Contraseña:");
 
         txtContrasenia.setEditable(false);
 
+        jCheckBox1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jCheckBox1.setText("Mostrar contraseña");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +144,7 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 314, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
                         .addComponent(btnIngresarCliente)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bntCancelar)
@@ -168,7 +183,7 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel9)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(62, 62, 62)
+                                    .addGap(42, 42, 42)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jCheckBox1)
                                         .addComponent(txtContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -219,7 +234,7 @@ public class IngresarEmpleado extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnIngresarCliente)
                                 .addComponent(bntCancelar)))))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -42,8 +42,6 @@ import Vista.Proovedoores.ListarCompraProveedores;
 
 
 
-
-
 /**
  *
  * @author Usuario
@@ -124,6 +122,7 @@ public class Administrador extends javax.swing.JFrame {
         deleteMenuItem = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         itemMenuNuevoCliente = new javax.swing.JMenuItem();
@@ -142,6 +141,8 @@ public class Administrador extends javax.swing.JFrame {
         jMenuItem13 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        desktopPane.setBackground(new java.awt.Color(0, 102, 255));
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("Productos");
@@ -232,6 +233,14 @@ public class Administrador extends javax.swing.JFrame {
             }
         });
         editMenu.add(jMenuItem2);
+
+        jMenuItem14.setText("Eliminar Compra Proveedor");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        editMenu.add(jMenuItem14);
 
         jMenuItem16.setText("Listar Compra Proveedor");
         jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
@@ -538,6 +547,10 @@ public class Administrador extends javax.swing.JFrame {
         listarProducto.setVisible(true); 
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
     private void deleteMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteMenuItemActionPerformed
         if(listarProveedores_1 == null){
             listarProveedores_1 = new ListarProveedores_1(controladorProveedor,desktopPane);
@@ -639,6 +652,7 @@ public class Administrador extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem2;

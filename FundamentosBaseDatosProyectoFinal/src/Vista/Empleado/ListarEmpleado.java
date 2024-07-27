@@ -36,8 +36,6 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
         desktopPane = p;
         controladorPersona=new ControladorPersona();
         controladorEmpleado=new ControladorEmpleado();
-        this.limpiarTabla();
-        
     }
 
     /**
@@ -60,6 +58,9 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
         jBntCancelar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 255));
+
+        jTableEmpleados.setBackground(new java.awt.Color(0, 204, 255));
         jTableEmpleados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -73,6 +74,7 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTableEmpleados);
 
+        jBntSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/seleccionar.png"))); // NOI18N
         jBntSeleccionar.setText("Seleccionar");
         jBntSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,6 +82,7 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        jboxNombre.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jboxNombre.setText("Nombre");
         jboxNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,10 +90,13 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        Cedula.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         Cedula.setText("Cedula");
 
+        jboxTodo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jboxTodo.setText("Listar todo");
 
+        jBntCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/cancelar.png"))); // NOI18N
         jBntCancelar.setText("Cancelar");
         jBntCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +104,7 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Listar por :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -123,7 +130,7 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jBntCancelar)))))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +141,7 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 65, Short.MAX_VALUE)
+                        .addGap(0, 23, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jboxNombre)
                             .addComponent(Cedula)
@@ -175,7 +182,6 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
         this.setVisible(false);
         this.limpiarTabla();
         buttonGroupSeleccion.clearSelection();
-        
     }//GEN-LAST:event_jBntCancelarActionPerformed
 
     private void jBntSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBntSeleccionarActionPerformed

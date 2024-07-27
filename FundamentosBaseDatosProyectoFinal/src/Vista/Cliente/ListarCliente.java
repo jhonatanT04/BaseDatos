@@ -60,6 +60,9 @@ public class ListarCliente extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jbntSalir = new javax.swing.JButton();
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 255));
+
+        jTableClientes.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jTableClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -73,6 +76,7 @@ public class ListarCliente extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTableClientes);
 
+        jboxNombre.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jboxNombre.setText("Nombre");
         jboxNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,10 +84,13 @@ public class ListarCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        Cedula.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         Cedula.setText("Cedula");
 
+        jboxTodo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jboxTodo.setText("Listar todo");
 
+        jBntSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/seleccionar.png"))); // NOI18N
         jBntSeleccion.setText("Seleccionar");
         jBntSeleccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,8 +98,10 @@ public class ListarCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Listar por :");
 
+        jbntSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/salir.png"))); // NOI18N
         jbntSalir.setText("Salir");
         jbntSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,28 +116,24 @@ public class ListarCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jboxNombre)
-                                    .addGap(129, 129, 129)
-                                    .addComponent(Cedula)
-                                    .addGap(121, 121, 121)
-                                    .addComponent(jboxTodo)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
-                                    .addComponent(jBntSeleccion))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                    .addComponent(jLabel1)
-                                    .addGap(693, 693, 693)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(183, 183, 183))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbntSalir)
-                        .addGap(103, 103, 103))))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jboxNombre)
+                            .addGap(129, 129, 129)
+                            .addComponent(Cedula)
+                            .addGap(121, 121, 121)
+                            .addComponent(jboxTodo))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(57, 57, 57)
+                            .addComponent(jLabel1)
+                            .addGap(693, 693, 693)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jBntSeleccion)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 793, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbntSalir))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,11 +146,11 @@ public class ListarCliente extends javax.swing.JInternalFrame {
                     .addComponent(Cedula)
                     .addComponent(jboxTodo)
                     .addComponent(jBntSeleccion))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbntSalir)
-                .addGap(33, 33, 33))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,7 +159,7 @@ public class ListarCliente extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 903, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

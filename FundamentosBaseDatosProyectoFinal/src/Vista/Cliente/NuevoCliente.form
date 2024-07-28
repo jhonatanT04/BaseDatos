@@ -191,7 +191,7 @@
         <Component class="javax.swing.JButton" name="btnIngresarCliente">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/crearCliente.png"/>
+              <Image iconType="3" name="/Iconos/crearCliente.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Crear CLiente"/>
           </Properties>
@@ -218,7 +218,7 @@
         <Component class="javax.swing.JButton" name="bntCancelar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/cancelar.png"/>
+              <Image iconType="3" name="/Iconos/cancelar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>

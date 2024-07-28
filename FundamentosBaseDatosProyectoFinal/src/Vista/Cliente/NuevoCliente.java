@@ -76,7 +76,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jLabel10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel10.setText("Nombres:");
 
-        btnIngresarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/crearCliente.png"))); // NOI18N
+        btnIngresarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/crearCliente.png"))); // NOI18N
         btnIngresarCliente.setText("Crear CLiente");
         btnIngresarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,7 +90,7 @@ public class NuevoCliente extends javax.swing.JInternalFrame {
         jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel12.setText("Direccion:");
 
-        bntCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/cancelar.png"))); // NOI18N
+        bntCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancelar.png"))); // NOI18N
         bntCancelar.setText("Cancelar");
         bntCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

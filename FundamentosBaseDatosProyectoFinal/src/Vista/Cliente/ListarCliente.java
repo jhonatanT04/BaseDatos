@@ -90,7 +90,7 @@ public class ListarCliente extends javax.swing.JInternalFrame {
         jboxTodo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jboxTodo.setText("Listar todo");
 
-        jBntSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/seleccionar.png"))); // NOI18N
+        jBntSeleccion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/seleccionar.png"))); // NOI18N
         jBntSeleccion.setText("Seleccionar");
         jBntSeleccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +101,7 @@ public class ListarCliente extends javax.swing.JInternalFrame {
         jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Listar por :");
 
-        jbntSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/salir.png"))); // NOI18N
+        jbntSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/salir.png"))); // NOI18N
         jbntSalir.setText("Salir");
         jbntSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -161,7 +161,7 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/buscar.png"/>
+              <Image iconType="3" name="/Iconos/buscar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Buscar"/>
           </Properties>
@@ -175,7 +175,7 @@
               <Font name="Segoe UI" size="12" style="2"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/actualizar.png"/>
+              <Image iconType="3" name="/Iconos/actualizar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Actualizar"/>
             <Property name="enabled" type="boolean" value="false"/>
@@ -253,7 +253,7 @@
               <Font name="Segoe UI" size="12" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/cancelar.png"/>
+              <Image iconType="3" name="/Iconos/cancelar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>

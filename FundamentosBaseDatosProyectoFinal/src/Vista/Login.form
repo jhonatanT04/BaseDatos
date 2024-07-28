@@ -194,7 +194,7 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/CORREO.png"/>
+              <Image iconType="3" name="/Iconos/CORREO.png"/>
             </Property>
           </Properties>
           <Constraints>
@@ -206,7 +206,7 @@
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/contra.png"/>
+              <Image iconType="3" name="/Iconos/contra.png"/>
             </Property>
           </Properties>
           <Constraints>

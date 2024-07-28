@@ -140,7 +140,7 @@
         <Component class="javax.swing.JButton" name="jBntSeleccionar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/seleccionar.png"/>
+              <Image iconType="3" name="/Iconos/seleccionar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Seleccionar"/>
           </Properties>
@@ -178,7 +178,7 @@
         <Component class="javax.swing.JButton" name="jBntCancelar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/cancelar.png"/>
+              <Image iconType="3" name="/Iconos/cancelar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
           </Properties>

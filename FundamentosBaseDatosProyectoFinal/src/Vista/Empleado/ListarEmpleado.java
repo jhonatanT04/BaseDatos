@@ -74,7 +74,7 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jTableEmpleados);
 
-        jBntSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/seleccionar.png"))); // NOI18N
+        jBntSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/seleccionar.png"))); // NOI18N
         jBntSeleccionar.setText("Seleccionar");
         jBntSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,7 +96,7 @@ public class ListarEmpleado extends javax.swing.JInternalFrame {
         jboxTodo.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jboxTodo.setText("Listar todo");
 
-        jBntCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Extra/imagen/cancelar.png"))); // NOI18N
+        jBntCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancelar.png"))); // NOI18N
         jBntCancelar.setText("Cancelar");
         jBntCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

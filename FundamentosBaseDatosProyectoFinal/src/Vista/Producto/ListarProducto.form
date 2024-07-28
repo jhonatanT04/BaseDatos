@@ -131,7 +131,7 @@
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/registrar.png"/>
+              <Image iconType="3" name="/Iconos/seleccionar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Listar"/>
           </Properties>
@@ -157,7 +157,7 @@
         <Component class="javax.swing.JButton" name="btnSeleccionar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Extra/imagen/seleccionar.png"/>
+              <Image iconType="3" name="/Iconos/seleccionar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Seleccionar"/>
           </Properties>
